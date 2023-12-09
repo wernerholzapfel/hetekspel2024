@@ -1,0 +1,41 @@
+<ion-header>
+    <app-menu-toolbar title="Finaleronde"></app-menu-toolbar>
+</ion-header>
+<ion-content>
+
+    <ion-grid>
+        <ion-row class="ion-no-padding">
+            <ion-col size="12" class="ion-no-padding">
+                <ion-card color="tertiary">
+                    <ion-card-content>
+                        De Toto statistieken laten zien hoevaak er is voorspeld wie er wint of dat er gelijk gespeeld
+                        wordt.
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+        <ng-container *ngFor="let toto of totoStats">
+            <div>
+                <ion-row class="hes-background" (click)="openMatch(toto.id)">
+                    <ion-col class="ion-text-center">
+                        <span class="flag-icon flag-icon-{{toto.homeTeam.logoUrl}} flag-icon-squared"></span>
+                        {{toto.homeTeam.name}}
+                    </ion-col>
+                    <ion-col class="ion-text-center" size="1">X</ion-col>
+                    <ion-col class="ion-text-center">
+                        <span class="flag-icon flag-icon-{{toto.awayTeam.logoUrl}} flag-icon-squared"></span>
+                        {{toto.awayTeam.name}}
+                    </ion-col>
+                </ion-row>
+                <ion-row class="hes-border-bottom hes-background">
+                    <ion-col class="ion-text-center hes-toto-col hes-background-secondary-accent"
+                             (click)="openMatchWithTotoFilter(toto.id, 1)">{{toto.toto1}}</ion-col>
+                    <ion-col class="ion-text-center hes-toto-col hes-background-secondary-accent" (click)="openMatchWithTotoFilter(toto.id, 3)"
+                             size="1">{{toto.toto3}}</ion-col>
+                    <ion-col class="ion-text-center hes-toto-col hes-background-secondary-accent"
+                             (click)="openMatchWithTotoFilter(toto.id, 2)">{{toto.toto2}}</ion-col>
+                </ion-row>
+            </div>
+        </ng-container>
+    </ion-grid>
+</ion-content>

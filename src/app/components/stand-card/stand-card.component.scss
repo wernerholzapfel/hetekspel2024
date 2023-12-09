@@ -1,0 +1,17 @@
+:host {
+
+  --ion-padding: 8px;
+
+  .hes-toolbar>ion-card-header {
+    padding: 8px 16px;
+  }
+
+  .toggle-reorder-icon {
+    font-size: 24px;
+  }
+
+  .hes-toolbar {
+    border-radius: 0;
+    margin: 0
+  }
+}

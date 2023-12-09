@@ -1,0 +1,33 @@
+<ion-header>
+    <app-menu-toolbar title="Eindstanden"></app-menu-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-grid class="ion-no-padding">
+        <ion-row>
+            <ion-col size="12">
+                <ion-card color="secondary">
+                    <ion-card-content>
+                        Hier komen de standen van de poules te staan op basis van jouw ingevulde wedstrijduitslagen.
+                        Voor iedere ploeg op een goede positie krijg je 5 punten. Als je dat wilt kun je de volgorde van
+                        de ploegen nog wijzigen, klik daarvoor op het slotje. <i>Op basis van de standen in de poules
+                        worden de ploegen in de 1/8e finales voor je ingevuld.</i>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="12" size-md="6" size-lg="6" size-xl="4" *ngFor="let poule of poules">
+                <app-stand-card [editMode]="!arePoulesInComplete()" [stand]="poule.stand" [poule]="poule"></app-stand-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+<ion-footer *ngIf="uiService.isRegistrationOpen$ | async">
+    <ng-container class="ion-no-border ion-padding-horizontal">
+        <ion-button color="tertiary" expand="full" fill="solid" [disabled]="arePoulesInComplete()" (click)="save()">
+            <span *ngIf="arePoulesInComplete()">Voorspel eerst de wedstrijden</span>
+            <span *ngIf="!arePoulesInComplete()">Opslaan</span>
+        </ion-button>
+    </ng-container>
+</ion-footer>

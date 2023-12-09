@@ -1,0 +1,38 @@
+<ion-header>
+    <app-menu-toolbar title="Knockouts"></app-menu-toolbar>
+</ion-header>
+<ion-content>
+    <ion-grid>
+        <ion-row class="ion-no-padding">
+            <ion-col size="12" class="ion-no-padding">
+                <ion-card color="tertiary">
+                    <ion-card-content>
+                        De statistieken van de finaleronde laten zien hoevaak een team gekozen is in die specifieke ronde.
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+        <ng-container *ngFor="let knockout of knockoutStats">
+            <ion-row>
+                <ion-col>{{knockout.round | roundText}} </ion-col>
+            </ion-row>
+            <ng-container *ngFor="let team of knockout.teams">
+                <ion-item *ngIf="team.count > 0" lines="full"  (click)="openKoTeam(team.id, knockout.round)">
+                <!-- <ion-row *ngIf="team.count > 0" class="hes-border-bottom" (click)="openKoTeam(team.id, knockout.round)"> -->
+                    <!-- <ion-col size="6" class="ion-padding ion-text-start hes-background"> -->
+                        <ion-text>
+                            <span class="flag-icon flag-icon-{{team.logoUrl}} flag-icon-squared"></span>
+                            {{team.name}}
+                        </ion-text>
+                    <!-- </ion-col> -->
+                    <!-- <ion-col size="6" class="ion-padding ion-text-end hes-background"> -->
+                        <ion-text slot="end">
+                            {{team.count}}
+                        </ion-text>
+                    <!-- </ion-col> -->
+                <!-- </ion-row> -->
+            </ion-item>
+            </ng-container>
+        </ng-container>
+    </ion-grid>
+</ion-content>

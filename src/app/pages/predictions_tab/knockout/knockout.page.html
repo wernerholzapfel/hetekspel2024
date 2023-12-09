@@ -1,0 +1,108 @@
+<ion-header>
+    <app-menu-toolbar title="Eindstanden" [rightCornerIcon]="'trash-outline'"
+                      (emitIconClick)="deleteKnockoutPredictions()"></app-menu-toolbar>
+    <ion-segment [(ngModel)]="activeKnockoutRound"
+                 (ionChange)="selectKnockoutRound($event)"
+                 scrollable
+                 mode="md">
+        <ion-segment-button [value]="round.round" (click)="scrollSegments(i+1)"
+                            *ngFor="let round of rounds; let i = index">
+            {{round.text}}
+        </ion-segment-button>
+    </ion-segment>
+</ion-header>
+<ion-content>
+    <div #topScrollAnchor></div>
+    <ion-grid class="ion-no-padding">
+        <ion-row *ngIf="wrongSelectedTeam?.length > 0">
+            <ion-col size="12">
+                <ion-card color="danger">
+                    <ion-card-content>
+                        De volgende wedstrijd heeft geen correcte winnaar:
+                        <div *ngFor="let match of wrongSelectedTeam">
+                          {{match.roundText}} {{match.homeTeam.name}} - {{match.awayTeam.name}}
+                        </div>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+         <ion-row *ngIf="landDoubleInRound?.length > 0">
+            <ion-col size="12">
+                <ion-card color="danger">
+                    <ion-card-content>
+                        Je hebt een of meer landen dubbel in een ronde:
+                        <ng-container *ngFor="let round of landDoubleInRound">
+                            <div *ngFor="let team of round.duplicateTeams" >
+                                {{round.text}} {{team}}
+                              </div>
+                        </ng-container>
+                        
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="activeKnockoutRound === '16'">
+            <ion-col size="12">
+                <ion-card color="secondary">
+                    <ion-card-content>
+                        Selecteer voor elke ronde in de finaleronde welke ploeg volgens jou doorgaat naar de
+                        volgende ronde. Je krijgt punten voor de juiste ploegen in elke ronde. Goed voorspelde 1/8e finalist
+                        20 pt, kwartfinalist 35 pt, halve finalist 60 pt, finalist 100 pt, winnaar troostfinale 60pt, Wereldkampioen 175 pt.
+                        <br><br>
+                        Heb je wijzigingen in de poulewedstrijden gemaakt en wil je je <b>1/8e finale 'resetten'?</b>
+                        Verwijder dan al je knockout voorspellingen door rechtsboven op het prullenbakje te klikken.
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="activeKnockoutRound === '3'">
+            <ion-col size="12">
+                <ion-card color="secondary">
+                    <ion-card-content>
+                        Voorspel de winnaar van de troostfinale.
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="12" size-md="6" size-lg="6" size-xl="4"
+                     *ngFor="let match of speelschema | filterKnockoutRounds:activeKnockoutRound">
+                <ion-card>
+                    <app-city-card-header [match]="match"></app-city-card-header>
+                    <ion-progress-bar [color]="isLoadingColor" *ngIf="!match.isLoading" value="1"></ion-progress-bar>
+                    <ion-progress-bar color="secondary" *ngIf="match.isLoading" type="indeterminate"></ion-progress-bar>
+                    <ion-radio-group [value]="match.selectedTeam?.id" (ionChange)="setSelectedTeam(match, $event)">
+                        <ion-item lines="none">
+                            <ion-label>
+                                <span class="flag-icon flag-icon-{{match.homeTeam?.logoUrl}} flag-icon-squared"></span>
+                                {{match.homeTeam?.name}} {{match.home}} ({{match.homeId}})
+                            </ion-label>
+                            <ion-radio slot="start" [value]="match.homeTeam?.id"
+                                       [disabled]="!(uiService.isRegistrationOpen$ | async) || !match.homeTeam?.id"></ion-radio>
+                        </ion-item>
+                        <ion-item lines="none">
+                            <ion-label>
+                                <span class="flag-icon flag-icon-{{match.awayTeam?.logoUrl}} flag-icon-squared"></span>
+                                {{match.awayTeam?.name}} {{match.away}} ({{match.awayId}})
+                            </ion-label>
+                            <ion-radio slot="start" [value]="match.awayTeam?.id"
+                                       [disabled]="!(uiService.isRegistrationOpen$ | async) || !match.awayTeam?.id"></ion-radio>
+                        </ion-item>
+                    </ion-radio-group>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+<ion-footer *ngIf="uiService.isRegistrationOpen$ | async">
+    <ng-container class="ion-no-border ion-padding-horizontal">
+        <ion-button *ngIf="activeKnockoutRound !== '2'" color="tertiary" expand="full" fill="solid"
+                    [disabled]="!canIGoToNextStep" (click)="next()">Ga naar
+            Volgende
+        </ion-button>
+        <ion-button *ngIf="activeKnockoutRound === '2' && !predictionInComplete()" (click)="navigateToHome()"
+                    color="tertiary"
+                    expand="full" fill="solid">Voorspellingen compleet
+        </ion-button>
+    </ng-container>
+</ion-footer>

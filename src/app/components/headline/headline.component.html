@@ -1,0 +1,38 @@
+<ion-card class="welcome-card" *ngIf="headlines?.length > 0">
+    <div class="hes-background-secondary ion-padding">
+        <img src="/assets/header_hetwkspel_light_mode.png" alt=""/>
+    </div>
+    <ion-card-header>
+        <ion-card-title color="secondary">
+            {{headline.title}}
+        </ion-card-title>
+        <ion-card-subtitle>{{this.headline.createdDate | fromNow}}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+        <p [innerHTML]="headline.text">
+    </ion-card-content>
+    <ion-footer>
+        <ion-toolbar mode="ios">
+            <ion-buttons slot="start">
+                <ion-button fill="clear" [disabled]="headlineIndex === 0" (click)="previousHeadline()">
+                    <ion-icon slot="icon-only" color="secondary" name="arrow-back"></ion-icon>
+                </ion-button>
+                <ion-label color="medium">
+                    {{headlineIndex + 1 }} van {{headlines?.length}}
+                </ion-label>
+                <ion-button fill="clear" [disabled]="headlineIndex + 1 === headlines?.length" (click)="nextHeadline()">
+                    <ion-icon slot="icon-only" color="secondary" name="arrow-forward"></ion-icon>
+                </ion-button>
+            </ion-buttons>
+            <ion-buttons slot="end" *ngIf="isAdmin">
+                <ion-button fill="clear" (click)="addHeadline()">
+                    <ion-icon slot="icon-only" color="secondary" name="add"></ion-icon>
+                </ion-button>
+                <ion-button fill="clear" [disabled]="headlines?.length === 0" (click)="editHeadline(headline, false)">
+                    <ion-icon slot="icon-only" color="secondary" name="create-outline"></ion-icon>
+                </ion-button>
+            </ion-buttons>
+
+        </ion-toolbar>
+    </ion-footer>
+</ion-card>

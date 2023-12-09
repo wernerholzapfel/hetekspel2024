@@ -1,0 +1,31 @@
+<ion-header>
+    <app-menu-toolbar>
+    </app-menu-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <img src="/assets/deelnemers.jpeg" style="width: 100%" alt=""/>
+    <ion-card-header *ngIf="participants">
+        <ion-card-title>
+            {{participants?.length}} Deelnemers
+        </ion-card-title>
+    </ion-card-header>
+    <ion-list>
+        <ion-virtual-scroll [items]="participants" approxItemHeight="48px">
+        <ion-item *virtualItem="let p; let itemBounds = bounds let i = index;" lines="full">
+            {{i + 1}} {{p.displayName}}
+            <ng-container *ngIf="isAdmin$ | async">
+                <ion-icon slot="end" [color]="p.matchpredictions === 48 ? 'primary' : 'medium'" name="football">
+                </ion-icon>
+                <ion-icon slot="end" [color]="p.poulepredictions === 32 ? 'primary' : 'medium'" name="list">
+                </ion-icon>
+                <ion-icon slot="end" [color]="p.knockoutpredictions === 16 ? 'primary' : 'medium'" name="trophy">
+                </ion-icon>
+            </ng-container>
+        </ion-item>
+        </ion-virtual-scroll>
+    </ion-list>
+</ion-content>

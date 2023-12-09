@@ -1,0 +1,56 @@
+<ion-header>
+    <app-menu-toolbar title="Knockouts"></app-menu-toolbar>
+</ion-header>
+<ion-toolbar color="background" mode="ios">
+    <ion-searchbar mode="ios" (ionChange)="search($event)" placeholder="Zoek deelnemer" color="light" debounce="500">
+    </ion-searchbar>
+
+</ion-toolbar>
+<ion-content>
+    <ion-grid>
+        <ion-row>
+            <ion-col>{{koTeamStats?.round | roundText}} </ion-col>
+        </ion-row>
+        <app-knockout-team-header [team]="koTeamStats?.team" [punten]="koTeamStats?.team.points"
+            [round]="koTeamStats?.round"></app-knockout-team-header>
+    </ion-grid>
+    <ion-grid>
+        <ion-virtual-scroll [items]="koTeamStats?.participants" approxItemHeight="70px">
+            <ng-container *virtualItem="let participant; let itemBounds = bounds let i = index;">
+                <ion-row class="hes-border-bottom" (click)="openParticipant(participant.participant.id)">
+                    <ion-col [ngClass]="participant.isMine ? 'hes-background-tertiary' : 'hes-background'">
+                        <ion-row>
+                            <ion-col>
+                                {{participant.tableLine.position}}) {{participant.participant.displayName}}
+                            </ion-col>
+                            <ion-col class="ion-text-end">
+                                <ion-icon name="podium-outline"></ion-icon>
+                                {{participant.tableLine.totalPoints}}
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col class="match-col ion-align-items-center">
+                                <ion-text [color]="participant.isMine ? 'dark' : 'medium'">
+                                    <ion-icon name="football"></ion-icon>
+                                    {{participant.tableLine.matchPoints}}
+                                </ion-text>
+                            </ion-col>
+                            <ion-col class="poule-col ion-align-items-center ion-text-center">
+                                <ion-text [color]="participant.isMine ? 'dark' : 'medium'">
+                                    <ion-icon name="list"></ion-icon>
+                                    {{participant.tableLine.poulePoints}}
+                                </ion-text>
+                            </ion-col>
+                            <ion-col class="knockout-col ion-align-items-center ion-text-end">
+                                <ion-text [color]="participant.isMine ? 'dark' : 'medium'">
+                                    <ion-icon name="trophy"></ion-icon>
+                                    {{participant.tableLine.knockoutPoints}}
+                                </ion-text>
+                            </ion-col>
+                        </ion-row>
+                    </ion-col>
+                </ion-row>
+            </ng-container>
+        </ion-virtual-scroll>
+    </ion-grid>
+</ion-content>

@@ -1,0 +1,40 @@
+<ion-app>
+    <ion-split-pane contentId="main-content">
+        <ion-menu contentId="main-content" type="overlay" swipeGesture="false">
+            <ion-header>
+                <ion-toolbar color="primary" mode="ios">
+                    <ion-title>
+                        <img [src]="!(uiService.prefersDark$ | async) ? '/assets/header_hetwkspel_dark_mode.png' : '/assets/header_hetwkspel_light_mode.png'"
+                             height="36px;">
+                    </ion-title>
+                </ion-toolbar>
+                <app-loader></app-loader>
+            </ion-header>
+            <ion-content>
+                <ion-list>
+                    <ion-menu-toggle auto-hide="false">
+                        <ng-container *ngFor="let p of appPages">
+                            <ion-item *ngIf="p.show"
+                                      [class.active-item]="p.active"
+                                      [class.inactive-item]="!p.active"
+                                      [routerLink]="[p.url]"
+                                      detail="false">
+                                <ion-icon slot="start" [name]="p.icon"></ion-icon>
+                                <ion-label>
+                                    {{p.title}}
+                                </ion-label>
+                            </ion-item>
+                        </ng-container>
+                        <ion-item button class="inactive-item" *ngIf="(authService.user$ | async)"
+                                  (click)="authService.logout()"
+                                  detail="false">
+                            <ion-icon slot="start" name="log-out-outline"></ion-icon>
+                            <ion-label>Uitloggen</ion-label>
+                        </ion-item>
+                    </ion-menu-toggle>
+                </ion-list>
+            </ion-content>
+        </ion-menu>
+        <ion-router-outlet class="ion-page" id="main-content"></ion-router-outlet>
+    </ion-split-pane>
+</ion-app>

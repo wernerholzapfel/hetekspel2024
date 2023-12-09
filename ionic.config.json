@@ -1,0 +1,7 @@
+{
+  "name": "hetekspelapp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

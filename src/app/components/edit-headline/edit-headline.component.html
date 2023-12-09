@@ -1,0 +1,35 @@
+<ion-content>
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title>Headline</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <ion-item>
+                <ion-label position="floating">Titel</ion-label>
+                <ion-input [(ngModel)]="headline.title"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="floating">Tekst</ion-label>
+                <ion-textarea rows="10" [(ngModel)]="headline.text"></ion-textarea>
+            </ion-item>
+            <ion-item>
+                <ion-label>Actief</ion-label>
+                <ion-toggle [(ngModel)]="headline.isActive"></ion-toggle>
+            </ion-item>
+        </ion-card-content>
+    </ion-card>
+</ion-content>
+<ion-footer>
+    <ion-toolbar mode="ios">
+        <ion-grid class="ion-no-padding ion-no-margin">
+            <ion-row>
+                <ion-col>
+                    <ion-button expand="full" (click)="saveHeadline()">Opslaan</ion-button>
+                </ion-col>
+                <ion-col>
+                    <ion-button color="danger" expand="full" (click)="cancel()">Annuleren</ion-button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-toolbar>
+</ion-footer>

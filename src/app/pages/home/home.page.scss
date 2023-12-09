@@ -1,0 +1,29 @@
+:host {
+    ion-chip {
+        background: var(--ion-color-secondary);
+        color: #fff;
+      }
+}
+
+:host {
+  --ion-padding: 10px;
+
+  ion-item {
+    --padding-end: 0px;
+    --inner-padding-end: 0px;
+    // here other custom CSS from documentation
+  }
+
+  ion-col {
+    --ion-padding: 5px;
+  }
+
+  ion-row {
+    --ion-padding: 5px;
+  }
+
+  ion-chip {
+    background: var(--ion-color-secondary);
+    color: #fff;
+  }
+}

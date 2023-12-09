@@ -1,0 +1,14 @@
+:host {
+  .odd {
+    background-color: var(--ion-color-secondary-accent-tint);
+    color: #000;
+  }
+  
+  .even {
+    color: #000;
+  }
+
+  .internal {
+    display: none
+  }
+}

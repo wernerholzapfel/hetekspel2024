@@ -1,0 +1,18 @@
+<ion-header>
+    <app-menu-toolbar></app-menu-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-card-header>
+        <ion-card-title>Poule wedstrijden</ion-card-title>
+    </ion-card-header>
+    <ng-container *ngFor="let match of matches">
+        <app-speelschema-match-item [match]="match" [url]="'poule'"></app-speelschema-match-item>
+    </ng-container>
+    <ion-card-header>
+        <ion-card-title>Finaleronde</ion-card-title>
+    </ion-card-header>
+    <ng-container *ngFor="let match of knockout">
+        <app-speelschema-match-item [match]="match" [url]="'finaleronde'"></app-speelschema-match-item>
+    </ng-container>
+</ion-content>

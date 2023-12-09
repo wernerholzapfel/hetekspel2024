@@ -1,0 +1,192 @@
+<ion-header>
+    <app-menu-toolbar (emitIconClick)="showFilter = !showFilter"
+                      [iconColor]="(selectedUitslagen$ | async).length > 0 ? 'secondary' : ''"
+                      rightCornerIcon="funnel"></app-menu-toolbar>
+</ion-header>
+<ion-toolbar color="background" *ngIf="match" class="ion-no-padding" mode="ios">
+    <ion-grid *ngIf="showFilter" class="hes-background">
+        <ng-container *ngFor="let toto of totoUitslagen">
+            <ion-row class="hes-background" (click)="setTotoUitslagenAsFilter(toto.uitslagen)">
+                <ion-col class="ion-text-center" *ngIf="toto.toto === 1">
+                    <ion-text color="dark"> Winst {{match.homeTeam.name}}
+                        <span class="flag-icon flag-icon-{{match?.homeTeam?.logoUrl}} flag-icon-squared"></span>
+                    </ion-text>
+                </ion-col>
+                <ion-col class="ion-text-center" *ngIf="toto.toto === 2">
+                    <ion-text color="dark"> Winst {{match.awayTeam.name}}
+                        <span class="flag-icon flag-icon-{{match?.awayTeam?.logoUrl}} flag-icon-squared"></span>
+                    </ion-text>
+                </ion-col>
+                <ion-col class="ion-text-center" *ngIf="toto.toto === 3">
+                    <ion-text color="dark"> Gelijkspel</ion-text>
+                </ion-col>
+            </ion-row>
+            <ion-row *ngFor="let uitslag of toto.uitslagen" (click)="filterUitslag(uitslag)">
+                <ion-col class="ion-align-self-start">
+                    <ion-badge [color]="uitslag.active ? 'secondary' : 'primary'">
+                        {{uitslag.homeScore}} - {{uitslag.awayScore}}</ion-badge>
+                </ion-col>
+                <ion-col size="6" class="ion-align-self-center">
+                    <ion-progress-bar
+                            [color]="uitslag.active ? 'secondary' : 'primary'"
+                            style="height: 20px" [value]="uitslag.count"></ion-progress-bar>
+                </ion-col>
+                <ion-col class="ion-align-self-end ion-text-end">
+                    <ion-badge [color]="uitslag.active ? 'secondary' : 'primary'"
+                    >{{uitslag.aantal}}</ion-badge>
+                </ion-col>
+            </ion-row>
+        </ng-container>
+        <ion-row class="hes-background"
+                 (click)="resetFilter()">
+            <ion-col size="12" class="ion-align-self-center ion-text-center">
+                <ion-text color="dark">Reset filter</ion-text>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <ng-container *ngIf="!showFilter && (selectedUitslagen$ | async).length > 0">
+        <ion-grid class="hes-background">
+            <ion-row class="hes-background" (click)="showFilter = !showFilter"
+                     *ngFor="let uitslag of (selectedUitslagen$ | async)">
+                <ion-col class="ion-align-self-start">
+                    <ion-badge [color]="'secondary'">
+                        {{uitslag.homeScore}} - {{uitslag.awayScore}}</ion-badge>
+                </ion-col>
+                <ion-col size="6" class="ion-align-self-center">
+                    <ion-progress-bar
+                            color="secondary"
+                            style="height: 20px" [value]="uitslag.count"></ion-progress-bar>
+                </ion-col>
+                <ion-col class="ion-align-self-end ion-text-end">
+                    <ion-badge color="secondary">{{uitslag.aantal}}</ion-badge>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ng-container>
+    <ion-searchbar mode="ios" (ionChange)="search($event)" placeholder="Zoek deelnemer" color="light"
+                   debounce="500"></ion-searchbar>
+</ion-toolbar>
+<ion-content *ngIf="match">
+    <ion-card class="match-card">
+        <app-city-card-header [match]="match" [showImage]="false"></app-city-card-header>
+        <ion-card-content>
+            <ion-card-subtitle>
+                <ion-row>
+                    <ion-col>
+                        <ion-row>
+                            <ion-col>
+                                <span class="flag-icon flag-icon-{{match?.homeTeam.logoUrl}} flag-icon-squared"></span>
+                                {{match?.homeTeam.name}}
+                            </ion-col>
+                            <ion-col class="ion-text-end">
+                                {{match?.homeScore}}
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col>
+                                <span class="flag-icon flag-icon-{{match?.awayTeam.logoUrl}} flag-icon-squared"></span>
+                                {{match?.awayTeam.name}}
+                            </ion-col>
+                            <ion-col class="ion-text-end">
+                                {{match?.awayScore}}
+                            </ion-col>
+                        </ion-row>
+                    </ion-col>
+                </ion-row>
+            </ion-card-subtitle>
+        </ion-card-content>
+    </ion-card>
+    <ion-grid class="ion-padding" *ngIf="false">
+        <ion-row style="font-size: x-small">
+            <ion-col size="6" class="ion-padding ion-text-start hes-background">
+                <ion-text color="medium">
+                    {{match?.date | date}}
+                </ion-text>
+            </ion-col>
+            <ion-col size="6" class="ion-padding ion-text-end hes-background">
+                <ion-text color="medium">
+                    Poule {{match?.poule}}
+                </ion-text>
+            </ion-col>
+        </ion-row>
+        <ion-row class="hes-border-bottom">
+            <ion-col class="hes-background">
+                <ion-row>
+                    <ion-col>
+                        {{match?.homeScore}}
+                        <span class="flag-icon flag-icon-{{match?.homeTeam.logoUrl}} flag-icon-squared"></span>
+                        {{match?.homeTeam.name}}
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col>
+                        {{match?.awayScore}}
+                        <span class="flag-icon flag-icon-{{match?.awayTeam.logoUrl}} flag-icon-squared"></span>
+                        {{match?.awayTeam.name}}
+                    </ion-col>
+                </ion-row>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <ion-grid>
+        <ion-virtual-scroll [items]="match?.matchPredictions" approxItemHeight="71px">
+            <ion-row *virtualItem="let prediction; let itemBounds = bounds let i = index;" class="hes-border-bottom"
+                (click)="navigateToParticipant(prediction.participant.id)">
+                <ion-col [ngClass]="prediction.isMine ? 'hes-background-tertiary' : 'hes-background'"size="9">
+                    <ion-row>
+                        <ion-col size="9" class="hes-overflow">
+                            {{prediction.tableLine.position}}) {{prediction.participant.displayName}}
+                        </ion-col>
+                        <ion-col size="3" class="ion-text-end">
+                            <ion-icon name="podium-outline"></ion-icon>
+                            {{prediction.tableLine.totalPoints}}</ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col class="match-col ion-align-items-center">
+                            <ion-text [color]="prediction.isMine ? 'dark' : 'medium'">
+                                <ion-icon name="football"></ion-icon>
+                                {{prediction.tableLine.matchPoints}}
+                            </ion-text>
+                        </ion-col>
+                        <ion-col class="poule-col ion-align-items-center ion-text-center">
+                            <ion-text [color]="prediction.isMine ? 'dark' : 'medium'">
+                                <ion-icon name="list"></ion-icon>
+                                {{prediction.tableLine.poulePoints}}
+                            </ion-text>
+                        </ion-col>
+                        <ion-col class="knockout-col ion-align-items-center ion-text-end">
+                            <ion-text [color]="prediction.isMine ? 'dark' : 'medium'">
+                                <ion-icon name="trophy"></ion-icon>
+                                {{prediction.tableLine.knockoutPoints}}
+                            </ion-text>
+                        </ion-col>
+                    </ion-row>
+                </ion-col>
+                <ion-col size="3" class="hes-accent-background">
+                    <ion-row>
+                        <ion-col size="6" class="ion-no-padding ion-text-start">
+                            <ion-row class="ion-no-padding">
+                                <ion-col class="ion-text-start">
+                                    <span class="hes-show-flag flag-icon flag-icon-{{match?.homeTeam.logoUrl}} flag-icon-squared"></span>
+                                    {{prediction.homeScore}}
+                                </ion-col>
+                            </ion-row>
+                            <ion-row class="ion-no-padding">
+                                <ion-col class="ion-text-start">
+                                    <span class="hes-show-flag flag-icon flag-icon-{{match?.awayTeam.logoUrl}} flag-icon-squared"></span>
+                                    {{prediction.awayScore}}
+                                </ion-col>
+                            </ion-row>
+                        </ion-col>
+                        <ion-col size="6"
+                                 class="ion-no-padding ion-text-start ion-align-self-center">
+                            <ion-chip color="primary" *ngIf="prediction.spelpunten != null">
+                                {{prediction.spelpunten}}
+                            </ion-chip>
+                        </ion-col>
+                    </ion-row>
+                </ion-col>
+            </ion-row>
+        </ion-virtual-scroll>
+    </ion-grid>
+</ion-content>

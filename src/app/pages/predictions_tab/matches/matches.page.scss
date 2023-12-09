@@ -1,0 +1,17 @@
+:host {
+
+  ion-segment {
+    justify-content: space-between;
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+      display: none;
+    }
+
+    ion-segment-button.segment-button {
+      flex: 1 0 100px;
+    }
+  }
+}

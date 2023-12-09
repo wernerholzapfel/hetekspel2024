@@ -1,0 +1,28 @@
+<ion-header>
+  <app-menu-toolbar></app-menu-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="welcome-card" color="background">
+    <img src="/assets/halloffame.jpeg" alt=""/>
+    <ion-card-header>
+      <ion-card-title>Hall of Fame</ion-card-title>
+      <ion-card-subtitle></ion-card-subtitle>
+    </ion-card-header>
+      <ion-card class="ion-no-padding" *ngFor="let t of tournaments">
+        <ion-card-header color="secondary">
+          <ion-card-title>{{t.jaar}}</ion-card-title>
+          <ion-card-subtitle>{{t.aantal}} deelnemers</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-grid>
+            <ion-row *ngFor="let h of t.halloffame">
+              <ion-col size="2">Nr {{h.positie}}.</ion-col>
+              <ion-col>{{h.naam}}</ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+  </div>
+
+</ion-content>

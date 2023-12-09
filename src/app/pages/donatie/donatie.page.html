@@ -1,0 +1,58 @@
+<ion-header>
+    <ion-toolbar color="primary" mode="ios">
+    <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title (click)="openHome()">
+        <img src="../../assets/header_hetwkspel_dark_mode.png" height="36px;">
+    </ion-title>
+    <ion-buttons slot="end">
+        <ion-button (click)="openHome()">
+            <ion-icon slot="icon-only" size="large" name="close-outline"></ion-icon>
+        </ion-button>
+    </ion-buttons>
+</ion-toolbar>
+</ion-header>
+<!-- <app-loader></app-loader> -->
+<ion-content color="primary">
+    <ion-card>
+        <!-- <img src="/assets/spelregels.jpg" alt="" /> -->
+        <ion-card-header>
+            <ion-card-title>Het is zover, het WK is begonnen!
+            </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            Toch voelt dit eindtoernooi niet helemaal als hetzelfde voetbalfeest waar we andere jaren met luid gejuich
+            naar toe leefden.
+            <br>
+            <br>
+            De aanloop naar dit toernooi laat namelijk zien dat er nog veel dingen niet goed gaan in de wereld.
+            <br>
+            <br>
+            Wij willen dit niet helemaal geruisloos aan ons voorbij laten gaan en willen daarom de
+            mensenrechtenorganisatie Human Rights Watch bij jullie onder de aandacht brengen.
+            <br>
+            <br>
+            Human Rights Watch is een mensenrechtenorganisatie die zich inzet tegen onder meer censuur, beperkingen in
+            de vrijheid van reizen en verkiezingen, rassendiscriminatie, dwangarbeid, de rechten van het kind en
+            kinderarbeid, geweld in oorlogstijd en wapenhandel. Ook de <a
+                href=" https://www.hrw.org/middle-east/north-africa/qatar" target="_blank">situatie in Qatar</a> stellen
+            zij aan de kaak. Een vrijwillige donatie kun je <a href=" https://donate.hrw.org/page/75691/donate/1" target="_blank">hier
+                doen.</a>
+            <br>
+            <br>
+            Bedankt voor jullie deelname en voor een eventuele donatie.
+            <br>
+            <br>
+            We wensen jullie veel voetbalplezier!
+            <br>
+            <br>
+            Werner en Tom
+            <br>
+            <br>
+            <ion-button (click)="openHome()" expand="full" color="secondary">
+                Sluit melding
+            </ion-button>
+        </ion-card-content>
+    </ion-card>
+</ion-content>

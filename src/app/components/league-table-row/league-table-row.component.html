@@ -1,0 +1,52 @@
+<ion-row class="ion-padding" [ngClass]="(index % 2 == 0) ? 'odd' : 'even'">
+    <ion-col>
+        <span class="flag-icon flag-icon-{{line.team.logoUrl}} flag-icon-squared"></span>
+        <ion-text>
+            {{line.positie}}
+            {{line.team.name}}
+        </ion-text>
+    </ion-col>
+    <ion-col size="2">
+        <ion-text>
+            {{line.gespeeld}}
+        </ion-text>
+    </ion-col>
+    <ion-col size="2">
+        <ion-text>
+            {{line.punten}}
+        </ion-text>
+    </ion-col>
+    <ion-col [size]="isSortDisabled ? 2 : 1">
+        <ion-text>
+            {{line.goalsFor - line.goalsAgainst}}
+        </ion-text>
+    </ion-col>
+    <ion-col size="1" *ngIf="!(isRegistrationOpen$ | async) && !admin">
+        <ion-icon *ngIf="line.spelpunten === 0" name="close-outline"
+                  color="danger"></ion-icon>
+        <ion-icon *ngIf="line.spelpunten === null"
+                  name="help-outline"
+                  color="medium"></ion-icon>
+        <ion-icon *ngIf="line.spelpunten === 5"
+                  name="checkmark-outline"
+                  color="success"></ion-icon>
+    </ion-col>
+    <ion-col size="1" *ngIf="admin">
+        <ion-icon (click)="openSelect()"
+                  *ngIf="line.team.isEliminated && line.team.eliminationRound === '32'" name="close-outline"
+                  color="danger"></ion-icon>
+        <ion-icon (click)="openSelect()"
+                  *ngIf="line.team.isEliminated === null"
+                  name="help-outline"
+                  color="medium"></ion-icon>
+        <ion-icon (click)="openSelect()"
+                  *ngIf="line.team.isEliminated === false ||
+                  line.team.isEliminated && line.team.eliminationRound !== '32'"
+                  name="checkmark-outline"
+                  color="success"></ion-icon>
+
+    </ion-col>
+    <ion-col size="1" *ngIf="!isSortDisabled">
+        <ion-icon name="shuffle-outline"></ion-icon>
+    </ion-col>
+</ion-row>

@@ -1,0 +1,50 @@
+<ion-card [ngClass]="isToolbar ? 'hes-toolbar': '' ">
+    <ion-card-header>
+        <ion-grid class="ion-no-padding">
+            <ion-row class="ion-no-padding ion-justify-content-between" (click)="isToolbar ? closeOrOpenTable(): ''">
+                <ion-col class="ion-align-self-center">
+                    <ion-card-subtitle class="ion-no-margin">
+                        Stand poule {{poule?.poule}} 
+                    </ion-card-subtitle>
+                </ion-col>
+                <ion-col size="1" class="ion-align-self-end" *ngIf="editMode && uiService?.isRegistrationOpen$ | async">
+                    <ion-icon class="toggle-reorder-icon" (click)="toggleReorderGroup()"
+                              [name]="poule?.isSortDisabled ? 'lock-closed-outline' : 'lock-open-outline'"></ion-icon>
+                </ion-col>
+                <ion-col size="1" class="ion-align-self-end" *ngIf="(uiService?.isRegistrationOpen$ | async) && isToolbar">
+                    <ion-icon class="toggle-reorder-icon"
+                              [name]="isTableOpen ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-card-header>
+    <ion-card-content *ngIf="isTableOpen">
+        <hr>
+        <ion-grid>
+            <ion-row class="ion-padding-horizontal" *ngIf="!isToolbar">
+                <ion-col [offset]="admin || !(isRegistrationOpen | async) && !admin ? 5 : 6" size="2">
+                    W
+                </ion-col>
+                <ion-col size="2">
+                    PT
+                </ion-col>
+                <ion-col size="2">
+                    DS
+                </ion-col>
+                <ion-col size="1" *ngIf="admin">
+                    Uit
+                </ion-col>
+                <ion-col size="1" *ngIf="!(isRegistrationOpen | async) && !admin">
+
+                </ion-col>
+            </ion-row>
+            <ion-reorder-group (ionItemReorder)="doReorder($event)" [disabled]="poule?.isSortDisabled">
+                <ion-reorder *ngFor="let line of stand; let i = index">
+                    <app-league-table-row [admin]="admin" [isRegistrationOpen$]="isRegistrationOpen"
+                                          [isSortDisabled]="poule?.isSortDisabled" [line]="line"
+                                          [index]="i"></app-league-table-row>
+                </ion-reorder>
+            </ion-reorder-group>
+        </ion-grid>
+    </ion-card-content>
+</ion-card>

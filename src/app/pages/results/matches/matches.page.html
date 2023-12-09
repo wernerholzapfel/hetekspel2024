@@ -1,0 +1,27 @@
+<ion-header>
+    <app-menu-toolbar title="Voorspellen"></app-menu-toolbar>
+</ion-header>
+<ion-content>
+    <ion-item *ngFor="let match of matches">
+        <ion-grid class="ion-no-padding">
+            <ion-row class="ion-justify-content-between ion-align-items-center ion-padding-vertical">
+                <ion-col>
+                    <ion-label>
+                        <span class="flag-icon flag-icon-{{match?.homeTeam?.logoUrl}} flag-icon-squared"></span>
+                        {{match.homeTeam.name }}</ion-label>
+                    <ion-input placeholder="thuis" type="number" [(ngModel)]="match.homeScore"></ion-input>
+                </ion-col>
+                <ion-col>
+                    <ion-label>
+                        <span class="flag-icon flag-icon-{{match?.awayTeam?.logoUrl}} flag-icon-squared"></span>
+                        {{match.awayTeam.name }}
+                    </ion-label>
+                    <ion-input placeholder="uit" type="number" [(ngModel)]="match.awayScore"></ion-input>
+                </ion-col>
+                <ion-col class="ion-text-end">
+                    <ion-button color="secondary" (click)="save(match)">Opslaan</ion-button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-item>
+</ion-content>

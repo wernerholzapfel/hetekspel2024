@@ -1,0 +1,21 @@
+<ion-row class="ion-align-items-center hes-background">
+  <ion-col>
+    <ion-col>
+      <span class="flag-icon flag-icon-{{team?.logoUrl}} flag-icon-squared"></span>
+      {{team?.name}}
+    </ion-col>
+  </ion-col>
+  <ion-col size="3" class="ion-align-items-stretch hes-background-secondary-accent hes-no-padding-start">
+    <ion-row>
+      <ion-col size="4" class="ion-text-start ion-align-self-center">
+        <ion-icon [name]="icon"
+                  [color]="iconColor"></ion-icon>
+      </ion-col>
+      <ion-col size="8" class="ion-no-padding ion-text-center ion-align-self-center">
+        <ion-chip color="secondary" *ngIf="punten > 0 || this.icon === 'close-outline'">
+          {{punten}}
+        </ion-chip>
+      </ion-col>
+    </ion-row>
+  </ion-col>
+</ion-row>

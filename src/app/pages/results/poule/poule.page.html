@@ -1,0 +1,13 @@
+<ion-header>
+    <app-menu-toolbar title="Eindstanden"></app-menu-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-grid class="ion-no-padding">
+        <ion-row>
+            <ion-col size="12" size-md="6" size-lg="6" size-xl="4" *ngFor="let poule of poules">
+                <app-stand-card [poule]="poule" [stand]="poule.stand" [admin]="true" [editMode]="true"></app-stand-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

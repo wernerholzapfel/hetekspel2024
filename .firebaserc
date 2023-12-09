@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "hetwkspel-2022"
+  },
+  "targets": {
+    "hetwkspel-2022": {
+      "hosting": {
+        "app": [
+          "hetwkspel-2022"
+        ]
+      }
+    }
+  }
+}

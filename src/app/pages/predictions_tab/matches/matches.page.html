@@ -1,0 +1,57 @@
+<!--https://www.flaticon.com/packs/countrys-flags-->
+<ion-header>
+    <app-menu-toolbar title="Voorspellen"></app-menu-toolbar>
+    <ion-segment [(ngModel)]="pouleName"
+                 (ionChange)="selectPoule($event)"
+                 scrollable
+                 mode="md">
+        <ion-segment-button *ngFor="let poule of pouleNavigatie; let i = index"
+                            [value]="poule.current"
+                            (click)="scrollSegments(i+1)"
+                            [disabled]="poule.disabled">
+            {{poule.text}}
+        </ion-segment-button>
+    </ion-segment>
+    <app-stand-card [poule]="standCardPoule" [stand]="standCardPoule?.stand" 
+    [isTableOpen]="false" [editMode]="false" [isToolbar]="true"></app-stand-card>
+</ion-header>
+<ion-content>
+    <div #topScrollAnchor></div>
+    <ion-grid class="ion-no-padding">
+        <ion-row *ngIf="activePoule?.current === 'A'">
+            <ion-col size="12">
+                <ion-card class="message" color="secondary">
+                    <ion-card-content>
+                        Voorspel de uitslagen van alle wedstrijden in elke poule.
+                        Je krijgt 20 punten voor goed voorspellen winnaar/gelijkspel en 5 punten als je de doelpunten
+                        van een ploeg goed voorspelt. Voor een volledig goede wedstrijduitslag krijg je dus 30 punten.
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="12" size-md="6" size-lg="6" size-xl="4"
+                     *ngFor="let matchPrediction of matchPredictions | filterPouleMatches:activePoule?.current">
+                <app-match-card
+                        [isRegistrationOpen]="isRegistrationOpen$ | async"
+                        [matchPrediction]="matchPrediction"></app-match-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+<ion-footer>
+    <ng-container class="ion-no-border ion-padding-horizontal">
+        <ion-button *ngIf="(isRegistrationOpen$ | async) && activePoule?.current !== 'H'"
+                    [disabled]="!activePoule?.isFinal"
+                    color="tertiary" expand="full" fill="solid"
+                    (click)="next()">
+            Naar volgende poule
+        </ion-button>
+        <ion-button *ngIf="(isRegistrationOpen$ | async) && activePoule?.current === 'H'"
+                    [disabled]="!activePoule?.isFinal"
+                    color="tertiary" expand="full" fill="solid"
+                    (click)="navigateToPoulePredictions()">
+            Voorspel de poulestanden
+        </ion-button>
+    </ng-container>
+</ion-footer>

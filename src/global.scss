@@ -1,0 +1,112 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+@import "theme/variables.scss";
+
+.welcome-card img {
+  overflow: hidden;
+  width: 100%;
+}
+
+ion-card.message {
+  --background: var(--ion-color-primary-tint);
+  --color: var(--ion-color-light)
+}
+
+ion-card {
+  margin: 8px;
+}
+
+.hes-border-bottom {
+  border-bottom: 1px solid var(--ion-color-light-shade)
+}
+
+.hes-delta-text {
+  font-size: x-small;
+}
+
+ion-icon {
+  vertical-align: text-top;
+}
+
+ion-searchbar {
+  margin-top: 15px;
+}
+
+.hes-accent-background {
+  background-color: var(--ion-color-accent);
+}
+
+.hes-background {
+  background-color: var(--ion-color-light);
+}
+
+.hes-background-primary {
+  background-color: var(--ion-color-primary);
+}
+.hes-background-secondary {
+  background-color: var(--ion-color-secondary);
+}
+.hes-background-secondary-accent {
+  background-color: var(--ion-color-secondary-accent);
+}
+.hes-background-tertiary {
+  background-color: var(--ion-color-tertiary);
+}
+
+ion-item {
+  --background: var(--ion-color-light);
+}
+
+.hes-alert-danger {
+  color: var(--ion-color-danger) !important;
+}
+
+  ion-tab-bar {
+    --background: var(--ion-color-primary)
+  }
+  ion-tab-button {
+    // Icon and text
+    --color: var(--ion-color-light);
+    --color-selected: var(--ion-color-tertiary);
+    // Background
+    --background: var(--ion-color-primary);
+    --background-focused:  var(--ion-color-primary);
+    --ripple-color: var(--ion-color-primary);
+  }
+
+
+// @media (prefers-color-scheme: dark) {
+//   ion-tab-button {
+//     // Icon and text
+//     --color: var(--ion-color-dark);
+//     --color-selected: var(--ion-color-tertiary);
+//     // Background
+//     --background: var(--ion-color-primary);
+//     --background-focused:  var(--ion-color-primary);
+//     --ripple-color: var(--ion-color-primary);
+//   }
+// }

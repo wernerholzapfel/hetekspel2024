@@ -1,0 +1,29 @@
+<ion-header>
+    <app-menu-toolbar>
+    </app-menu-toolbar>
+</ion-header>
+<ion-content>
+    <ion-card>
+        <ion-card-header color="secondary">
+            <ion-card-subtitle>
+                Profiel van {{participant?.displayName}}
+            </ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content class="ion-no-padding">
+            <ion-item lines="none" lines="inset">
+                Wijzig je naam
+                <ion-button slot="end" size="small" color="tertiary" (click)="editNewDisplayName = !editNewDisplayName">
+                    <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
+                </ion-button>
+            </ion-item>
+            <ng-container *ngIf="editNewDisplayName">
+                <ion-item lines="none">
+                    <ion-input type="text" placeholder="Nieuwe naam" [(ngModel)]="newDisplayName"></ion-input>
+                </ion-item>
+                <ion-button color="tertiary" expand="full" (click)="updateDisplayName()">Opslaan</ion-button>
+            </ng-container>
+            <ion-item>App versie: {{currentVersion?.bundle?.version}} ({{currentVersion?.bundle.status}}) </ion-item>
+            <ion-item *ngIf="(uiService.isAdmin$ | async)">{{deviceId}}</ion-item>
+        </ion-card-content>
+    </ion-card>
+</ion-content>

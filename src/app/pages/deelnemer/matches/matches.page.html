@@ -1,0 +1,80 @@
+<ion-header>
+    <ion-toolbar mode="ios">
+        <ion-title>matches</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content appGestures
+             [gestureOpts]="gestureOpts"
+             (swipe)="onSwipe($event)">
+    <ion-card class="message" color="tertiary">
+        <ion-card-content *ngIf="standLine">
+            {{standLine?.displayName}} staat {{standLine?.position}}e met {{standLine?.totalPoints}} punten, waarvan {{standLine?.matchPoints}}
+            punten voor de wedstrijden.
+        </ion-card-content>
+    </ion-card>
+    <ng-container *ngIf="predictions">
+        <ion-virtual-scroll [items]="predictions" approxItemHeight="70px">
+            <ion-item *virtualItem="let prediction; let itemBounds = bounds let i = index;" (click)="openMatch(prediction.match.id)" class="ion-no-padding"
+                      lines="none">
+                <ion-grid class="ion-no-padding ion-padding-start">
+                    <ion-row style="font-size: x-small">
+                        <ion-col size="6" class="ion-padding-vertical ion-text-start hes-background">
+                            <ion-text color="medium">
+                                {{prediction.match.date | date : 'dd MMMM  HH:mm'}}
+                            </ion-text>
+                        </ion-col>
+                        <ion-col size="6" class="ion-padding ion-text-end hes-background">
+                            <ion-text color="medium">
+                                Poule {{prediction.match.poule}}
+                            </ion-text>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="hes-border-bottom">
+                        <ion-col class="hes-background">
+                            <ion-row>
+                                <ion-col class="ion-padding-vertical">
+                                    {{prediction.match.homeScore}}
+                                    <span class="flag-icon flag-icon-{{prediction.match.homeTeam.logoUrl}} flag-icon-squared"></span>
+                                    {{prediction.match.homeTeam.name}}
+                                </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col class="ion-padding-vertical">
+                                {{prediction.match.awayScore}}
+                                <span class="flag-icon flag-icon-{{prediction.match.awayTeam.logoUrl}} flag-icon-squared"></span>
+                                {{prediction.match.awayTeam.name}}
+                            </ion-col>
+                        </ion-row>
+                    </ion-col>
+                    <ion-col size="3" class="hes-background-secondary-accent">
+                        <ion-row>
+                            <ion-col size="6" class="ion-no-padding ion-text-start">
+                                <ion-row class="ion-no-padding">
+                                    <ion-col
+                                            class="ion-padding-vertical ion-padding-start ion-text-start">{{prediction.homeScore}}</ion-col>
+                                </ion-row>
+                                <ion-row class="ion-no-padding">
+                                    <ion-col
+                                            class="ion-padding-vertical ion-padding-start ion-text-start">{{prediction.awayScore}}</ion-col>
+                                </ion-row>
+                            </ion-col>
+                            <ion-col size="6"
+                                     class="ion-padding-vertical ion-no-padding ion-text-center ion-align-self-center">
+                                <ion-chip color="secondary" *ngIf="prediction.spelpunten != null">
+                                    {{prediction.spelpunten}}
+                                </ion-chip>
+                            </ion-col>
+                        </ion-row>
+                    </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-item>
+        </ion-virtual-scroll>
+    </ng-container>
+</ion-content>
+
+
+
+
+

@@ -1,0 +1,13 @@
+:host {
+  .hes-overflow {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  @media only screen and (max-width: 374px) {
+    .hes-show-flag {
+      display: none;
+    }
+  }
+}

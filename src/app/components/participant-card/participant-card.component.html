@@ -1,0 +1,31 @@
+<ion-card *ngIf="standLine" [color]="color">
+    <ion-card-header>
+        <ion-card-title>{{ownCard ? 'Jij' : standLine?.displayName}} staat {{standLine.position}}e 
+            {{ownCard ?  'met ' + standLine.totalPoints  + ' punten' : ''}}</ion-card-title>
+        <ion-card-subtitle>{{lastUpdated | fromNow}}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+        <ion-grid class="ion-no-padding">
+            <ion-row class="ion-align-items-stretch">
+                <app-punten-chip
+                        (click)="openStand()" [iconName]="'podium-outline'"
+                        [color]="color === 'primary' || (uiService.prefersDark$ | async)  ? 'light' : 'dark'"
+                        [deltaPoints]="standLine.deltaTotalPoints"
+                        [points]="standLine.totalPoints"></app-punten-chip>
+                <app-punten-chip
+                        (click)="openMatches()"
+                        [iconName]="'football'" [deltaPoints]="standLine.deltaMatchPoints"
+                        [color]="color === 'primary' || (uiService.prefersDark$ | async)  ? 'light' : 'dark'"
+                        [points]="standLine.matchPoints"></app-punten-chip>
+                <app-punten-chip
+                        (click)="openPoules()" [iconName]="'list'" [deltaPoints]="standLine.deltaPoulePoints"
+                        [color]="color === 'primary' || (uiService.prefersDark$ | async)  ? 'light' : 'dark'"
+                        [points]="standLine.poulePoints"></app-punten-chip>
+                <app-punten-chip
+                        (click)="openKnockout()" [iconName]="'trophy'" [deltaPoints]="standLine.deltaKnockoutPoints"
+                        [color]="color === 'primary' || (uiService.prefersDark$ | async)  ? 'light' : 'dark'"
+                        [points]="standLine.knockoutPoints"></app-punten-chip>
+            </ion-row>
+        </ion-grid>
+    </ion-card-content>
+</ion-card>

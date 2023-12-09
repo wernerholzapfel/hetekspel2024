@@ -1,0 +1,18 @@
+// ion-tab-button {
+//   --color-selected: var(--ion-color-secondary)
+// }
+:host {
+  ion-tab-bar {
+    --background: var(--ion-color-primary)
+  }
+  ion-tab-button {
+    // Icon and text
+    --color: var(--ion-color-light);
+    --color-selected: var(--ion-color-tertiary);
+    // Background
+    --background: var(--ion-color-primary);
+    --background-focused:  var(--ion-color-primary);
+    --ripple-color: var(--ion-color-primary);
+    }
+  
+}

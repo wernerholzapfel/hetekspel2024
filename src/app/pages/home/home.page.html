@@ -1,0 +1,296 @@
+<ion-header>
+    <app-menu-toolbar></app-menu-toolbar>
+</ion-header>
+<ion-content>
+    <ion-grid class="ion-no-padding">
+        <ion-row>
+            <ion-col size="12" size-md="6" size-lg="6" size-xl="6" *ngIf="!(authService.user$ | async)">
+                <app-login></app-login>
+            </ion-col>
+            <ion-col size="12" size-md="6" size-lg="6" size-xl="6">
+                <ion-card *ngIf="(participant$ | async) && !(participant$ | async)?.isAllowed">
+                    <div class="hes-background-primary ion-padding">
+                        <img src="/assets/header_hetwkspel_dark_mode.png" alt="" />
+                    </div>
+                    <ion-card-header>
+                        <ion-card-title color="primary">
+                            Helaas {{(participant$ | async)?.displayName}}
+                        </ion-card-title>
+                        <ion-card-subtitle>Het WK spel is alleen voor bekenden van Werner en/of Tom</ion-card-subtitle>
+                    </ion-card-header>
+                    <ion-card-content>
+                        Helaas moeten we je mededelen dat je niet mee kan doen
+                        aan Het WK spel, aangezien je geen bekende bent van Werner en/of Tom.
+                        Mocht je het idee hebben dat wij verkeerd zitten of dat je toch via via graag mee wilt doen maar
+                        wij hier niet van op de hoogte waren, stuur ons dan even een berichtje. <br><br>
+                        Vriendelijke groeten,
+                        <br><br>
+                        Werner en Tom.
+                    </ion-card-content>
+                </ion-card>
+                <app-headline [headlines]="headlines"></app-headline>
+            </ion-col>
+            <ion-col class="ion-no-padding" size="12" size-md="6" size-lg="6" size-xl="6"
+            *ngIf="(uiService.isRegistrationOpen$ | async) === false">
+            <app-participant-card color="tertiary" [lastUpdated]="lastUpdated" [ownCard]="true"
+                [standLine]="participantStandLine"></app-participant-card>
+            </ion-col>
+            <ion-col class="ion-no-padding" size="12" size-md="6" size-lg="6" size-xl="6"
+                *ngIf="(uiService.isRegistrationOpen$ | async) === false && todaysMatches?.matchPredictions?.length > 0">
+                <ion-card>
+                    <ion-card-header>
+                        <ion-card-title>
+                            Mijn wedstrijden van vandaag
+                        </ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content class="ion-no-padding">
+                        <ion-item
+                            *ngFor="let prediction of todaysMatches?.matchPredictions; let itemBounds = bounds let i = index;"
+                            (click)="openMatch(prediction.match.id)" class="ion-padding-end" lines="none">
+                            <ion-grid class="ion-no-padding ion-padding-start">
+                                <ion-row style="font-size: x-small">
+                                    <ion-col size="6" class="ion-padding-vertical ion-text-start hes-background">
+                                        <ion-text color="medium">
+                                            {{prediction.match.date | date : 'dd MMMM HH:mm'}}
+                                        </ion-text>
+                                    </ion-col>
+                                    <ion-col size="6" class="ion-padding ion-text-end hes-background">
+                                        <ion-text color="medium">
+                                            Poule {{prediction.match.poule}}
+                                        </ion-text>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row class="hes-border-bottom">
+                                    <ion-col class="hes-background">
+                                        <ion-row>
+                                            <ion-col class="ion-padding-vertical">
+                                                {{prediction.match.homeScore}}
+                                                <span
+                                                    class="flag-icon flag-icon-{{prediction.match.homeTeam.logoUrl}} flag-icon-squared"></span>
+                                                {{prediction.match.homeTeam.name}}
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row>
+                                            <ion-col class="ion-padding-vertical">
+                                                {{prediction.match.awayScore}}
+                                                <span
+                                                    class="flag-icon flag-icon-{{prediction.match.awayTeam.logoUrl}} flag-icon-squared"></span>
+                                                {{prediction.match.awayTeam.name}}
+                                            </ion-col>
+                                        </ion-row>
+                                    </ion-col>
+                                    <ion-col size="3" class="hes-background-secondary-accent">
+                                        <ion-row>
+                                            <ion-col size="6" class="ion-no-padding ion-text-start">
+                                                <ion-row class="ion-no-padding">
+                                                    <ion-col
+                                                        class="ion-padding-vertical ion-padding-start ion-text-start">
+                                                        {{prediction.homeScore}}</ion-col>
+                                                </ion-row>
+                                                <ion-row class="ion-no-padding">
+                                                    <ion-col
+                                                        class="ion-padding-vertical ion-padding-start ion-text-start">
+                                                        {{prediction.awayScore}}</ion-col>
+                                                </ion-row>
+                                            </ion-col>
+                                            <ion-col size="6"
+                                                class="ion-padding-vertical ion-no-padding ion-text-center ion-align-self-center">
+                                                <ion-chip color="secondary" *ngIf="prediction.spelpunten != null">
+                                                    {{prediction.spelpunten}}
+                                                </ion-chip>
+                                            </ion-col>
+                                        </ion-row>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                        </ion-item>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+               <ion-col class="ion-no-padding" size="12" size-md="6" size-lg="6" size-xl="6"
+                *ngIf="(uiService.isRegistrationOpen$ | async) === false && todaysMatches?.knockout?.length > 0">
+                <ion-card>
+                    <ion-card-header>
+                        <ion-card-title>
+                            Mijn wedstrijden van vandaag
+                        </ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content class="ion-no-padding">
+                        <ion-item
+                            *ngFor="let prediction of todaysMatches?.knockout; let itemBounds = bounds let i = index;"
+                            (click)="openMatch(prediction.match.id)" class="ion-padding-end" lines="none">
+                            <ion-grid class="ion-no-padding ion-padding-start">
+                                <ion-row style="font-size: x-small">
+                                    <ion-col size="6" class="ion-padding-vertical ion-text-start hes-background">
+                                        <ion-text color="medium">
+                                            {{prediction.date | date : 'dd MMMM HH:mm'}}
+                                        </ion-text>
+                                    </ion-col>
+                                    <ion-col size="6" class="ion-padding ion-text-end hes-background">
+                                        <ion-text color="medium">
+                                            Ronde {{prediction.round}}
+                                        </ion-text>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row class="hes-border-bottom">
+                                    <ion-col class="hes-background">
+                                        <ion-row>
+                                            <ion-col class="ion-padding-vertical">
+                                                {{prediction.homeScore}}
+                                                <span
+                                                    class="flag-icon flag-icon-{{prediction.homeTeam.logoUrl}} flag-icon-squared"></span>
+                                                {{prediction.homeTeam.name}}
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row>
+                                            <ion-col class="ion-padding-vertical">
+                                                {{prediction.awayScore}}
+                                                <span
+                                                    class="flag-icon flag-icon-{{prediction.awayTeam.logoUrl}} flag-icon-squared"></span>
+                                                {{prediction.awayTeam.name}}
+                                            </ion-col>
+                                        </ion-row>
+                                    </ion-col>
+                                    <ion-col size="3" class="hes-background-secondary-accent">
+                                        <ion-row>
+                                            <ion-col size="6" class="ion-no-padding ion-text-start">
+                                                <ion-row class="ion-no-padding">
+                                                    <ion-col
+                                                        class="ion-padding-vertical ion-padding-start ion-text-start">
+                                                        {{prediction.homeScore}}</ion-col>
+                                                </ion-row>
+                                                <ion-row class="ion-no-padding">
+                                                    <ion-col
+                                                        class="ion-padding-vertical ion-padding-start ion-text-start">
+                                                        {{prediction.awayScore}}</ion-col>
+                                                </ion-row>
+                                            </ion-col>
+                                            <ion-col size="6"
+                                                class="ion-padding-vertical ion-no-padding ion-text-center ion-align-self-center">
+                                                <ion-chip color="secondary" *ngIf="prediction.spelpunten != null">
+                                                    {{prediction.spelpunten}}
+                                                </ion-chip>
+                                            </ion-col>
+                                        </ion-row>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                        </ion-item>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+            <ion-col class="ion-no-padding" size="12" size-md="6" size-lg="6" size-xl="6"
+                *ngIf="(uiService.isRegistrationOpen$ | async) === false && (upcomingMatches$ | async)?.length > 0">
+                <ion-card>
+                    <ion-card-header>
+                        <ion-card-title>
+                            Komende wedstrijden stats
+                        </ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                        <div *ngFor="let toto of (upcomingMatches$ | async)">
+                            <ion-card-subtitle>
+                                {{toto.date | date : 'dd MMMM HH:mm'}}
+                            </ion-card-subtitle>
+                            <ion-row class="hes-background" (click)="openMatch(toto.id)">
+                                <ion-col class="ion-text-center">
+                                    <span
+                                        class="flag-icon flag-icon-{{toto.homeTeam.logoUrl}} flag-icon-squared"></span>
+                                    {{toto.homeTeam.name}}
+                                </ion-col>
+                                <ion-col class="ion-text-center" size="1">X</ion-col>
+                                <ion-col class="ion-text-center">
+                                    <span
+                                        class="flag-icon flag-icon-{{toto.awayTeam.logoUrl}} flag-icon-squared"></span>
+                                    {{toto.awayTeam.name}}
+                                </ion-col>
+                            </ion-row>
+                            <ion-row class="hes-border-bottom hes-background">
+                                <ion-col class="ion-text-center hes-toto-col hes-background-secondary-accent"
+                                    (click)="openMatchWithTotoFilter(toto.id, 1)">{{toto.toto1}}</ion-col>
+                                <ion-col class="ion-text-center hes-toto-col hes-background-secondary-accent"
+                                    (click)="openMatchWithTotoFilter(toto.id, 3)" size="1">{{toto.toto3}}</ion-col>
+                                <ion-col class="ion-text-center hes-toto-col hes-background-secondary-accent"
+                                    (click)="openMatchWithTotoFilter(toto.id, 2)">{{toto.toto2}}</ion-col>
+                            </ion-row>
+                        </div>
+                    </ion-card-content>
+
+                </ion-card>
+            </ion-col>
+
+            <ion-col class="ion-no-padding" size="12" size-md="6" size-lg="6" size-xl="6"
+                *ngIf="(uiService.isRegistrationOpen$ | async) === false">
+                <app-participant-card color="quaternary" [lastUpdated]="lastUpdated" [standLine]="standLine">
+                </app-participant-card>
+            </ion-col>
+            <ng-container>
+                <ion-col class="ion-no-padding" size="12" size-md="6" size-lg="6" size-xl="6"
+                    *ngFor="let fullscore of fullscore$ | async">
+                    <ion-card>
+                        <app-city-card-header [match]="fullscore"></app-city-card-header>
+                        <ion-card-content>
+                            <ion-card-title (click)="openMatch(fullscore.id)">
+                                <ion-row>
+                                    <ion-col class="ion-no-padding">
+                                        <span
+                                            class="flag-icon flag-icon-{{fullscore?.homeTeam?.logoUrl}} flag-icon-squared"></span>
+                                        {{fullscore?.homeTeam?.name}}
+                                    </ion-col>
+                                    <ion-col class="ion-no-padding ion-text-right" size="1">
+                                        {{fullscore.homeScore}}
+                                    </ion-col>
+                                </ion-row>
+                            </ion-card-title>
+                            <ion-card-title>
+                                <ion-row>
+                                    <ion-col class="ion-no-padding">
+                                        <span
+                                            class="flag-icon flag-icon-{{fullscore?.awayTeam?.logoUrl}} flag-icon-squared"></span>
+                                        {{fullscore?.awayTeam?.name}}
+                                    </ion-col>
+                                    <ion-col class="ion-no-padding ion-text-right" size="1">
+                                        {{fullscore.awayScore}}
+                                    </ion-col>
+                                </ion-row>
+                            </ion-card-title>
+                            <ion-card-subtitle class="ion-padding-top">
+                                Goed voorspeld door {{fullscore.participants.length}} {{fullscore.participants.length
+                                === 1 ? 'deelnemer' : 'deelnemers'}}:
+                            </ion-card-subtitle>
+                            <ion-chip (click)="openParticipant(participant.id)" color="secondary"
+                                *ngFor="let participant of fullscore.participants">{{participant.displayName}}
+                            </ion-chip>
+                        </ion-card-content>
+                    </ion-card>
+                </ion-col>
+            </ng-container>
+            <ion-col class="ion-no-padding" size="12" size-md="6" size-lg="6" size-xl="6"
+                *ngFor="let knockoutScore of knockoutScores">
+                <ion-card>
+                    <ion-card-header color="tertiary">
+                        <ion-card-title>
+                            <span class="flag-icon flag-icon-{{knockoutScore.team?.logoUrl}} flag-icon-squared"></span>
+                            {{knockoutScore.team?.name}}
+                        </ion-card-title>
+                        <ion-card-title>
+                            <ion-card-subtitle>
+                                {{knockoutScore.round | knockoutCardText}}
+                            </ion-card-subtitle>
+                        </ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                        <ion-card-subtitle class="ion-padding-top">
+                            Goed voorspeld door {{knockoutScore.participants?.length}}
+                            {{knockoutScore.participants?.length === 1 ? 'deelnemer' : 'deelnemers'}}:
+                        </ion-card-subtitle>
+                        <ion-chip (click)="openParticipantKnockout(participant.participant.id)" color="secondary"
+                            *ngFor="let participant of knockoutScore.participants">
+                            {{participant.participant.displayName}}</ion-chip>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+</ion-content>
