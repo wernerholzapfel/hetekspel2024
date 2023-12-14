@@ -1,36 +1,30 @@
-cordova-res ios --skip-config --copy
-cordova-res android --skip-config --copy
-
-
-IOS:
-
-
-ionic cordova build ios --prod
-
-appcenter codepush release -a werner.holzapfel-gmail.com/hetekspel-ios -c ios/App/App/public/ -t 2.0.0  -d Production -m
-
 WEB:
 export NODE_OPTIONS=--openssl-legacy-provider && ng build --configuration production
 firebase deploy --only hosting
 
+
 ANDROID:
 
-build project:
-ionic cordova build android --prod --release
-copy project and key to
-cp /Users/wernerholzapfel/Projects/Prive/hetekspel/hetekspelapp/platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk ~/Library/Android/sdk/build-tools/30.0.1/
-
-Go to ~/Library/Android/sdk/build-tools/30.0.1/
-cd ~/Library/Android/sdk/build-tools/30.0.1/
-and run:
-jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore hetekspel-release-key.keystore app-release-unsigned.apk hetekspel_key
-./zipalign -v 4 app-release-unsigned.apk hetekspel_1.1.1.apk
 
 
 Appcenter:
 
-ionic cordova build android --prod --release
-appcenter codepush release -a werner.holzapfel-gmail.com/hetekspel-android -c ./platforms/android/app/src/main/assets/www/ -t 1.1.0 -d Production -m
+
+IOS
+export NODE_OPTIONS=--openssl-legacy-provider && ng build --configuration production
+npx cap sync ios
+
+IOS OTA
+
+npx @capgo/cli@latest bundle upload
+
+android app:
+
+
+ng build --configuration production
+npx cap sync android
+
+firebase deploy --only hosting
 
 
 FIX FOR CAPGO CAPACITOR UPDATER Need meer nodig:
