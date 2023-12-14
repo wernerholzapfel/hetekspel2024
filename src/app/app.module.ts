@@ -34,7 +34,6 @@ registerLocaleData(localeNl);
 
 @NgModule({
     declarations: [AppComponent],
-    entryComponents: [],
     imports: [
         BrowserModule,
         IonicModule.forRoot({
@@ -62,11 +61,9 @@ registerLocaleData(localeNl);
             multi: true,
         },
         {
-
             provide: HTTP_INTERCEPTORS,
             useClass: HttpErrorInterceptor,
             multi: true
-
         },
         { provide: LOCALE_ID, useValue: 'nl-NL' },
         AuthService,

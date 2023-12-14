@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {Subject} from 'rxjs';
 import {ToastController} from '@ionic/angular';
 import {ParticipantService} from '../../services/participant.service';
@@ -29,15 +29,15 @@ export class LoginComponent implements OnInit, OnDestroy {
     ) {
     }
 
-    userForm = new FormGroup({
-        emailFormControl: new FormControl('', [
+    userForm = new UntypedFormGroup({
+        emailFormControl: new UntypedFormControl('', [
             Validators.required,
             Validators.email,
         ]),
-        displayName: new FormControl('', [
+        displayName: new UntypedFormControl('', [
             Validators.required,
         ]),
-        passwordFormControl: new FormControl('', [
+        passwordFormControl: new UntypedFormControl('', [
             Validators.required,
             Validators.minLength(8),
         ])
