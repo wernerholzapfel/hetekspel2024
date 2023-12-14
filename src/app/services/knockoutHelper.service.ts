@@ -27,11 +27,6 @@ export class KnockoutHelperService {
         }, {
             round: '4',
             text: '1/2 F',
-            next: '3',
-            teams: []
-        }, {
-            round: '3',
-            text: '3p',
             next: '2',
             teams: []
         }, {

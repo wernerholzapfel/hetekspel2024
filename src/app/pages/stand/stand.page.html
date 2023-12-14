@@ -2,8 +2,8 @@
     <app-menu-toolbar>
     </app-menu-toolbar>
 </ion-header>
-<ion-toolbar color="accent" mode="ios">
-    <ion-segment value="totaalstand" mode="md" (ionChange)="toggleMatchStand()">
+<!-- <ion-toolbar color="accent" mode="ios"> -->
+    <ion-segment  value="totaalstand" mode="md" (ionChange)="toggleMatchStand()">
         <ion-segment-button value="totaalstand">
             <ion-label>Totaal</ion-label>
         </ion-segment-button>
@@ -11,7 +11,7 @@
             <ion-label>Wedstrijden</ion-label>
         </ion-segment-button>
     </ion-segment>
-</ion-toolbar>
+<!-- </ion-toolbar> -->
 <ion-item lines="full" class="ion-no-padding" color="tertiary">
     <ion-grid>
         <ion-row (click)="navigateToParticipant(mijnStand?.id)">

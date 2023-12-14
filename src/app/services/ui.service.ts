@@ -56,22 +56,10 @@ export class UiService {
         }, {
             current: 'F',
             previous: 'E',
-            next: 'G',
-            disabled: true,
-            text: 'Poule F'
-        },{
-            current: 'G',
-            previous: 'F',
-            next: 'H',
-            disabled: true,
-            text: 'Poule G'
-        },{
-            current: 'H',
-            previous: 'F',
             next: null,
             disabled: true,
-            text: 'Poule H'
-        }];
+            text: 'Poule F'
+        },];
 
     constructor(private toastController: ToastController) {
     }

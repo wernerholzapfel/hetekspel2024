@@ -15,7 +15,7 @@ export class CityCardHeaderComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.imageUrl = '/assets/' + this.match?.city.toLowerCase().replace(' ', '_') + '.jpeg'
+        this.imageUrl = '/assets/' + this.match?.city.toLowerCase() + '.png'
     }
 
 }

@@ -36,9 +36,9 @@ export class ParticipantListPage implements OnDestroy {
     getParticipants(event) {
         return this.statsService.getParticipantsStats().subscribe(participants => {
             this.participants = participants;
-            this.matchesPredicted = this.participants.filter(p => p.matchpredictions === 48).length;
-            this.poulePredicted = this.participants.filter(p => p.poulepredictions === 32).length;
-            this.knockoutPredicted = this.participants.filter(p => p.knockoutpredictions === 16).length;
+            this.matchesPredicted = this.participants.filter(p => p.matchpredictions === 36).length;
+            this.poulePredicted = this.participants.filter(p => p.poulepredictions === 24).length;
+            this.knockoutPredicted = this.participants.filter(p => p.knockoutpredictions === 15).length;
             if (event) {
                 event.target.complete();
             }

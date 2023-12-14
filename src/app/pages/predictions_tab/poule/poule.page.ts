@@ -1,11 +1,11 @@
-import {Component} from '@angular/core';
-import {Observable, of, Subject} from 'rxjs';
-import {MatchService} from '../../../services/match.service';
-import {IMatchPrediction} from '../../../models/participant.model';
-import {PoulepredictionService} from '../../../services/pouleprediction.service';
-import {Router} from '@angular/router';
-import {ToastService} from '../../../services/toast.service';
-import {UiService} from '../../../services/ui.service';
+import { Component } from '@angular/core';
+import { Observable, of, Subject } from 'rxjs';
+import { MatchService } from '../../../services/match.service';
+import { IMatchPrediction } from '../../../models/participant.model';
+import { PoulepredictionService } from '../../../services/pouleprediction.service';
+import { Router } from '@angular/router';
+import { ToastService } from '../../../services/toast.service';
+import { UiService } from '../../../services/ui.service';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -19,10 +19,10 @@ export class PoulePage {
     poules = [];
 
     constructor(private matchService: MatchService,
-                private poulepredictionService: PoulepredictionService,
-                private toastService: ToastService,
-                public uiService: UiService,
-                private router: Router) {
+        private poulepredictionService: PoulepredictionService,
+        private toastService: ToastService,
+        public uiService: UiService,
+        private router: Router) {
     }
 
     ionViewWillEnter() {
@@ -34,51 +34,43 @@ export class PoulePage {
                     stand: this.createStand(poulePrediction, 'A'),
                     isSortDisabled: true
                 },
-                    {
-                        poule: 'B',
-                        stand: this.createStand(poulePrediction, 'B'),
-                        isSortDisabled: true
-                    },
-                    {
-                        poule: 'C',
-                        stand: this.createStand(poulePrediction, 'C'),
-                        isSortDisabled: true
-                    },
-                    {
-                        poule: 'D',
-                        stand: this.createStand(poulePrediction, 'D'),
-                        isSortDisabled: true
-                    },
-                    {
-                        poule: 'E',
-                        stand: this.createStand(poulePrediction, 'E'),
-                        isSortDisabled: true
-                    },
-                    {
-                        poule: 'F',
-                        stand: this.createStand(poulePrediction, 'F'),
-                        isSortDisabled: true
-                    },{
-                        poule: 'G',
-                        stand: this.createStand(poulePrediction, 'G'),
-                        isSortDisabled: true
-                    },{
-                        poule: 'H',
-                        stand: this.createStand(poulePrediction, 'H'),
-                        isSortDisabled: true
-                    }];
+                {
+                    poule: 'B',
+                    stand: this.createStand(poulePrediction, 'B'),
+                    isSortDisabled: true
+                },
+                {
+                    poule: 'C',
+                    stand: this.createStand(poulePrediction, 'C'),
+                    isSortDisabled: true
+                },
+                {
+                    poule: 'D',
+                    stand: this.createStand(poulePrediction, 'D'),
+                    isSortDisabled: true
+                },
+                {
+                    poule: 'E',
+                    stand: this.createStand(poulePrediction, 'E'),
+                    isSortDisabled: true
+                },
+                {
+                    poule: 'F',
+                    stand: this.createStand(poulePrediction, 'F'),
+                    isSortDisabled: true
+                }];
             });
 
-            this.uiService.updatePouleStand$.pipe(takeUntil(this.unsubscribe))
+        this.uiService.updatePouleStand$.pipe(takeUntil(this.unsubscribe))
             .subscribe(stand => {
-                if (stand) 
-                this.poules = this.poules.map(item => {
-                    if (item.poule === stand[0].poule) {
-                        return {...item, stand: stand}
-                    } else {
-                        return item
-                    }
-                })
+                if (stand)
+                    this.poules = this.poules.map(item => {
+                        if (item.poule === stand[0].poule) {
+                            return { ...item, stand: stand }
+                        } else {
+                            return item
+                        }
+                    })
             })
     }
 
@@ -114,12 +106,11 @@ export class PoulePage {
             ...this.poules[2].stand,
             ...this.poules[3].stand,
             ...this.poules[4].stand,
-            ...this.poules[5].stand,
-            ...this.poules[6].stand,
-            ...this.poules[7].stand]).subscribe(() => {
+            ...this.poules[5].stand
+        ]).subscribe(() => {
             this.toastService.presentToast('Opslaan is gelukt');
             this.uiService.isDirty$.next(false);
-            this.router.navigate(['prediction/prediction/knockout'], {replaceUrl: false});
+            this.router.navigate(['prediction/prediction/knockout'], { replaceUrl: false });
         }, error => {
             this.toastService.presentToast(error && error.error && error.error.message ? error.error.message : 'Er is iets misgegaan', 'warning');
 

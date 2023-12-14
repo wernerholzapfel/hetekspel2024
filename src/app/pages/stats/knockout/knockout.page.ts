@@ -20,7 +20,7 @@ export class KnockoutPage {
 
     ionViewWillEnter() {
         this.unsubscribe = new Subject<void>();
-        this.db.list<any>(`stats/knockout`)
+        this.db.list<any>(`ek2024/stats/knockout`)
             .valueChanges()
             .pipe(takeUntil(this.unsubscribe))
             .subscribe(knockoutStats => {

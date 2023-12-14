@@ -28,7 +28,8 @@ export class AuthService {
         combineLatest([this.getTokenResult(), this.uiService.isRegistrationOpen$])
             .subscribe(
                 ([tokenResult, isRegistrationOpen]) => {
-
+                    console.log("isRegistrationOpen")
+                    console.log(isRegistrationOpen)
                     if (tokenResult) {
                         this.isAdmin = tokenResult && tokenResult.claims ? tokenResult.claims.admin : false;
                         this.uiService.isAdmin$.next(this.isAdmin);

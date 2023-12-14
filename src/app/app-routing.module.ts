@@ -47,9 +47,6 @@ const routes: Routes = [
     {
         path: 'stats',
         loadChildren: () => import('./pages/stats/stats.module').then(m => m.StatsPageModule)
-    },{
-        path: 'doneren',
-        loadChildren: () => import('./pages/donatie/donatie.module').then(m => m.DonatiePageModule)
     },
     {
         path: 'stats/knockout/round/:roundid/team/:teamid',

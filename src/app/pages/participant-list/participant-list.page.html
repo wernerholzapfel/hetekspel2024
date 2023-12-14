@@ -18,11 +18,11 @@
         <ion-item *virtualItem="let p; let itemBounds = bounds let i = index;" lines="full">
             {{i + 1}} {{p.displayName}}
             <ng-container *ngIf="isAdmin$ | async">
-                <ion-icon slot="end" [color]="p.matchpredictions === 48 ? 'primary' : 'medium'" name="football">
+                <ion-icon slot="end" [color]="p.matchpredictions === 36 ? 'primary' : 'medium'" name="football">
                 </ion-icon>
-                <ion-icon slot="end" [color]="p.poulepredictions === 32 ? 'primary' : 'medium'" name="list">
+                <ion-icon slot="end" [color]="p.poulepredictions === 24 ? 'primary' : 'medium'" name="list">
                 </ion-icon>
-                <ion-icon slot="end" [color]="p.knockoutpredictions === 16 ? 'primary' : 'medium'" name="trophy">
+                <ion-icon slot="end" [color]="p.knockoutpredictions === 15 ? 'primary' : 'medium'" name="trophy">
                 </ion-icon>
             </ng-container>
         </ion-item>

@@ -146,21 +146,12 @@ export class MenuService {
             onlyForUser: false,
             showAfterRegistration: false
 
-        }, {
-            title: 'Doneren',
-            url: '/doneren',
-            urls: ['/doneren'],
-            icon: 'cash-outline',
-            active: false,
-            onlyForAdmin: false,
-            onlyForUser: false,
-            showAfterRegistration: true
-
         }
     ]);
 
     
     setMenu(admin: boolean, user, registrationOpen: boolean) {
+        console.log(registrationOpen)
         this.appPages$.next(this.appPages$.getValue().map(item => {
             return {
                 ...item,

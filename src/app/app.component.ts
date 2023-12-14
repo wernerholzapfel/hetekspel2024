@@ -111,14 +111,14 @@ export class AppComponent implements OnInit, OnDestroy {
             }
         });
 
-        this.db.list<any>(`totaal`)
+        this.db.list<any>(`ek2024/totaal`)
             .valueChanges()
             .pipe(takeUntil(this.unsubscribe))
             .subscribe(totaalstand => {
                 this.uiService.totaalstand$.next(totaalstand);
             });
 
-        this.db.object<{ lastUpdated: number }>(`lastUpdated`)
+        this.db.object<{ lastUpdated: number }>(`ek2024/lastUpdated`)
             .valueChanges()
             .pipe(takeUntil(this.unsubscribe))
             .subscribe(item => {
@@ -172,6 +172,7 @@ export class AppComponent implements OnInit, OnDestroy {
                 const deadline = moment(hetwkspel.deadline);
                 const now = moment(new Date());
                 const diffDays = deadline.diff(now, 'milliseconds');
+                console.log(diffDays)
                 this.uiService.isRegistrationOpen$.next(diffDays > 0);
 
                 return timer(diffDays);
@@ -180,7 +181,7 @@ export class AppComponent implements OnInit, OnDestroy {
                 (x) => { },
                 (y) => { },
                 () => {
-                    this.uiService.isRegistrationOpen$.next(false); // todo timer complets before deadline
+                    // this.uiService.isRegistrationOpen$.next(false); // todo timer complets before deadline
                 }
             );
     }

@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiBaseUrl: 'https://hetwkspel-2022.onrender.com',
+  apiBaseUrl: 'https://hetekspelapi-2024.onrender.com',
   firebase: {
     apiKey: "AIzaSyDUuYuKQNzDv9rCdJg3JNetL7m4Du6SxMk",
     authDomain: "hetwkspel-2022.firebaseapp.com",
