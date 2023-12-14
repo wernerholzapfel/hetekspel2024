@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree} from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import {Observable} from 'rxjs';
 import {UiService} from '../services/ui.service';
 import {delay, map, retryWhen} from 'rxjs/operators';
@@ -8,7 +8,7 @@ import {HetwkspelService} from '../services/hetwkspel.service';
 @Injectable({
     providedIn: 'root'
 })
-export class DeadlineGuard implements CanActivate {
+export class DeadlineGuard  {
     constructor(private uiService: UiService, private hetwkspelService: HetwkspelService) {
     }
 

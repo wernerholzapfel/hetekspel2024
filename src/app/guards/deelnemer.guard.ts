@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import {Observable} from 'rxjs';
 import {UiService} from '../services/ui.service';
 import {delay, map, retryWhen} from 'rxjs/operators';
@@ -8,7 +8,7 @@ import {HetwkspelService} from '../services/hetwkspel.service';
 @Injectable({
     providedIn: 'root'
 })
-export class DeelnemerGuard implements CanActivate {
+export class DeelnemerGuard  {
     constructor(private uiService: UiService, private router: Router) {
     }
 

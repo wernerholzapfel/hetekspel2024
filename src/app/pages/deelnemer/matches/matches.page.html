@@ -14,8 +14,7 @@
         </ion-card-content>
     </ion-card>
     <ng-container *ngIf="predictions">
-        <ion-virtual-scroll [items]="predictions" approxItemHeight="70px">
-            <ion-item *virtualItem="let prediction; let itemBounds = bounds let i = index;" (click)="openMatch(prediction.match.id)" class="ion-no-padding"
+            <ion-item *ngFor="let prediction of predictions; let itemBounds = bounds let i = index;" (click)="openMatch(prediction.match.id)" class="ion-no-padding"
                       lines="none">
                 <ion-grid class="ion-no-padding ion-padding-start">
                     <ion-row style="font-size: x-small">
@@ -70,7 +69,6 @@
                     </ion-row>
                 </ion-grid>
             </ion-item>
-        </ion-virtual-scroll>
     </ng-container>
 </ion-content>
 

@@ -129,8 +129,7 @@
         </ion-row>
     </ion-grid>
     <ion-grid>
-        <ion-virtual-scroll [items]="match?.matchPredictions" approxItemHeight="71px">
-            <ion-row *virtualItem="let prediction; let itemBounds = bounds let i = index;" class="hes-border-bottom"
+            <ion-row *ngFor="let prediction of match?.matchPredictions; let itemBounds = bounds let i = index;" class="hes-border-bottom"
                 (click)="navigateToParticipant(prediction.participant.id)">
                 <ion-col [ngClass]="prediction.isMine ? 'hes-background-tertiary' : 'hes-background'"size="9">
                     <ion-row>
@@ -187,6 +186,5 @@
                     </ion-row>
                 </ion-col>
             </ion-row>
-        </ion-virtual-scroll>
     </ion-grid>
 </ion-content>

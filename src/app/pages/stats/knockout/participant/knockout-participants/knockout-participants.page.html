@@ -15,8 +15,7 @@
             [round]="koTeamStats?.round"></app-knockout-team-header>
     </ion-grid>
     <ion-grid>
-        <ion-virtual-scroll [items]="koTeamStats?.participants" approxItemHeight="70px">
-            <ng-container *virtualItem="let participant; let itemBounds = bounds let i = index;">
+            <ng-container *ngFor="let participant of koTeamStats?.participants; let itemBounds = bounds let i = index;">
                 <ion-row class="hes-border-bottom" (click)="openParticipant(participant.participant.id)">
                     <ion-col [ngClass]="participant.isMine ? 'hes-background-tertiary' : 'hes-background'">
                         <ion-row>
@@ -51,6 +50,5 @@
                     </ion-col>
                 </ion-row>
             </ng-container>
-        </ion-virtual-scroll>
     </ion-grid>
 </ion-content>

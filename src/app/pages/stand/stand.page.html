@@ -70,8 +70,7 @@
 </ion-toolbar>
 
 <ion-content>
-    <ion-virtual-scroll [items]="stand" approxItemHeight="88px">
-        <ng-container *virtualItem="let line; let itemBounds = bounds let i = index;">
+        <ng-container *ngFor="let line of stand; let itemBounds = bounds let i = index;">
             <ion-item [color]="line?.isMine ? 'tertiary' : i % 2 != 0 ? 'secondary-accent' : ''" lines="full"
                 class="ion-no-padding">
                 <ion-grid>
@@ -127,5 +126,4 @@
                 </ion-grid>
             </ion-item>
         </ng-container>
-    </ion-virtual-scroll>
 </ion-content>

@@ -4,7 +4,7 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { MenuItem, MenuService } from './services/menu.service';
 import { combineLatest, of, Subject, timer } from 'rxjs';
-import { NavigationEnd, Router, RouterEvent } from '@angular/router';
+import { NavigationEnd, Router, Event, RouterEvent } from '@angular/router';
 import { switchMap, take, takeUntil, withLatestFrom } from 'rxjs/operators';
 import { AuthService } from './services/auth.service';
 import { UiService } from './services/ui.service';
@@ -95,9 +95,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
                 // Method called when tapping on a notification
                 // PushNotifications.addListener('pushNotificationActionPerformed',
-                    // (notification: ActionPerformed) => {
-                        // alert('Push action performed: ' + JSON.stringify(notification));
-                    // }
+                // (notification: ActionPerformed) => {
+                // alert('Push action performed: ' + JSON.stringify(notification));
+                // }
                 // );
 
             }
@@ -127,7 +127,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
 
         // set linkactive.
-        this.router.events.pipe(takeUntil(this.unsubscribe)).subscribe((event: RouterEvent) => {
+        this.router.events.pipe(takeUntil(this.unsubscribe)
+        ).subscribe((event: Event | RouterEvent) => {
             if (event instanceof NavigationEnd) {
                 this.menuService.appPages$.getValue().map(p => {
                     return Object.assign(p, {
@@ -158,9 +159,9 @@ export class AppComponent implements OnInit, OnDestroy {
         // const prefersDarkMQL = window.matchMedia('(prefers-color-scheme: dark)');
         // this.uiService.prefersDark$.next(prefersDarkMQL.matches);
         // prefersDarkMQL.addListener((e) => {
-            // this.ngZone.run(() => {
-                // this.uiService.prefersDark$.next(e.matches);
-            // });
+        // this.ngZone.run(() => {
+        // this.uiService.prefersDark$.next(e.matches);
+        // });
         // });
         this.uiService.prefersDark$.next(false);
 
@@ -188,18 +189,18 @@ export class AppComponent implements OnInit, OnDestroy {
 
     registerToken() {
         combineLatest([this.uiService.participant$, this.uiService.pushToken$])
-        .pipe(switchMap(([participant, pushtoken]) => {
-            if (participant && pushtoken) {
-                return this.participantService.putPushToken({pushtoken: pushtoken})
-            } else {
-                return of(null)
-            }
-        }))
-        .pipe(takeUntil(this.unsubscribe))
-        .subscribe(token => {
-            if (token) {
-            }
-        })
+            .pipe(switchMap(([participant, pushtoken]) => {
+                if (participant && pushtoken) {
+                    return this.participantService.putPushToken({ pushtoken: pushtoken })
+                } else {
+                    return of(null)
+                }
+            }))
+            .pipe(takeUntil(this.unsubscribe))
+            .subscribe(token => {
+                if (token) {
+                }
+            })
 
     }
 
