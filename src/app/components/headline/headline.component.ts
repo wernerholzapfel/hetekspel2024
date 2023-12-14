@@ -61,7 +61,6 @@ export class HeadlineComponent implements OnInit, OnDestroy {
     async editHeadline(headline: IHeadline, isNewHeadline: boolean) {
         const modal = await this.modalController.create({
             component: EditHeadlineComponent,
-            swipeToClose: true,
             presentingElement: this.routerOutlet.nativeEl,
             componentProps: {
                 headline,
