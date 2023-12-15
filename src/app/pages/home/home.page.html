@@ -66,7 +66,7 @@
                                             <ion-col class="ion-padding-vertical">
                                                 {{prediction.match.homeScore}}
                                                 <span
-                                                    class="flag-icon flag-icon-{{prediction.match.homeTeam.logoUrl}} flag-icon-squared"></span>
+                                                    class="fi fi-{{prediction.match.homeTeam.logoUrl}} fis"></span>
                                                 {{prediction.match.homeTeam.name}}
                                             </ion-col>
                                         </ion-row>
@@ -74,7 +74,7 @@
                                             <ion-col class="ion-padding-vertical">
                                                 {{prediction.match.awayScore}}
                                                 <span
-                                                    class="flag-icon flag-icon-{{prediction.match.awayTeam.logoUrl}} flag-icon-squared"></span>
+                                                    class="fi fi-{{prediction.match.awayTeam.logoUrl}} fis"></span>
                                                 {{prediction.match.awayTeam.name}}
                                             </ion-col>
                                         </ion-row>
@@ -138,7 +138,7 @@
                                             <ion-col class="ion-padding-vertical">
                                                 {{prediction.homeScore}}
                                                 <span
-                                                    class="flag-icon flag-icon-{{prediction.homeTeam.logoUrl}} flag-icon-squared"></span>
+                                                    class="fi fi-{{prediction.homeTeam.logoUrl}} fis"></span>
                                                 {{prediction.homeTeam.name}}
                                             </ion-col>
                                         </ion-row>
@@ -146,7 +146,7 @@
                                             <ion-col class="ion-padding-vertical">
                                                 {{prediction.awayScore}}
                                                 <span
-                                                    class="flag-icon flag-icon-{{prediction.awayTeam.logoUrl}} flag-icon-squared"></span>
+                                                    class="fi fi-{{prediction.awayTeam.logoUrl}} fis"></span>
                                                 {{prediction.awayTeam.name}}
                                             </ion-col>
                                         </ion-row>
@@ -195,13 +195,13 @@
                             <ion-row class="hes-background" (click)="openMatch(toto.id)">
                                 <ion-col class="ion-text-center">
                                     <span
-                                        class="flag-icon flag-icon-{{toto.homeTeam.logoUrl}} flag-icon-squared"></span>
+                                        class="fi fi-{{toto.homeTeam.logoUrl}} fis"></span>
                                     {{toto.homeTeam.name}}
                                 </ion-col>
                                 <ion-col class="ion-text-center" size="1">X</ion-col>
                                 <ion-col class="ion-text-center">
                                     <span
-                                        class="flag-icon flag-icon-{{toto.awayTeam.logoUrl}} flag-icon-squared"></span>
+                                        class="fi fi-{{toto.awayTeam.logoUrl}} fis"></span>
                                     {{toto.awayTeam.name}}
                                 </ion-col>
                             </ion-row>
@@ -234,7 +234,7 @@
                                 <ion-row>
                                     <ion-col class="ion-no-padding">
                                         <span
-                                            class="flag-icon flag-icon-{{fullscore?.homeTeam?.logoUrl}} flag-icon-squared"></span>
+                                            class="fi fi-{{fullscore?.homeTeam?.logoUrl}} fis"></span>
                                         {{fullscore?.homeTeam?.name}}
                                     </ion-col>
                                     <ion-col class="ion-no-padding ion-text-right" size="1">
@@ -246,7 +246,7 @@
                                 <ion-row>
                                     <ion-col class="ion-no-padding">
                                         <span
-                                            class="flag-icon flag-icon-{{fullscore?.awayTeam?.logoUrl}} flag-icon-squared"></span>
+                                            class="fi fi-{{fullscore?.awayTeam?.logoUrl}} fis"></span>
                                         {{fullscore?.awayTeam?.name}}
                                     </ion-col>
                                     <ion-col class="ion-no-padding ion-text-right" size="1">
@@ -270,7 +270,7 @@
                 <ion-card>
                     <ion-card-header color="tertiary">
                         <ion-card-title>
-                            <span class="flag-icon flag-icon-{{knockoutScore.team?.logoUrl}} flag-icon-squared"></span>
+                            <span class="fi fi-{{knockoutScore.team?.logoUrl}} fis"></span>
                             {{knockoutScore.team?.name}}
                         </ion-card-title>
                         <ion-card-title>

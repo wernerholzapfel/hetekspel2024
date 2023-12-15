@@ -7,13 +7,13 @@
             <ion-row class="ion-justify-content-between ion-align-items-center ion-padding-vertical">
                 <ion-col>
                     <ion-label>
-                        <span class="flag-icon flag-icon-{{match?.homeTeam?.logoUrl}} flag-icon-squared"></span>
+                        <span class="fi fi-{{match?.homeTeam?.logoUrl}} fis"></span>
                         {{match.homeTeam.name }}</ion-label>
                     <ion-input placeholder="thuis" type="number" [(ngModel)]="match.homeScore"></ion-input>
                 </ion-col>
                 <ion-col>
                     <ion-label>
-                        <span class="flag-icon flag-icon-{{match?.awayTeam?.logoUrl}} flag-icon-squared"></span>
+                        <span class="fi fi-{{match?.awayTeam?.logoUrl}} fis"></span>
                         {{match.awayTeam.name }}
                     </ion-label>
                     <ion-input placeholder="uit" type="number" [(ngModel)]="match.awayScore"></ion-input>

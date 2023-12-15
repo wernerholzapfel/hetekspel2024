@@ -23,7 +23,6 @@ import localeNl from '@angular/common/locales/nl';
 import { registerLocaleData } from '@angular/common';
 import { HeadlineService } from './services/headline.service';
 import { FromNowPipe } from './pipes/fromNow.pipe';
-import { FCM } from '@awesome-cordova-plugins/fcm/ngx';
 import { DeelnemerGuard } from './guards/deelnemer.guard';
 import { KnockoutHelperService } from './services/knockoutHelper.service';
 import { RouteReuseStrategy } from '@angular/router';
@@ -67,7 +66,6 @@ registerLocaleData(localeNl);
         },
         { provide: LOCALE_ID, useValue: 'nl-NL' },
         AuthService,
-        FCM,
         HeadlineService,
         ParticipantService,
         LoaderService,

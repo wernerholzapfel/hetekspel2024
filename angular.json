@@ -32,7 +32,7 @@
             ],
             "styles": [
               {
-                "input": "node_modules/flag-icon-css/css/flag-icon.min.css",
+                "input": "node_modules/flag-icons/css/flag-icons.min.css",
                 "inject": true
               },
               {

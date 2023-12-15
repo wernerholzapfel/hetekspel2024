@@ -9,12 +9,12 @@
             <ion-row class="hes-background" (click)="setTotoUitslagenAsFilter(toto.uitslagen)">
                 <ion-col class="ion-text-center" *ngIf="toto.toto === 1">
                     <ion-text color="dark"> Winst {{match.homeTeam.name}}
-                        <span class="flag-icon flag-icon-{{match?.homeTeam?.logoUrl}} flag-icon-squared"></span>
+                        <span class="fi fi-{{match?.homeTeam?.logoUrl}} fis"></span>
                     </ion-text>
                 </ion-col>
                 <ion-col class="ion-text-center" *ngIf="toto.toto === 2">
                     <ion-text color="dark"> Winst {{match.awayTeam.name}}
-                        <span class="flag-icon flag-icon-{{match?.awayTeam?.logoUrl}} flag-icon-squared"></span>
+                        <span class="fi fi-{{match?.awayTeam?.logoUrl}} fis"></span>
                     </ion-text>
                 </ion-col>
                 <ion-col class="ion-text-center" *ngIf="toto.toto === 3">
@@ -75,7 +75,7 @@
                     <ion-col>
                         <ion-row>
                             <ion-col>
-                                <span class="flag-icon flag-icon-{{match?.homeTeam.logoUrl}} flag-icon-squared"></span>
+                                <span class="fi fi-{{match?.homeTeam.logoUrl}} fis"></span>
                                 {{match?.homeTeam.name}}
                             </ion-col>
                             <ion-col class="ion-text-end">
@@ -84,7 +84,7 @@
                         </ion-row>
                         <ion-row>
                             <ion-col>
-                                <span class="flag-icon flag-icon-{{match?.awayTeam.logoUrl}} flag-icon-squared"></span>
+                                <span class="fi fi-{{match?.awayTeam.logoUrl}} fis"></span>
                                 {{match?.awayTeam.name}}
                             </ion-col>
                             <ion-col class="ion-text-end">
@@ -114,14 +114,14 @@
                 <ion-row>
                     <ion-col>
                         {{match?.homeScore}}
-                        <span class="flag-icon flag-icon-{{match?.homeTeam.logoUrl}} flag-icon-squared"></span>
+                        <span class="fi fi-{{match?.homeTeam.logoUrl}} fis"></span>
                         {{match?.homeTeam.name}}
                     </ion-col>
                 </ion-row>
                 <ion-row>
                     <ion-col>
                         {{match?.awayScore}}
-                        <span class="flag-icon flag-icon-{{match?.awayTeam.logoUrl}} flag-icon-squared"></span>
+                        <span class="fi fi-{{match?.awayTeam.logoUrl}} fis"></span>
                         {{match?.awayTeam.name}}
                     </ion-col>
                 </ion-row>
@@ -166,13 +166,13 @@
                         <ion-col size="6" class="ion-no-padding ion-text-start">
                             <ion-row class="ion-no-padding">
                                 <ion-col class="ion-text-start">
-                                    <span class="hes-show-flag flag-icon flag-icon-{{match?.homeTeam.logoUrl}} flag-icon-squared"></span>
+                                    <span class="hes-show-flag fi fi-{{match?.homeTeam.logoUrl}} fis"></span>
                                     {{prediction.homeScore}}
                                 </ion-col>
                             </ion-row>
                             <ion-row class="ion-no-padding">
                                 <ion-col class="ion-text-start">
-                                    <span class="hes-show-flag flag-icon flag-icon-{{match?.awayTeam.logoUrl}} flag-icon-squared"></span>
+                                    <span class="hes-show-flag fi fi-{{match?.awayTeam.logoUrl}} fis"></span>
                                     {{prediction.awayScore}}
                                 </ion-col>
                             </ion-row>
