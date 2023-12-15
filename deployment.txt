@@ -24,7 +24,7 @@ android app:
 ng build --configuration production
 npx cap sync android
 
-firebase deploy --only hosting
+npx firebase deploy --only hosting
 
 
 FIX FOR CAPGO CAPACITOR UPDATER Need meer nodig:
