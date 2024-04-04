@@ -105,6 +105,12 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        combineLatest([this.authService.user$, this.uiService.participant$])
+            .subscribe(([user, participant]) => {
+                if (participant === null && user && user.uid) {
+                    console.log(' ingelogd maar geen db record')
+                }
+            })
         this.menuService.appPages$.pipe(takeUntil(this.unsubscribe)).subscribe(menu => {
             if (menu) {
                 this.appPages = menu;

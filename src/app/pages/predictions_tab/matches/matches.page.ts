@@ -68,8 +68,9 @@ export class MatchesPage {
     }
 
     selectPoule($event) {
+        console.log('selectpoule aangeroepen met ' + $event.detail.value)
         this.activePoule = this.pouleNavigatie.find(p => p.current === $event.detail.value);
-        this.getPredictedMatches();
+        this.uiService.matchPredictions$.next(this.matchPredictions)
         this.standCardPoule = {...this.standCardPoule, poule: this.pouleName};
 
 
@@ -83,9 +84,10 @@ export class MatchesPage {
             active.scrollIntoView({behavior: 'smooth', inline: 'center'});
         }
     }
-
+    
     next() {
         const activePoule = this.pouleNavigatie.find(p => p.current === this.pouleName);
+        this.activePoule = this.pouleNavigatie.find(p => p.current === this.pouleName);
         this.pouleName = activePoule.next;
         this.pouleNavigatie = this.pouleNavigatie.map(pn => {
             if (pn.current === activePoule.next) {
@@ -99,6 +101,7 @@ export class MatchesPage {
                 };
             }
         });
+        this.uiService.matchPredictions$.next(this.matchPredictions)
         this.standCardPoule = {...this.standCardPoule, poule: this.pouleName};
         this.scrollSegments(this.pouleNavigatie.findIndex(poule => poule.next === this.pouleName));
     }

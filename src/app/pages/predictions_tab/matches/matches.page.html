@@ -3,11 +3,11 @@
     <app-menu-toolbar title="Voorspellen"></app-menu-toolbar>
     <ion-segment [(ngModel)]="pouleName"
                  (ionChange)="selectPoule($event)"
-                 scrollable
-                 mode="md">
+                 [scrollable]="true" 
+                 mode="md"
+                 [value]="activePoule?.current">
         <ion-segment-button *ngFor="let poule of pouleNavigatie; let i = index"
                             [value]="poule.current"
-                            (click)="scrollSegments(i+1)"
                             [disabled]="poule.disabled">
             {{poule.text}}
         </ion-segment-button>
