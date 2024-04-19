@@ -22,6 +22,7 @@ export class UiService {
     isMatchStandActive$: BehaviorSubject<boolean> = new BehaviorSubject(false);
     prefersDark$: BehaviorSubject<boolean> = new BehaviorSubject(null);
     matchPredictions$: BehaviorSubject<IMatchPrediction[]> = new BehaviorSubject([]);
+    fetchTable$: BehaviorSubject<string> = new BehaviorSubject("A");
     pouleNav: PouleNav[] = [
         {
             current: 'A',

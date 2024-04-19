@@ -1,22 +1,17 @@
 <!--https://www.flaticon.com/packs/countrys-flags-->
 <ion-header>
     <app-menu-toolbar title="Voorspellen"></app-menu-toolbar>
-    <ion-segment [(ngModel)]="pouleName"
-                 (ionChange)="selectPoule($event)"
-                 [scrollable]="true" 
-                 mode="md"
-                 [value]="activePoule?.current">
-        <ion-segment-button *ngFor="let poule of pouleNavigatie; let i = index"
-                            [value]="poule.current"
-                            [disabled]="poule.disabled">
+    <ion-segment  (ionChange)="next($event.detail.value)" [scrollable]="true" mode="md" [value]="pouleName">
+        <ion-segment-button *ngFor="let poule of pouleNavigatie; let i = index" [value]="poule.current">
             {{poule.text}}
         </ion-segment-button>
     </ion-segment>
-    <app-stand-card [poule]="standCardPoule" [stand]="standCardPoule?.stand" 
-    [isTableOpen]="false" [editMode]="false" [isToolbar]="true"></app-stand-card>
+    <app-stand-card [poule]="standCardPoule" [stand]="standCardPoule?.stand" [isTableOpen]="false" [editMode]="false"
+        [isToolbar]="true"></app-stand-card>
 </ion-header>
 <ion-content>
     <div #topScrollAnchor></div>
+   
     <ion-grid class="ion-no-padding">
         <ion-row *ngIf="activePoule?.current === 'A'">
             <ion-col size="12">
@@ -31,10 +26,9 @@
         </ion-row>
         <ion-row>
             <ion-col size="12" size-md="6" size-lg="6" size-xl="4"
-                     *ngFor="let matchPrediction of matchPredictions | filterPouleMatches:activePoule?.current">
-                <app-match-card
-                        [isRegistrationOpen]="isRegistrationOpen$ | async"
-                        [matchPrediction]="matchPrediction"></app-match-card>
+                *ngFor="let matchPrediction of uiService.matchPredictions$ | async | filterPouleMatches:activePoule?.current">
+                <app-match-card [isRegistrationOpen]="isRegistrationOpen$ | async"
+                    [matchPrediction]="matchPrediction"></app-match-card>
             </ion-col>
         </ion-row>
     </ion-grid>
@@ -42,15 +36,13 @@
 <ion-footer>
     <ng-container class="ion-no-border ion-padding-horizontal">
         <ion-button *ngIf="(isRegistrationOpen$ | async) && activePoule?.current !== 'F'"
-                    [disabled]="!activePoule?.isFinal"
-                    color="tertiary" expand="full" fill="solid"
-                    (click)="next()">
+            [disabled]="!activePoule?.isFinal" color="tertiary" expand="full" fill="solid"
+            (click)="next(activePoule.next)">
             Naar volgende poule
         </ion-button>
         <ion-button *ngIf="(isRegistrationOpen$ | async) && activePoule?.current === 'F'"
-                    [disabled]="!activePoule?.isFinal"
-                    color="tertiary" expand="full" fill="solid"
-                    (click)="navigateToPoulePredictions()">
+            [disabled]="!activePoule?.isFinal" color="tertiary" expand="full" fill="solid"
+            (click)="navigateToPoulePredictions()">
             Voorspel de poulestanden
         </ion-button>
     </ng-container>

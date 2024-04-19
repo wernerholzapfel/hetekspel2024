@@ -3,13 +3,13 @@
         <ion-row style="font-size: x-small">
             <ion-col size="6" class="ion-padding-vertical ion-text-start hes-background">
                 <ion-text color="medium">
-                    {{match?.date | date : 'dd MMMM HH:mm'}}
+                    {{match?.date | date : 'dd MMMM HH:mm'}} &#64; {{match?.city}}
                 </ion-text>
             </ion-col>
             <ion-col size="6" class="ion-padding ion-text-end hes-background">
                 <ion-text color="medium">
                     {{match?.poule ? 'poule ' + match?.poule : match.round | roundText : true }}
-                    <ion-text color="medium">{{match.matchId}}</ion-text>
+                    <ion-text color="medium" *ngIf="match?.round != undefined"> ({{match.matchId}})</ion-text>
                 </ion-text>
             </ion-col>
         </ion-row>
@@ -19,17 +19,14 @@
                     <ion-col class="ion-padding-vertical">
                         {{match?.homeScore}}
                         <span class="fi fi-{{match?.homeTeam?.logoUrl}} fis"></span>
-                        {{match?.homeTeam?.id ? match?.homeTeam?.name : 'Winnaar ' + match.homeId}}
+                        {{match?.homeTeam?.id ? match?.homeTeam?.name : match?.round != '16' ? 'Winnaar ' + match.homeId : match.homeId}}
                     </ion-col>
-                    <!-- <ion-col class="ion-padding-end ion-text-end"> -->
-                        <!-- <ion-text color="medium" *ngIf="match?.homeId">({{match?.homeId}})</ion-text> -->
-                    <!-- </ion-col> -->
                 </ion-row>
                 <ion-row (click)="url !== 'poule' ? openKnockout(match?.awayTeam?.id, match?.round) : ''">
                     <ion-col class="ion-padding-vertical">
                         {{match?.awayScore}}
                         <span class="fi fi-{{match?.awayTeam?.logoUrl}} fis"></span>
-                        {{match?.awayTeam?.id ? match?.awayTeam?.name : 'Winnaar ' + match?.awayId }}
+                        {{match?.awayTeam?.id ? match?.awayTeam?.name : match?.round != '16' ? 'Winnaar ' + match.awayId : match.awayId}}
                     </ion-col>
                     <!-- <ion-col class="ion-padding-end ion-text-end"> -->
                         <!-- <ion-text color="medium" *ngIf="match?.awayId">({{match.awayId}})</ion-text> -->

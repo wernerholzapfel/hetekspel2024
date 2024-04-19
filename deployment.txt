@@ -1,13 +1,9 @@
 WEB:
 export NODE_OPTIONS=--openssl-legacy-provider && ng build --configuration production
-firebase deploy --only hosting
+npx firebase deploy --only hosting
 
 
 ANDROID:
-
-
-
-Appcenter:
 
 
 IOS
@@ -15,7 +11,8 @@ export NODE_OPTIONS=--openssl-legacy-provider && ng build --configuration produc
 npx cap sync ios
 
 IOS OTA
-
+export NODE_OPTIONS=--openssl-legacy-provider && ng build --configuration production
+npx cap copy ios
 npx @capgo/cli@latest bundle upload
 
 android app:

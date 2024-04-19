@@ -1,11 +1,15 @@
 <ion-card [ngClass]="isToolbar ? 'hes-toolbar': '' ">
     <ion-card-header>
-        <ion-grid class="ion-no-padding">
-            <ion-row class="ion-no-padding ion-justify-content-between" (click)="isToolbar ? closeOrOpenTable(): ''">
+        <ion-grid class="ion-no-padding ion-no-margin">
+            <ion-row class="ion-no-padding" (click)="isToolbar ? closeOrOpenTable(): ''">
                 <ion-col class="ion-align-self-center">
                     <ion-card-subtitle class="ion-no-margin">
                         Stand poule {{poule?.poule}} 
                     </ion-card-subtitle>
+                </ion-col>
+                <ion-col size="1" class="ion-align-self-end" *ngIf="editMode && !poule?.isSortDisabled && uiService?.isRegistrationOpen$ | async">
+                    <ion-icon class="toggle-reorder-icon" (click)="setSortBackToOriginal()"
+                              name="refresh-outline"></ion-icon>
                 </ion-col>
                 <ion-col size="1" class="ion-align-self-end" *ngIf="editMode && uiService?.isRegistrationOpen$ | async">
                     <ion-icon class="toggle-reorder-icon" (click)="toggleReorderGroup()"
@@ -21,7 +25,7 @@
     <ion-card-content *ngIf="isTableOpen">
         <hr>
         <ion-grid>
-            <ion-row class="ion-padding-horizontal" *ngIf="!isToolbar">
+            <ion-row class="ion-padding-horizontal">
                 <ion-col [offset]="admin || !(isRegistrationOpen | async) && !admin ? 5 : 6" size="2">
                     W
                 </ion-col>

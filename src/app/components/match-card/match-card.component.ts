@@ -56,7 +56,9 @@ export class MatchCardComponent implements OnInit {
                             } else {
                                 return mp;
                             }
-                        }));
+                        }))
+                    this.uiService.fetchTable$.next(this.matchPrediction.match.poule)
+                        ;
                 }, error => {
                     this.isLoading = false;
                     this.isLoadingColor = 'danger';

@@ -11,17 +11,17 @@ export class RoundTextPipe implements PipeTransform {
     transform(value: unknown, isSpeelschema?: boolean): unknown {
         switch (value) {
             case '16':
-                return 'Achtste finales';
+                return 'Achtste finale';
             case '8':
-                return 'Kwartfinales';
+                return 'Kwartfinale';
             case '4':
-                return 'Halve Finales';
+                return 'Halve Finale';
             case '3':
                 return isSpeelschema ? 'Troostfinale' : 'Winnaar troostfinale'
             case '2':
                 return 'Finale';
             default:
-                return 'Wereldkampioen';
+                return 'Europees kampioen';
         }
     }
 
