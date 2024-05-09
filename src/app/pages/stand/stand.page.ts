@@ -16,7 +16,7 @@ import { ToggleStandListComponent } from '../../components/toggle-stand-list/tog
 export class StandPage {
 
     searchTerm$: BehaviorSubject<string> = new BehaviorSubject('');
-
+    isMatchStandActive = false;
     mijnStand: IStandLine;
     stand: IStandLine[];
     unsubscribe: Subject<void>;
@@ -30,20 +30,12 @@ export class StandPage {
     ionViewWillEnter() {
         this.unsubscribe = new Subject<void>();
 
-        this.uiService.isMatchStandActive$
-            .pipe(takeUntil(this.unsubscribe))
-            .pipe(switchMap(isMatchStandActive => {
-                return combineLatest([
-                    this.uiService.totaalstand$.pipe(map(stand =>
-                        this.standService.calculatePosition(stand.sort((a, b) => {
-                            return isMatchStandActive ? b.matchPoints - a.matchPoints : b.totalPoints - a.totalPoints;
-                        }), isMatchStandActive)
-                    )),
+        combineLatest([
+                    this.uiService.totaalstand$,
                     this.searchTerm$,
-                    this.uiService.participant$]
-                );
-            }))
+                    this.uiService.participant$])
             .subscribe(([stand, searchTerm, participant]) => {
+                console.log(stand)
                 this.stand = this.uiService.filterDeelnemers(searchTerm, stand.map(line => {
                     return {
                         ...line,
@@ -81,7 +73,8 @@ export class StandPage {
         this.unsubscribe.unsubscribe();
     }
 
-    async toggleMatchStand() {
-        this.uiService.isMatchStandActive$.next(!this.uiService.isMatchStandActive$.getValue());
-    }
+    // async toggleMatchStand() {
+        
+    //     this.uiService.isMatchStandActive$.next(!this.uiService.isMatchStandActive$.getValue());
+    // }
 }

@@ -1,13 +1,13 @@
 export const environment = {
-  production: false,
+  production: true,
   apiBaseUrl: 'https://hetekspelapi-2024.onrender.com',
   firebase: {
-    apiKey: "AIzaSyCMeYBPzetTQIAArzY-AIzeru0cd4egQEk",
-    authDomain: "hetekspel-2024.firebaseapp.com",
-    projectId: "hetekspel-2024",
-    storageBucket: "hetekspel-2024.appspot.com",
-    messagingSenderId: "308732419869",
-    appId: "1:308732419869:web:915cc022133a0eff08cbf4",
-    databaseUrl: "https://hetekspel-2024-default-rtdb.europe-west1.firebasedatabase.app"
+    apiKey: "AIzaSyDlOPUlGlhhxC8wPiFo6H0cfaxG69RvqnM",
+    authDomain: "hetekspel-24.firebaseapp.com",
+    projectId: "hetekspel-24",
+    storageBucket: "hetekspel-24.appspot.com",
+    messagingSenderId: "309318087423",
+    appId: "1:309318087423:web:39cbb20dea0caadf40d2ca",
+    databaseUrl: "https://hetekspel-24-default-rtdb.firebaseio.com/"
   }
 };

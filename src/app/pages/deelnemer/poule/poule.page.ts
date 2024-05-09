@@ -26,6 +26,19 @@ export class PoulePage {
   ionViewWillEnter() {
     this.unsubscribe = new Subject<void>();
 
+    this.refresh(null);
+
+    combineLatest([this.uiService.totaalstand$, this.route.params])
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(([stand, params]) => {
+        if (stand && params.id) {
+          this.standLine = stand.find(line => line.id === params.id);
+        }
+      })
+
+  }
+
+  refresh(event):void {
     this.route.params.pipe(switchMap((params) => {
       return  this.poulepredictionService.getPoulePredictionsByParticipant(params.id)
     }))
@@ -62,29 +75,22 @@ export class PoulePage {
                   .sort((a, b) => a.positie - b.positie),
               isSortDisabled: true
             },
-            {
-              poule: 'G', stand: poulePrediction.filter(p => p.poule === 'G')
-                  .sort((a, b) => a.positie - b.positie),
-              isSortDisabled: true
-            },
-            {
-              poule: 'H', stand: poulePrediction.filter(p => p.poule === 'H')
-                  .sort((a, b) => a.positie - b.positie),
-              isSortDisabled: true
-            }];
+            // {
+            //   poule: 'G', stand: poulePrediction.filter(p => p.poule === 'G')
+            //       .sort((a, b) => a.positie - b.positie),
+            //   isSortDisabled: true
+            // },
+            // {
+            //   poule: 'H', stand: poulePrediction.filter(p => p.poule === 'H')
+            //       .sort((a, b) => a.positie - b.positie),
+            //   isSortDisabled: true
+            // }
+          ];
         });
-
-    combineLatest([this.uiService.totaalstand$, this.route.params])
-      .pipe(takeUntil(this.unsubscribe))
-      .subscribe(([stand, params]) => {
-        if (stand && params.id) {
-          this.standLine = stand.find(line => line.id === params.id);
-
-        }
-      })
-
+        if (event) {
+          event.target.complete();
+      }
   }
-
   ionViewDidLeave(): void {
     this.unsubscribe.next();
     this.unsubscribe.unsubscribe();

@@ -7,6 +7,9 @@
 <ion-content appGestures
              [gestureOpts]="gestureOpts"
              (swipe)="onSwipe($event)">
+            <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+                <ion-refresher-content></ion-refresher-content>
+            </ion-refresher>
     <ion-card class="message" color="tertiary">
         <ion-card-content *ngIf="standLine">
             {{standLine?.displayName}} staat {{standLine?.position}}e met {{standLine?.totalPoints}} punten, waarvan {{standLine?.matchPoints}}
@@ -14,7 +17,7 @@
         </ion-card-content>
     </ion-card>
     <ng-container *ngIf="predictions">
-            <ion-item *ngFor="let prediction of predictions; let itemBounds = bounds let i = index;" (click)="openMatch(prediction.match.id)" class="ion-no-padding"
+            <ion-item *ngFor="let prediction of predictions; let i = index;" (click)="openMatch(prediction.match.id)" class="ion-no-padding"
                       lines="none">
                 <ion-grid class="ion-no-padding ion-padding-start">
                     <ion-row style="font-size: x-small">

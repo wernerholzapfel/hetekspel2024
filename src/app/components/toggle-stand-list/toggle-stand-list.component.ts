@@ -9,16 +9,16 @@ import {UiService} from '../../services/ui.service';
 })
 export class ToggleStandListComponent implements OnInit {
 
-    isMatchStandActive: boolean;
+    // isMatchStandActive: boolean;
 
     constructor(private popoverController: PopoverController, private uiService: UiService) {
     }
 
     ngOnInit() {
-        this.isMatchStandActive = this.uiService.isMatchStandActive$.getValue();
+        // this.isMatchStandActive = this.uiService.isMatchStandActive$.getValue();
     }
 
-    async toggleStand(isMatchStandActive: boolean) {
-        await this.popoverController.dismiss({isMatchStandActive});
-    }
+    // async toggleStand(isMatchStandActive: boolean) {
+        // await this.popoverController.dismiss({isMatchStandActive});
+    // }
 }

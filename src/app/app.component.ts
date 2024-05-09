@@ -112,14 +112,14 @@ export class AppComponent implements OnInit, OnDestroy {
             }
         });
 
-        this.db.list<any>(`ek2024/totaal`)
+        this.db.list<any>(`totaal`)
             .valueChanges()
             .pipe(takeUntil(this.unsubscribe))
             .subscribe(totaalstand => {
                 this.uiService.totaalstand$.next(totaalstand);
             });
 
-        this.db.object<{ lastUpdated: number }>(`ek2024/lastUpdated`)
+        this.db.object<{ lastUpdated: number }>(`lastUpdated`)
             .valueChanges()
             .pipe(takeUntil(this.unsubscribe))
             .subscribe(item => {
@@ -142,6 +142,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
         this.platform.resume.subscribe(() => {
             if (this.platform.is('cordova')) {
+                console.log('resume')
                 this.refresh();
             }
         });
@@ -149,7 +150,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
     public refresh(): void {
         const currentPage = this.routeStateService.getCurrentRouteComponent();
+        console.log(currentPage)
         if (currentPage && currentPage.refresh) {
+            console.log('app component refresh')
+            console.log(currentPage)
+            console.log(currentPage)
             currentPage.refresh(null);
         }
     }

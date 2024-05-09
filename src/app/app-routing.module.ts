@@ -1,13 +1,11 @@
 import {NgModule} from '@angular/core';
 import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
 import {DeadlineGuard} from './guards/deadline.guard';
-import { DonatieGuard } from './guards/donatie.guard';
 
 const routes: Routes = [
     {
         path: 'home',
         loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule),
-        canActivate: [DonatieGuard]
     },
     {
         path: 'prediction',

@@ -37,14 +37,7 @@ export class MatchesPage {
     ionViewWillEnter() {
         this.unsubscribe = new Subject<void>();
 
-        this.route.params.pipe(switchMap((params) => {
-            return this.matchService.getMatchPredictionsForParticipant(params.id)
-        }))
-            .pipe(takeUntil(this.unsubscribe))
-            .subscribe(
-                matchPredictions => {
-                    this.predictions = matchPredictions;
-                });
+        this.refresh(null);
 
         combineLatest([this.uiService.totaalstand$, this.route.params])
             .pipe(takeUntil(this.unsubscribe))
@@ -52,7 +45,7 @@ export class MatchesPage {
                 if (stand && params.id) {
                     this.stand = stand;
                     this.standIndex = stand.findIndex(line => line.id === params.id);
-                    this.standLine = stand[this.standIndex];    
+                    this.standLine = stand[this.standIndex];
                 }
             })
 
@@ -74,6 +67,20 @@ export class MatchesPage {
 
             this.router.navigate([`deelnemer/deelnemer/${this.stand[this.standIndex].id}/matches/`]);
 
+        }
+    }
+    refresh(event): void {
+        this.route.params.pipe(switchMap((params) => {
+            return this.matchService.getMatchPredictionsForParticipant(params.id)
+        }))
+            .pipe(takeUntil(this.unsubscribe))
+            .subscribe(
+                matchPredictions => {
+                    this.predictions = matchPredictions;
+                });
+
+        if (event) {
+            event.target.complete();
         }
     }
 

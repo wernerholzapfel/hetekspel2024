@@ -11,7 +11,7 @@ export class KnockoutIconRowComponent implements OnInit {
   @Input() punten: number;
   @Input() round: number;
   @Input() isEliminated: boolean;
-  @Input() eliminationRound: string;
+  @Input() eliminationRound: number;
   public icon: string;
   public iconColor: string;
 
@@ -22,12 +22,12 @@ export class KnockoutIconRowComponent implements OnInit {
     if (this.punten > 0) {
       this.icon = 'checkmark-outline'
       this.iconColor = 'success'
-    } else if (parseFloat(this.eliminationRound.replace(/,/g, ".")) > this.round) {
+    } else if (this.isEliminated && this.eliminationRound && this.eliminationRound > this.round) {
       this.icon = 'close-outline';
       this.iconColor = 'danger'
     } else {
       this.icon = 'help-outline'
-      this.iconColor = 'dark';
+      this.iconColor = 'medium';
     }
   }
 

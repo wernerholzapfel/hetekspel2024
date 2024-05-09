@@ -19,7 +19,7 @@ export class UiService {
     pushToken$: BehaviorSubject<string> = new BehaviorSubject(null);
     totaalstand$: BehaviorSubject<IStandLine[]> = new BehaviorSubject([]);
     lastUpdated$: BehaviorSubject<{ lastUpdated?: number }> = new BehaviorSubject({});
-    isMatchStandActive$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+    // isMatchStandActive$: BehaviorSubject<boolean> = new BehaviorSubject(false);
     prefersDark$: BehaviorSubject<boolean> = new BehaviorSubject(null);
     matchPredictions$: BehaviorSubject<IMatchPrediction[]> = new BehaviorSubject([]);
     fetchTable$: BehaviorSubject<string> = new BehaviorSubject("A");

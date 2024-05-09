@@ -32,6 +32,19 @@ export class KnockoutPage {
     ionViewWillEnter() {
         this.unsubscribe = new Subject<void>();
 
+        this.refresh(null);
+
+        combineLatest([this.uiService.totaalstand$, this.route.params])
+            .pipe(takeUntil(this.unsubscribe))
+            .subscribe(([stand, params]) => {
+                if (stand && params.id) {
+                    this.standLine = stand.find(line => line.id === params.id);
+                }
+            })
+
+    }
+
+    refresh(event): void {
         this.route.params.pipe(switchMap((params) => {
             return combineLatest([
                 this.knockoutPredictionService.getKnockoutForParticipant(params.id),
@@ -45,6 +58,7 @@ export class KnockoutPage {
                         this.setEuropeesKampioen(prediction);
                     }
                     if (prediction.knockout.round === '3') {
+                        console.log('alleen wk')
                         this.setWinnaarTroostFinale(prediction);
                     }
                     return {
@@ -63,15 +77,9 @@ export class KnockoutPage {
                 });
                 console.log(this.predictions)
             });
-
-        combineLatest([this.uiService.totaalstand$, this.route.params])
-            .pipe(takeUntil(this.unsubscribe))
-            .subscribe(([stand, params]) => {
-                if (stand && params.id) {
-                    this.standLine = stand.find(line => line.id === params.id);
-                }
-            })
-
+        if (event) {
+            event.target.complete();
+        }
     }
 
     setEuropeesKampioen(finaleWedstrijd: any) {

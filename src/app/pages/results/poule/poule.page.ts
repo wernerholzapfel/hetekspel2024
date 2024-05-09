@@ -52,15 +52,17 @@ export class PoulePage {
                         poule: 'F', stand: poulePrediction.filter(p => p.poule === 'F')
                             .sort((a, b) => a.positie - b.positie),
                         isSortDisabled: true
-                    }, {
-                        poule: 'G', stand: poulePrediction.filter(p => p.poule === 'G')
-                            .sort((a, b) => a.positie - b.positie),
-                        isSortDisabled: true
-                    }, {
-                        poule: 'H', stand: poulePrediction.filter(p => p.poule === 'H')
-                            .sort((a, b) => a.positie - b.positie),
-                        isSortDisabled: true
-                    }];
+                    }
+                    // , {
+                    //     poule: 'G', stand: poulePrediction.filter(p => p.poule === 'G')
+                    //         .sort((a, b) => a.positie - b.positie),
+                    //     isSortDisabled: true
+                    // }, {
+                    //     poule: 'H', stand: poulePrediction.filter(p => p.poule === 'H')
+                    //         .sort((a, b) => a.positie - b.positie),
+                    //     isSortDisabled: true
+                    // }
+                ];
             });
     }
 }

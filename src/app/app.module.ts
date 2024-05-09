@@ -26,7 +26,6 @@ import { FromNowPipe } from './pipes/fromNow.pipe';
 import { DeelnemerGuard } from './guards/deelnemer.guard';
 import { KnockoutHelperService } from './services/knockoutHelper.service';
 import { RouteReuseStrategy } from '@angular/router';
-import { DonatieGuard } from './guards/donatie.guard';
 
 registerLocaleData(localeNl);
 
@@ -73,7 +72,6 @@ registerLocaleData(localeNl);
         UiService,
         CanDeactivateGuard,
         DeelnemerGuard,
-        DonatieGuard,
         FilterKnockoutRoundsPipe,
         FromNowPipe,
         KnockoutHelperService,

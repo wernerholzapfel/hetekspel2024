@@ -1,12 +1,12 @@
 {
   "projects": {
-    "default": "hetekspel-2024"
+    "default": "hetekspel-24"
   },
   "targets": {
-    "hetekspel-2024": {
+    "hetekspel-24": {
       "hosting": {
         "app": [
-          "hetekspel-2024"
+          "hetekspel-24"
         ]
       }
     }
