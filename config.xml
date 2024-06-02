@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.wernerholzapfel.hetekspel" version="2.0.0" xmlns="http://www.w3.org/ns/widgets">
+<widget id="com.wernerholzapfel.hetekspel" version="3.0.0" xmlns="http://www.w3.org/ns/widgets">
     <name>Het EK Spel</name>
-    <description>Het WK Spel 2022</description>
+    <description>Het EK Spel 2024</description>
     <author email="werner.holzapfel@gmail.com" href="http://hetekspel-2020.web.app/">Het EK Spel</author>
     <content src="index.html" />
     <access origin="*" />

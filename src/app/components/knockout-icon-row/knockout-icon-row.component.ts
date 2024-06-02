@@ -9,9 +9,9 @@ import {ITeam} from '../../models/poule.model';
 export class KnockoutIconRowComponent implements OnInit {
 
   @Input() punten: number;
-  @Input() round: number;
+  @Input() round: string;
   @Input() isEliminated: boolean;
-  @Input() eliminationRound: number;
+  @Input() eliminationRound: string;
   public icon: string;
   public iconColor: string;
 
@@ -22,7 +22,7 @@ export class KnockoutIconRowComponent implements OnInit {
     if (this.punten > 0) {
       this.icon = 'checkmark-outline'
       this.iconColor = 'success'
-    } else if (this.isEliminated && this.eliminationRound && this.eliminationRound > this.round) {
+    } else if (this.isEliminated && this.eliminationRound && parseInt(this.eliminationRound) > parseInt(this.round)) {
       this.icon = 'close-outline';
       this.iconColor = 'danger'
     } else {

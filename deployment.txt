@@ -62,3 +62,23 @@ https://ionic.zendesk.com/hc/en-us/articles/360055258453-Converting-a-Cordova-Ap
 [capacitor]        cordova-plugin-splashscreen@6.0.0
 [capacitor]        cordova-plugin-statusbar@2.4.3
 [capacitor]        cordova-plugin-whitelist@1.3.4
+
+
+fixes:
+
+you should search this file in your project:
+
+Pods-[your-project-name]-frameworks.sh (...-frameworks.sh)
+
+and edit this section:
+
+ if [ -L "${source}" ]; then
+    echo "Symlinked..."
+    source="$(readlink "${source}")"
+  fi
+to
+
+ if [ -L "${source}" ]; then
+    echo "Symlinked..."
+    source="$(readlink -f "${source}")"
+  fi

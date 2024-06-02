@@ -33,12 +33,12 @@ export class SpeelschemaMatchItemComponent implements OnInit {
     ngOnInit() {
     }
     openMatch(matchId: string) {
-        if (this.url === 'poule') {
+        if (this.url === 'poule' && matchId !== undefined) {
             this.router.navigate([`match/${matchId}`], {replaceUrl: false});
         } 
     }
     openKnockout(team: string, round: string) {
-        if (this.url !== 'poule') {
+        if (this.url !== 'poule' && team !== undefined) {
             this.router.navigate([`stats/knockout/round/${round}/team/${team}`], {replaceUrl: false});
 
         } 

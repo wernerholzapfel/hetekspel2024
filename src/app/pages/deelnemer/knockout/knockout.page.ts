@@ -17,6 +17,7 @@ export class KnockoutPage {
     predictions: any[]; // todo model
     speelschema: any[]; // todo model
     standLine: IStandLine;
+    showWinnaarTroostFinale = false;
     winnaarTroostFinale: any;
     europeesKampioen: any;
     unsubscribe = new Subject<void>();

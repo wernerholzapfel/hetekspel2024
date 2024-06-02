@@ -22,6 +22,7 @@ import { KnockoutIconRowComponent } from '../knockout-icon-row/knockout-icon-row
 import { MenuToolbarComponent } from '../menu-toolbar/menu-toolbar.component';
 import { SpeelschemaMatchItemComponent } from '../speelschema-match-item/speelschema-match-item.component';
 import { KnockoutCardTextPipe } from 'src/app/pipes/knockoutCardText.pipe';
+import { FilterPoulePositionPipe } from 'src/app/pipes/filter-pouleposition.pipe';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { KnockoutCardTextPipe } from 'src/app/pipes/knockoutCardText.pipe';
         FilterPouleMatchesPipe,
         FromNowPipe,
         RoundTextPipe,
+        FilterPoulePositionPipe,
         KnockoutCardTextPipe,
         MatchCardComponent,
         PuntenChipComponent,
@@ -62,6 +64,7 @@ import { KnockoutCardTextPipe } from 'src/app/pipes/knockoutCardText.pipe';
         FilterPouleMatchesPipe,
         FromNowPipe,
         RoundTextPipe,
+        FilterPoulePositionPipe,
         KnockoutCardTextPipe,
         ScrollVanishDirective,
         GestureDirective,

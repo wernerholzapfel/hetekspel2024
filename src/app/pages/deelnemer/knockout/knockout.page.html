@@ -63,7 +63,7 @@
         </ng-container>
     </ng-container>
     </ion-grid>
-    <ng-container *ngIf="predictions && winnaarTroostFinale">
+    <ng-container *ngIf="predictions && winnaarTroostFinale && showWinnaarTroostFinale">
         <ion-grid>
             <ion-row>
                 <ion-col>Winnaar troostfinale
@@ -75,6 +75,8 @@
                                       [round]="'3'"
                                       [punten]="winnaarTroostFinale?.winnerSpelpunten ? winnaarTroostFinale?.winnerSpelpunten : 0"></app-knockout-team-header>
         </ion-grid>
+    </ng-container>
+    <ng-container *ngIf="predictions">
          <ion-grid>
             <ion-row>
                 <ion-col>Europeeskampioen
@@ -82,9 +84,11 @@
             </ion-row>
         </ion-grid>
         <ion-grid (click)="openKoTeam(europeesKampioen?.team.id, '1')">
-            <app-knockout-team-header [team]="europeesKampioen?.team"
+            <app-knockout-team-header 
+            [team]="europeesKampioen?.team"
             [round]="'2'"
-            [punten]="europeesKampioen?.winnerSpelpunten ? europeesKampioen?.winnerSpelpunten : 0"></app-knockout-team-header>
+            [punten]="europeesKampioen?.winnerSpelpunten ? europeesKampioen?.winnerSpelpunten : 0">
+        </app-knockout-team-header>
         </ion-grid>
     </ng-container>
 </ion-content>

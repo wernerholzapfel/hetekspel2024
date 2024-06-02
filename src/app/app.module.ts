@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthService } from './services/auth.service';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { AngularFireMessagingModule } from '@angular/fire/compat/messaging';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { ParticipantService } from './services/participant.service';
 import { environment } from '../environments/environment';
@@ -26,6 +27,9 @@ import { FromNowPipe } from './pipes/fromNow.pipe';
 import { DeelnemerGuard } from './guards/deelnemer.guard';
 import { KnockoutHelperService } from './services/knockoutHelper.service';
 import { RouteReuseStrategy } from '@angular/router';
+import { FilterPoulePositionPipe } from './pipes/filter-pouleposition.pipe';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getMessaging, provideMessaging } from '@angular/fire/messaging';
 
 registerLocaleData(localeNl);
 
@@ -74,6 +78,7 @@ registerLocaleData(localeNl);
         DeelnemerGuard,
         FilterKnockoutRoundsPipe,
         FromNowPipe,
+        FilterPoulePositionPipe,
         KnockoutHelperService,
     ],
     bootstrap: [AppComponent]

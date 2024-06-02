@@ -12,7 +12,7 @@ export class HalloffamePage implements OnInit {
     constructor() {
         this.tournaments = [
             {
-                jaar: 'WK 2024',
+                jaar: 'WK 2022',
                 aantal: 158,
                 halloffame: [{
                     naam: 'Frank van Maanen',

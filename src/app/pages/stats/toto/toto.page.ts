@@ -20,7 +20,6 @@ export class TotoPage {
 
     ionViewWillEnter() {
         this.unsubscribe = new Subject<void>();
-        
         this.db.list<any>(`ek2024/stats/toto`)
             .valueChanges()
             .pipe(takeUntil(this.unsubscribe))

@@ -10,8 +10,10 @@ import {PoulePage} from './poule.page';
 import {MatchesPageModule} from '../matches/matches.module';
 import {MenuToolbarModule} from '../../../components/menu-toolbar/menu-toolbar.module';
 import {CustomComponentsModule} from '../../../components/custom-components/custom-components.module';
+import { LoaderModule } from "../../../components/loader/loader.module";
 
 @NgModule({
+    declarations: [PoulePage],
     imports: [
         CommonModule,
         FormsModule,
@@ -19,8 +21,8 @@ import {CustomComponentsModule} from '../../../components/custom-components/cust
         PoulePageRoutingModule,
         MatchesPageModule,
         MenuToolbarModule,
-        CustomComponentsModule
-    ],
-  declarations: [PoulePage]
+        CustomComponentsModule,
+        LoaderModule
+    ]
 })
 export class PoulePageModule {}

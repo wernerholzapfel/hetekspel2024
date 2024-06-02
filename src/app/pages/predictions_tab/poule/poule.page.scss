@@ -3,4 +3,13 @@
     --background: var(--ion-color-secondary);
     --color: var(--ion-color-light)
   }
+
+}
+
+ion-row.ion-padding {
+  padding: 8px;
+}
+
+ion-modal ion-toolbar {
+  padding-top: var(--ion-safe-area-top);
 }

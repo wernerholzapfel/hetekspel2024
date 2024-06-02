@@ -6,6 +6,9 @@
                     <ion-card-subtitle class="ion-no-margin">
                         Stand poule {{poule?.poule}} 
                     </ion-card-subtitle>
+                    <ion-card-subtitle *ngIf="!isSortedCorrectly && showSortedCorrectly">
+                <ion-note color="danger">Deze poulestand is anders dan je zou verwachten op basis van je voorspellingen.</ion-note>
+                    </ion-card-subtitle>
                 </ion-col>
                 <ion-col size="1" class="ion-align-self-end" *ngIf="editMode && !poule?.isSortDisabled && uiService?.isRegistrationOpen$ | async">
                     <ion-icon class="toggle-reorder-icon" (click)="setSortBackToOriginal()"
@@ -25,7 +28,7 @@
     <ion-card-content *ngIf="isTableOpen">
         <hr>
         <ion-grid>
-            <ion-row class="ion-padding-horizontal">
+                <ion-row class="ion-padding-horizontal">
                 <ion-col [offset]="admin || !(isRegistrationOpen | async) && !admin ? 5 : 6" size="2">
                     W
                 </ion-col>

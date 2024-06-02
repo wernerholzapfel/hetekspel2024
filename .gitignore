@@ -40,3 +40,8 @@ google-services.json
 /android
 /.firebase
 src/environments/environment.ts
+
+# Firebase
+.firebase
+*-debug.log
+.runtimeconfig.json

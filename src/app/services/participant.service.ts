@@ -34,6 +34,8 @@ export class ParticipantService {
     }
 
     putPushToken(body: { pushtoken: string }): Observable<IParticipant> {
+        console.log('putPushToken')
+        console.log(body)
         return this.http.put<IParticipant>(`${environment.apiBaseUrl}/participant/pushtoken`, body);
     }
 

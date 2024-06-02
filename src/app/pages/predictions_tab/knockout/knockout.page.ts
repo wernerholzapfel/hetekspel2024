@@ -1,14 +1,14 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
-import {PoulepredictionService} from '../../../services/pouleprediction.service';
-import {IPoulePrediction} from '../../../models/participant.model';
-import {IKnockout} from '../../../models/knockout.model';
-import {ITeam} from '../../../models/poule.model';
-import {ToastService} from '../../../services/toast.service';
-import {UiService} from '../../../services/ui.service';
-import {KnockoutService} from '../../../services/knockout.service';
-import {Router} from '@angular/router';
-import {AlertController, LoadingController} from '@ionic/angular';
-import {take} from 'rxjs/operators';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { PoulepredictionService } from '../../../services/pouleprediction.service';
+import { IPoulePrediction } from '../../../models/participant.model';
+import { IKnockout } from '../../../models/knockout.model';
+import { ITeam } from '../../../models/poule.model';
+import { ToastService } from '../../../services/toast.service';
+import { UiService } from '../../../services/ui.service';
+import { KnockoutService } from '../../../services/knockout.service';
+import { Router } from '@angular/router';
+import { AlertController, LoadingController } from '@ionic/angular';
+import { take } from 'rxjs/operators';
 import { TeamService } from 'src/app/services/team.service';
 import { KnockoutHelperService } from 'src/app/services/knockoutHelper.service';
 
@@ -21,13 +21,13 @@ export class KnockoutPage {
     @ViewChild('topScrollAnchor') topScroll: ElementRef;
 
     constructor(private poulePredictionService: PoulepredictionService,
-                private knockoutService: KnockoutService,
-                private toastService: ToastService,
-                private router: Router,
-                public uiService: UiService,
-                public alertController: AlertController,
-                private loadingCtrl: LoadingController,
-                private knockoutHelper: KnockoutHelperService) {
+        private knockoutService: KnockoutService,
+        private toastService: ToastService,
+        private router: Router,
+        public uiService: UiService,
+        public alertController: AlertController,
+        private loadingCtrl: LoadingController,
+        private knockoutHelper: KnockoutHelperService) {
     }
 
     public isLoadingColor = 'primary';
@@ -37,6 +37,7 @@ export class KnockoutPage {
     public segmentIndex = 1;
     public canIGoToNextStep: boolean;
     public wrongSelectedTeam: IKnockout[]
+    public eliminatedEarlier: IKnockout[]
     public landDoubleInRound: any[]
     public rounds = this.knockoutHelper.rounds;
     private nummerDries: IPoulePrediction[];
@@ -53,9 +54,7 @@ export class KnockoutPage {
 
             this.poules = pp;
 
-            this.nummerDries = pp.filter(item => item.positie === 3)
-            .sort((a, b) => b.thirdPositionScore - a.thirdPositionScore)
-            .slice(0, 4);
+            this.nummerDries = pp.filter(item => item.positie === 3 && item.selected)
 
             this.nummerDrieIdentifier = this.nummerDries.sort((a, b) => {
                 if (b.poule > a.poule) {
@@ -117,14 +116,58 @@ export class KnockoutPage {
     }
 
     private setWrongSelectedTeams() {
-        this.wrongSelectedTeam = this.speelschema.filter(match => match.selectedTeam && match.selectedTeam.id != match.homeTeam.id && match.selectedTeam.id != match.awayTeam.id)
-                .map(sp => {
-                    return {
+
+        const round16teams = [...this.speelschema.filter(match => match.round === '16').map(r16 => r16.homeTeam.id),
+        ...this.speelschema.filter(match => match.round === '16').map(r16 => r16.awayTeam.id)]
+        console.log(round16teams)
+        const round8teams = [...this.speelschema.filter(match => match.round === '8').map(r16 => r16.homeTeam.id),
+        ...this.speelschema.filter(match => match.round === '8').map(r16 => r16.awayTeam.id)]
+        console.log(round8teams)
+        const round4teams = [...this.speelschema.filter(match => match.round === '4').map(r16 => r16.homeTeam.id),
+        ...this.speelschema.filter(match => match.round === '4').map(r16 => r16.awayTeam.id)]
+        console.log(round4teams)
+        const round2teams = [...this.speelschema.filter(match => match.round === '2').map(r16 => r16.homeTeam.id),
+        ...this.speelschema.filter(match => match.round === '2').map(r16 => r16.awayTeam.id)]
+        console.log(round2teams)
+
+        this.eliminatedEarlier = []
+
+        const wrong2teams = round2teams.filter(rt => (!round4teams.includes(rt) || !round8teams.includes(rt) || !round16teams.includes(rt)) && rt !== undefined)
+        const wrong4teams = round4teams.filter(rt => (!round8teams.includes(rt) || !round16teams.includes(rt))  && rt !== undefined)
+        const wrong8teams = round8teams.filter(rt => !round16teams.includes(rt) && rt !== undefined)
+
+
+        this.eliminatedEarlier = [...this.eliminatedEarlier,
+            ...this.speelschema.filter(match => match.round === '2' && 
+            (wrong2teams.includes(match.homeTeam.id) || wrong2teams.includes(match.awayTeam.id))).map(sp => {
+                return {
                     ...sp,
                     roundText: this.knockoutHelper.rounds.find(r => r.round === sp.round).text
                 }
-                });
-            }
+            }),
+            ...this.speelschema.filter(match => match.round === '4' && 
+            (wrong4teams.includes(match.homeTeam.id) || wrong4teams.includes(match.awayTeam.id))).map(sp => {
+                return {
+                    ...sp,
+                    roundText: this.knockoutHelper.rounds.find(r => r.round === sp.round).text
+                }
+            }),
+            ...this.speelschema.filter(match => match.round === '8' && 
+            (wrong8teams.includes(match.homeTeam.id) || wrong8teams.includes(match.awayTeam.id))).map(sp => {
+                return {
+                    ...sp,
+                    roundText: this.knockoutHelper.rounds.find(r => r.round === sp.round).text
+                }
+            })]
+
+        this.wrongSelectedTeam = this.speelschema.filter(match => match.selectedTeam && match.selectedTeam.id != match.homeTeam.id && match.selectedTeam.id != match.awayTeam.id)
+            .map(sp => {
+                return {
+                    ...sp,
+                    roundText: this.knockoutHelper.rounds.find(r => r.round === sp.round).text
+                }
+            });
+    }
 
     toFindDuplicates(arry) {
         const uniqueElements = new Set(arry);
@@ -139,7 +182,7 @@ export class KnockoutPage {
         return [...new Set(filteredElements)]
     }
 
-    
+
     private setLandDoubleInRound(notifyWithAlert) {
         const landenPerRonde = this.speelschema.reduce((acc, index) => {
             return this.addMatchToRound(index, acc)
@@ -155,11 +198,11 @@ export class KnockoutPage {
         }).filter(r => r.duplicateTeams.length > 0);
 
 
-        if (notifyWithAlert && this.landDoubleInRound.length > 0 ) {
+        if (notifyWithAlert && this.landDoubleInRound.length > 0) {
             let text = 'Je hebt een of meer landen dubbel in een ronde:'
             this.landDoubleInRound.forEach(round => {
                 round.duplicateTeams.forEach(team => {
-                    text = `${text} ${round.text} ${team}`                   
+                    text = `${text} ${round.text} ${team}`
                 });
             });
             this.uiService.presentToast(text, 'danger', true);
@@ -169,7 +212,8 @@ export class KnockoutPage {
     private addMatchToRound(match, rounds: any[]) {
         return rounds.map(r => {
             if (r.round === match.round) {
-                return {...r,
+                return {
+                    ...r,
                     teams: [...r.teams, match.homeTeam, match.awayTeam]
                 }
             } else return { ...r };
@@ -179,7 +223,7 @@ export class KnockoutPage {
 
     selectKnockoutRound($event) {
         this.activeKnockoutRound = $event.detail.value;
-        setTimeout(() => this.topScroll.nativeElement.scrollIntoView({behavior: 'smooth'}), 500);
+        setTimeout(() => this.topScroll.nativeElement.scrollIntoView({ behavior: 'smooth' }), 500);
         this.calculateCanIGoToNextStep();
     }
 
@@ -188,8 +232,8 @@ export class KnockoutPage {
         const segment = document.querySelector('ion-segment');
         const active = segment.querySelectorAll('ion-segment-button')[index];
         if (active) {
-            active.scrollIntoView({behavior: 'smooth', inline: 'center'});
-            setTimeout(() => this.topScroll.nativeElement.scrollIntoView({behavior: 'smooth'}), 500);
+            active.scrollIntoView({ behavior: 'smooth', inline: 'center' });
+            setTimeout(() => this.topScroll.nativeElement.scrollIntoView({ behavior: 'smooth' }), 500);
         }
         this.calculateCanIGoToNextStep();
     }
@@ -197,42 +241,42 @@ export class KnockoutPage {
     async setSelectedTeam(match: IKnockout, $event, hasLoserMatch = false) {
         const loading = await this.loadingCtrl.create({
             message: 'Wedstrijd wordt opgeslagen',
-          });
-      
-          if (!match.prediction && !match.prediction?.id) {
+        });
+
+        if (!match.prediction && !match.prediction?.id) {
             loading.present();
-          }
+        }
         match.isLoading = true;
         this.poulePredictionService.saveKnockoutPrediction(
             (match.prediction && match.prediction.id) ?
                 {
                     id: match.prediction.id,
                     matchId: match.matchId,
-                    selectedTeam: {id: $event.detail.value},
+                    selectedTeam: { id: $event.detail.value },
                     homeTeam: match.homeTeam,
                     awayTeam: match.awayTeam,
-                    knockout: {id: match.id},
+                    knockout: { id: match.id },
                     round: match.round
                 } : {
-                    selectedTeam: {id: $event.detail.value},
+                    selectedTeam: { id: $event.detail.value },
                     matchId: match.matchId,
                     homeTeam: match.homeTeam,
                     awayTeam: match.awayTeam,
-                    knockout: {id: match.id},
+                    knockout: { id: match.id },
                     round: match.round
                 }
         ).subscribe(response => {
             loading.dismiss();
             match.isLoading = false;
             match.prediction = response;
-            match.selectedTeam = {id: $event.detail.value};
+            match.selectedTeam = { id: $event.detail.value };
 
             this.calculateCanIGoToNextStep();
             this.updateSpeelschema(match, $event.detail.value);
             if (match.round === "4") {
                 this.updateSpeelschema(match, $event.detail.value, true);
             }
-        
+
         }, error => {
             match.isLoading = false;
             this.toastService.presentToast(error && error.error && error.error.message ? error.error.message : 'Er is iets misgegaan', 'warning');
@@ -241,22 +285,23 @@ export class KnockoutPage {
 
     next() {
         this.activeKnockoutRound = this.knockoutHelper.rounds.find(r => r.round === this.activeKnockoutRound).next;
-        setTimeout(() => this.topScroll.nativeElement.scrollIntoView({behavior: 'smooth'}), 500);
+        setTimeout(() => this.topScroll.nativeElement.scrollIntoView({ behavior: 'smooth' }), 500);
+        this.calculateCanIGoToNextStep();
     }
 
     updateSpeelschema(match, selectedTeam, loserMatch = false) {
-        const matchToUpdate = loserMatch ? this.speelschema.find(m => m.homeId === "V"+match.matchId || 
-            m.awayId === "V"+match.matchId) : this.speelschema.find(m => m.homeId === match.matchId || 
-            m.awayId === match.matchId);
+        const matchToUpdate = loserMatch ? this.speelschema.find(m => m.homeId === "V" + match.matchId ||
+            m.awayId === "V" + match.matchId) : this.speelschema.find(m => m.homeId === match.matchId ||
+                m.awayId === match.matchId);
 
         // 3/4 P hoeft niet geupdate te worden?
         if (matchToUpdate) {
             this.speelschema = this.speelschema.map(m => {
                 if (matchToUpdate && m.matchId === matchToUpdate.matchId) {
-                    if (m.homeId === match.matchId || m.homeId === "V"+match.matchId) {
+                    if (m.homeId === match.matchId || m.homeId === "V" + match.matchId) {
                         return {
                             ...m,
-                            homeTeam: this.knockoutHelper.setTeam(this.speelschema, m.homeId, m.round,null, selectedTeam)
+                            homeTeam: this.knockoutHelper.setTeam(this.speelschema, m.homeId, m.round, null, selectedTeam)
                         };
                     } else {
                         return {

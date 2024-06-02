@@ -9,7 +9,9 @@ export interface IStandLine {
     totalPoints: number;
     deltaTotalPoints: number;
     deltaMatchPoints: number;
-    deltaMatchPosition?: number;
+    previousPosition?: number;
+    previousMatchPosition?: number;
+    matchPosition?: number;
     deltaPosition?: number;
     deltaPoulePoints: number;
     deltaKnockoutPoints: number;

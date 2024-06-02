@@ -71,7 +71,7 @@ export class KnockoutTeamHeaderComponent {
       this.punten = 0
     } else {
       this.icon = 'help-outline'
-      this.iconColor = 'dark';
+      this.iconColor = 'medium';
     }
   }
 

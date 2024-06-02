@@ -7,17 +7,17 @@
 	<key>REVERSED_CLIENT_ID</key>
 	<string>com.googleusercontent.apps.131148888399-jvp1uc62m4sljbhp3g7n5edgtq8v1nrf</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDdupaSxc27CHKZflcljUA1qgw9-Rms69k</string>
+		<string>AIzaSyArbKc_orvNUHzhG8ZxahaFFXgGXHliTCU</string>
 	<key>GCM_SENDER_ID</key>
-	<string>131148888399</string>
+		<string>309318087423</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.wernerholzapfel.hetekspel</string>
 	<key>PROJECT_ID</key>
-	<string>hetwkspel-2022</string>
+		<string>hetekspel-24</string>
 	<key>STORAGE_BUCKET</key>
-	<string>hetwkspel-2022.appspot.com</string>
+	<string>hetekspel-24.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:131148888399:ios:a38b5959f1e3193fa6ed3a</string>
+		<string>1:309318087423:ios:1f2e15a2e2b509ee40d2ca</string>
 	<key>DATABASE_URL</key>
-	<string>https://hetwkspel-2022-default-rtdb.europe-west1.firebasedatabase.app</string>
+		<string>https://hetekspel-24-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>
