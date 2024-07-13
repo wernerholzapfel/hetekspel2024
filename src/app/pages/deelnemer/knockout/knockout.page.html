@@ -1,7 +1,9 @@
 <ion-header>
     <app-menu-toolbar title="Finaleronde"></app-menu-toolbar>
 </ion-header>
-<ion-content>
+<ion-content appGestures
+[gestureOpts]="gestureOpts"
+(swipe)="onSwipe($event)">
     <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
@@ -12,6 +14,21 @@
         </ion-card-content>
     </ion-card>
     <ion-grid>
+        <ng-container *ngIf="predictions">
+            <ion-grid>
+               <ion-row>
+                   <ion-col>Europees kampioen
+                   </ion-col>
+               </ion-row>
+           </ion-grid>
+           <ion-grid (click)="openKoTeam(europeesKampioen?.team.id, '1')">
+               <app-knockout-team-header 
+               [team]="europeesKampioen?.team"
+               [round]="'2'"
+               [punten]="europeesKampioen?.winnerSpelpunten ? europeesKampioen?.winnerSpelpunten : 0">
+           </app-knockout-team-header>
+           </ion-grid>
+       </ng-container>
         <ng-container *ngFor="let prediction of predictions;let i = index">
          <ng-container *ngIf="prediction.round !== '3'">
             <ion-row *ngIf="i === 0 || predictions[i-1].knockout.round !== prediction.knockout.round">
@@ -63,7 +80,7 @@
         </ng-container>
     </ng-container>
     </ion-grid>
-    <ng-container *ngIf="predictions && winnaarTroostFinale">
+    <ng-container *ngIf="predictions && winnaarTroostFinale && showWinnaarTroostFinale">
         <ion-grid>
             <ion-row>
                 <ion-col>Winnaar troostfinale
@@ -75,16 +92,6 @@
                                       [round]="'3'"
                                       [punten]="winnaarTroostFinale?.winnerSpelpunten ? winnaarTroostFinale?.winnerSpelpunten : 0"></app-knockout-team-header>
         </ion-grid>
-         <ion-grid>
-            <ion-row>
-                <ion-col>Europeeskampioen
-                </ion-col>
-            </ion-row>
-        </ion-grid>
-        <ion-grid (click)="openKoTeam(europeesKampioen?.team.id, '1')">
-            <app-knockout-team-header [team]="europeesKampioen?.team"
-            [round]="'2'"
-            [punten]="europeesKampioen?.winnerSpelpunten ? europeesKampioen?.winnerSpelpunten : 0"></app-knockout-team-header>
-        </ion-grid>
     </ng-container>
+   
 </ion-content>

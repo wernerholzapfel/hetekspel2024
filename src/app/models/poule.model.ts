@@ -66,6 +66,7 @@ export interface ITableLine {
     spelpunten?: number;
     isPositionFinal?: boolean;
     positieVoorspelling?: number; 
+    selected?: boolean; 
 }
 
 export interface PouleNav {

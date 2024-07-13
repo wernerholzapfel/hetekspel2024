@@ -25,15 +25,20 @@ export class StandCardComponent implements OnInit, OnDestroy {
         return this._poule;
     }
 
+    @Input() showSortedCorrectly = false;
     @Input() isToolbar = false;
     @Input() admin = false;
     @Input() editMode = true;
     @Input() isTableOpen = true;
     isRegistrationOpen: Observable<boolean>;
+    isSortedCorrectly: boolean;
 
     private _stand: any[];
     @Input() set stand(value) {
         this._stand = value;
+        this.isSortedCorrectly = this.stand ? this.stand.every((value, index, array) => {
+            return index === 0 || value.sortering <= array[index - 1].sortering
+        }) : false
     }
     get stand() {
         return this._stand
@@ -69,16 +74,16 @@ export class StandCardComponent implements OnInit, OnDestroy {
     }
 
     setSortBackToOriginal() {
-        this.stand = this.stand.sort((a, b) => a.positieVoorspelling - b.positieVoorspelling).map((line, index) => {
+        this.stand = this.stand.sort((a, b) => b.sortering - a.sortering).map((line, index) => {
             return {
                 ...line,
                 positie: index + 1,
-                positieVoorspelling: index + 1
+                // positieVoorspelling: index + 1
             }
         })
         this.uiService.updatePouleStand$.next(this.stand)
         this.uiService.isDirty$.next(true);
-        
+
     }
 
     closeOrOpenTable() {

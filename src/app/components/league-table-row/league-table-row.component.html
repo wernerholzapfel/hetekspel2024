@@ -1,4 +1,5 @@
-<ion-row class="ion-padding" [ngClass]="line.positie === line.positieVoorspelling || !line.positieVoorspelling ? (index % 2 == 0) ? 'odd' : 'even' : 'changedposition'">
+<ion-row class="ion-padding"
+    [ngClass]="line.positie === line.positieVoorspelling || !line.positieVoorspelling ? (index % 2 == 0) ? 'odd' : 'even' : 'changedposition'">
     <ion-col>
         <span class="fi fi-{{line.team.logoUrl}} fis"></span>
         <ion-text>

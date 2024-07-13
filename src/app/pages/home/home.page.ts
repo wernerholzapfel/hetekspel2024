@@ -114,6 +114,11 @@ export class HomePage implements OnInit, OnDestroy {
     openParticipantKnockout(participantId: string) {
         this.router.navigate([`deelnemer/deelnemer/${participantId}/knockout`], { replaceUrl: false });
     }
+    
+    navigateToKnockoutStats(round: string, teamId: string) {
+        const nextRound = (parseInt(round,0) / 2)
+        this.router.navigate([`stats/knockout/round/${nextRound}/team/${teamId}`], { replaceUrl: false });
+    }
 
     ngOnDestroy(): void {
         this.unsubscribe.next();

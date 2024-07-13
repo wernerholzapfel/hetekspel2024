@@ -57,7 +57,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
             if (this.platform.is('hybrid')) {
 
-                CapacitorUpdater.notifyAppReady();
+               await CapacitorUpdater.notifyAppReady();
 
                 // await StatusBar.styleDefault();
                 await SplashScreen.hide();
@@ -77,6 +77,8 @@ export class AppComponent implements OnInit, OnDestroy {
                 // On success, we should be able to receive notifications
                 PushNotifications.addListener('registration',
                     (token: Token) => {
+                        console.log("token in registration")
+                        console.log(token.value)
                         this.uiService.pushToken$.next(token.value)
                     }
                 );

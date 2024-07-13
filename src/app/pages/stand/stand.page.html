@@ -3,7 +3,7 @@
     </app-menu-toolbar>
 </ion-header>
 <!-- <ion-toolbar color="accent" mode="ios"> -->
-    <ion-segment  value="totaalstand" mode="md" (ionChange)="isMatchStandActive = ! isMatchStandActive">
+    <ion-segment  value="totaalstand" mode="md" (ionChange)="changeStand(isMatchStandActive)">
         <ion-segment-button value="totaalstand">
             <ion-label>Totaal</ion-label>
         </ion-segment-button>
@@ -17,15 +17,15 @@
         <ion-row (click)="navigateToParticipant(mijnStand?.id)">
             <ion-col>
                 <span class="hes-position">
-                    {{mijnStand?.position}}
+                    {{isMatchStandActive ? mijnStand?.matchPosition : mijnStand?.position}}
                     <ion-icon *ngIf="!isMatchStandActive"
-                        [name]="mijnStand?.deltaPosition > 0 ? 'caret-up-outline' : mijnStand?.deltaPosition < 0 ? 'caret-down-outline' : 'caret-forward-outline'"
-                        [color]="mijnStand?.deltaPosition > 0 ? 'success' : mijnStand?.deltaPosition < 0 ? 'danger' : 'medium'">
-                    </ion-icon>
-                   <ion-icon *ngIf="isMatchStandActive"
-                        [name]="mijnStand?.deltaMatchPosition > 0 ? 'caret-up-outline' : mijnStand?.deltaMatchPosition < 0 ? 'caret-down-outline' : 'caret-forward-outline'"
-                        [color]="mijnStand?.deltaMatchPosition > 0 ? 'success' : mijnStand?.deltaMatchPosition < 0 ? 'danger' : 'medium'">
-                    </ion-icon>
+                    [name]="mijnStand?.previousPosition > mijnStand?.position ? 'caret-up-outline' : mijnStand?.previousPosition < mijnStand?.position ? 'caret-down-outline' : 'caret-forward-outline'"
+                    [color]="mijnStand?.previousPosition > mijnStand?.position ? 'success' :  mijnStand?.previousPosition < mijnStand?.position  ? 'danger' : 'medium'">
+                </ion-icon>
+               <ion-icon *ngIf="isMatchStandActive"
+                    [name]="mijnStand?.previousMatchPosition > mijnStand?.matchPosition ? 'caret-up-outline' : mijnStand?.previousMatchPosition < mijnStand?.matchPosition ? 'caret-down-outline' : 'caret-forward-outline'"
+                    [color]="mijnStand?.previousMatchPosition > mijnStand?.matchPosition ? 'success' :  mijnStand?.previousMatchPosition < mijnStand?.matchPosition ? 'danger' : 'medium'">
+                </ion-icon>
                 </span>
                 {{mijnStand?.displayName}}
             </ion-col>
@@ -81,14 +81,14 @@
                     <ion-row (click)="navigateToParticipant(line.id)">
                         <ion-col>
                             <span class="hes-position">
-                                {{line.position}}
+                    {{isMatchStandActive ? line?.matchPosition : line?.position}}
                                 <ion-icon *ngIf="!isMatchStandActive"
-                                [name]="mijnStand?.deltaPosition > 0 ? 'caret-up-outline' : mijnStand?.deltaPosition < 0 ? 'caret-down-outline' : 'caret-forward-outline'"
-                                [color]="mijnStand?.deltaPosition > 0 ? 'success' : mijnStand?.deltaPosition < 0 ? 'danger' : 'medium'">
+                                [name]="line?.previousPosition > line?.position ? 'caret-up-outline' : line?.previousPosition < line?.position ? 'caret-down-outline' : 'caret-forward-outline'"
+                                [color]="line?.previousPosition > line?.position ? 'success' :  line?.previousPosition < line?.position  ? 'danger' : 'medium'">
                             </ion-icon>
                            <ion-icon *ngIf="isMatchStandActive"
-                                [name]="mijnStand?.deltaMatchPosition > 0 ? 'caret-up-outline' : mijnStand?.deltaMatchPosition < 0 ? 'caret-down-outline' : 'caret-forward-outline'"
-                                [color]="mijnStand?.deltaMatchPosition > 0 ? 'success' : mijnStand?.deltaMatchPosition < 0 ? 'danger' : 'medium'">
+                                [name]="line?.previousMatchPosition > line?.matchPosition ? 'caret-up-outline' : line?.previousMatchPosition < line?.matchPosition ? 'caret-down-outline' : 'caret-forward-outline'"
+                                [color]="line?.previousMatchPosition > line?.matchPosition ? 'success' :  line?.previousMatchPosition < line?.matchPosition ? 'danger' : 'medium'">
                             </ion-icon>
                             </span>
                             {{line.displayName}}

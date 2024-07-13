@@ -19,12 +19,12 @@
                     <app-city-card-header [match]="match"></app-city-card-header>
                     <ion-radio-group [value]="match.selectedTeam?.id" (ionChange)="setSelectedTeam(match, $event)">
                         <ion-item lines="none">
-                            <ion-radio slot="start" [value]="match.homeTeam?.id">
+                            <ion-radio justify="space-between" [value]="match.homeTeam?.id">
                                 <span class="fi fi-{{match.homeTeam?.logoUrl}} fis"></span>
                                 {{match.homeTeam?.name}} {{match.home}} ({{match.homeId}})</ion-radio>
                         </ion-item>
                         <ion-item lines="none">
-                            <ion-radio slot="start" [value]="match.awayTeam?.id">
+                            <ion-radio justify="space-between" [value]="match.awayTeam?.id">
                                 <span class="fi fi-{{match.awayTeam?.logoUrl}} fis"></span>
                                 {{match.awayTeam?.name}} {{match.away}} ({{match.awayId}})
                             </ion-radio>

@@ -34,9 +34,7 @@ export class SpeelschemaPage implements OnInit {
 
     this.poulePredictionService.getPouleResults()
       .pipe(switchMap((pp) => {
-        this.nummerDries = pp.filter(item => item.positie === 3)
-        .sort((a, b) => b.thirdPositionScore - a.thirdPositionScore)
-        .slice(0, 4);
+        this.nummerDries = pp.filter(item => item.team.poulePosition === 3 && (!item.team.isEliminated || item.team.eliminationRound !== '32'))
 
         this.nummerDrieIdentifier = this.nummerDries.sort((a, b) => {
             if (b.poule > a.poule) {

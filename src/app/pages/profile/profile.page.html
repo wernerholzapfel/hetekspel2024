@@ -24,6 +24,7 @@
             </ng-container>
             <ion-item>App versie: {{currentVersion?.bundle?.version}} ({{currentVersion?.bundle.status}}) </ion-item>
             <ion-item *ngIf="(uiService.isAdmin$ | async)">{{deviceId}}</ion-item>
+            <ion-item  *ngIf="(uiService.isAdmin$ | async)">Push token: {{uiService.pushToken$ | async}}</ion-item>
         </ion-card-content>
     </ion-card>
 </ion-content>

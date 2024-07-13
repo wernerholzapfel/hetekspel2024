@@ -1,33 +1,217 @@
-<ion-header>
-    <app-menu-toolbar title="Eindstanden"></app-menu-toolbar>
-</ion-header>
+    <ion-header>
+        <app-menu-toolbar title="Eindstanden"></app-menu-toolbar>
+    </ion-header>
 
-<ion-content>
-    <ion-grid class="ion-no-padding">
-        <ion-row>
-            <ion-col size="12">
-                <ion-card color="secondary">
-                    <ion-card-content>
-                        Hier komen de standen van de poules te staan op basis van jouw ingevulde wedstrijduitslagen.
-                        Voor iedere ploeg op een goede positie krijg je 5 punten. Als je dat wilt kun je de volgorde van
-                        de ploegen nog wijzigen, klik daarvoor op het slotje. <i>Op basis van de standen in de poules
-                        worden de ploegen in de 1/8e finales voor je ingevuld.</i>
-                    </ion-card-content>
-                </ion-card>
-            </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col size="12" size-md="6" size-lg="6" size-xl="4" *ngFor="let poule of poules">
-                <app-stand-card [editMode]="!arePoulesInComplete()" [stand]="poule.stand" [poule]="poule"></app-stand-card>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
-</ion-content>
+    <ion-content #page>
+        <ion-grid class="ion-no-padding">
+            <ion-row>
+                <ion-col size="12">
+                    <ion-card color="secondary">
+                        <ion-card-content>
+                            Hier komen de standen van de poules te staan op basis van jouw ingevulde wedstrijduitslagen.
+                            Voor iedere ploeg op een goede positie krijg je 5 punten. Als je dat wilt kun je de volgorde
+                            van
+                            de ploegen nog wijzigen, klik daarvoor op het slotje. 
+                            Met het icoontje om te verversen (naast een open slotje) kun je eventueel de poulestand sorteren op basis van je huidige ingevulde wedstrijduitslagen.
+                            <i>
+                                <br><br>Op basis van de standen in de poules worden de ploegen in de 1/8e finales voor je ingevuld. Klik eerst op verder om jouw beste nummers drie uit de poules te kiezen.</i>
+                        </ion-card-content>
+                    </ion-card>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size="12" size-md="6" size-lg="6" size-xl="4" *ngFor="let poule of poules">
+                    <app-stand-card [editMode]="!arePoulesInComplete()" [stand]="poule.stand"
+                        [showSortedCorrectly]="true" [poule]="poule"></app-stand-card>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+<ion-modal [breakpoints]="[.9]" trigger="open-modal" (willDismiss)="onWillDismiss($event)" [canDismiss]="canDismiss()" [presentingElement]="page">
+    <ng-template>
+        <ion-toolbar color="primary" mode="ios">
+            <ion-title>
+                <img [src]="(uiService.prefersDark$ | async) ? '/assets/header_hetekspel2024_dark_mode.png' : '/assets/header_hetekspel2024_dark_mode.png'"
+                    height="36px;">
+            </ion-title>
+            <ion-buttons slot="start">
+                <ion-button (click)="modal.dismiss()">Terug</ion-button>
+            </ion-buttons>
+        </ion-toolbar>
+        <app-loader></app-loader>
+        <ion-content class="ion-no-padding">
+            <ion-row class="ion-no-padding">
+                <ion-col size="12">
+                    <ion-card color="secondary">
+                        <ion-card-content>
+                            De vier beste nummers drie uit de poules gaan door naar de 1/8e finales. 
+                            <br>Hieronder staan de nummers drie op basis van jouw poulestanden.
+                            <br>De vier geselecteerde landen gaan door naar de 1/8e finales, je kunt eventueel zelf de selectie veranderen.
+                        </ion-card-content>
+                    </ion-card>
+                </ion-col>
+            </ion-row>
+
+            <ion-card>
+                <ion-card-header>
+                    <ion-grid class="ion-no-padding ion-no-margin">
+                        <ion-row class="ion-no-padding">
+                            <ion-col class="ion-align-self-center">
+                                <ion-card-subtitle class="ion-no-margin">
+                                    Kies je vier beste nummers drie
+                                </ion-card-subtitle>
+                            </ion-col>
+                            <!-- <ion-col size="1" class="ion-align-self-end" *ngIf="editMode && !poule?.isSortDisabled && uiService?.isRegistrationOpen$ | async"> -->
+                            <!-- <ion-icon class="toggle-reorder-icon" (click)="setSortBackToOriginal()" -->
+                            <!-- name="refresh-outline"></ion-icon> -->
+                            <!-- </ion-col> -->
+                            <!-- <ion-col size="1" class="ion-align-self-end" *ngIf="editMode && uiService?.isRegistrationOpen$ | async"> -->
+                            <!-- <ion-icon class="toggle-reorder-icon" (click)="toggleReorderGroup()" -->
+                            <!-- [name]="poule?.isSortDisabled ? 'lock-closed-outline' : 'lock-open-outline'"></ion-icon> -->
+                            <!-- </ion-col> -->
+                            <!-- <ion-col size="1" class="ion-align-self-end" *ngIf="(uiService?.isRegistrationOpen$ | async) && isToolbar"> -->
+                            <!-- <ion-icon class="toggle-reorder-icon" -->
+                            <!-- [name]="isTableOpen ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon> -->
+                            <!-- </ion-col> -->
+                        </ion-row>
+                    </ion-grid>
+                </ion-card-header>
+                <ion-card-content class="padding-speciaal">
+                    <hr>
+                    <ion-grid class="ion-no-padding">
+                        <ion-row class="ion-padding-horizontal">
+                            <ion-col offset="7" size="1">
+                                W
+                            </ion-col>
+                            <ion-col size="1">
+                                PT
+                            </ion-col>
+                            <ion-col size="1">
+                                DS
+                            </ion-col>
+                            <ion-col size="1">
+                                P
+                            </ion-col>
+                        </ion-row>
+                        <!-- <ion-reorder-group (ionItemReorder)="doReorder($event)" [disabled]="false"> -->
+                        <!-- <ion-reorder *ngFor="let line of thirdpositions; let i = index"> -->
+                        <ion-row class="ion-padding" *ngFor="let line of thirdpositions; let i = index">
+                            <ion-col>
+                                <span class="fi fi-{{line.team.logoUrl}} fis"></span>
+                                {{line.team.name}}
+                            </ion-col>
+                            <ion-col size="1">
+                                {{line.gespeeld}}
+                            </ion-col>
+                            <ion-col size="1">
+                                {{line.punten}}
+                            </ion-col>
+                            <ion-col size="1">
+                                {{line.goalsFor - line.goalsAgainst}}
+                            </ion-col>
+                            <ion-col size="1">
+                                {{line.poule}}
+                            </ion-col>
+                            <ion-col size="1">
+                                <!-- <ion-icon *ngIf="!line.selected" name="close-outline"
+                                        color="danger"></ion-icon>
+                                    <ion-icon *ngIf="line.selected" name="checkmark-outline"
+                                        color="success"></ion-icon> -->
+                                <ion-checkbox color="success" [(ngModel)]="line.selected"
+                                    [checked]="line.selected" [disabled]="!line.selected && fourThirdpositions"
+                                    (ionChange)="recalcFourThirdpositions($event)">
+                                </ion-checkbox>
+                            </ion-col>
+                        </ion-row>
+                        <!-- </ion-reorder> -->
+                        <!-- </ion-reorder-group> -->
+                    </ion-grid>
+                </ion-card-content>
+            </ion-card>
+
+            <!-- <ion-grid class="ion-no-padding">
+            <ion-row class="ion-no-padding">
+                <ion-col size="12">
+                    <ion-card color="secondary">
+                        <ion-card-content>
+                            Tijdens het EK gaan de beste 4 nummers drie door. Aan de hand van de ingevulde
+                            uitslagen en poule voorspellingen zijn dit jouw nummers 3.<br>
+                            Je kan de volgorde veranderen door een land te slepen naar een andere plaats. De
+                            bovenste 4 gaan door en worden in het knockout schema geplaats.<br>
+                        </ion-card-content>
+                    </ion-card>
+                </ion-col>
+            </ion-row>
+                    <ion-row class="ion-no-padding">
+                        <ion-col>
+                            <ion-item>
+                                <ion-col offset="7" size="1">
+                                    W
+                                </ion-col>
+                                <ion-col size="1">
+                                    PT
+                                </ion-col>
+                                <ion-col size="1">
+                                    DS
+                                </ion-col>
+                                <ion-col size="1">
+                                    P
+                                </ion-col>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>
+                            <ion-reorder-group (ionItemReorder)="doReorder($event)" [disabled]="false">
+                                <ion-reorder *ngFor="let line of thirdpositions; let i = index">
+                                    <ion-item>
+                                        <ion-col>
+                                            <span class="fi fi-{{line.team.logoUrl}} fis"></span>
+                                            {{line.team.name}}
+                                        </ion-col>
+                                        <ion-col size="1">
+                                            {{line.gespeeld}}
+                                        </ion-col>
+                                        <ion-col size="1">
+                                            {{line.punten}}
+                                        </ion-col>
+                                        <ion-col size="1">
+                                            {{line.goalsFor - line.goalsAgainst}}
+                                        </ion-col>
+                                        <ion-col size="1">
+                                            {{line.poule}}
+                                        </ion-col>
+                                        <ion-col size="1">
+                                            <ion-icon *ngIf="!line.selected" name="close-outline"
+                                                color="danger"></ion-icon>
+                                            <ion-icon *ngIf="line.selected" name="checkmark-outline"
+                                                color="success"></ion-icon>
+                                        </ion-col>
+                                    </ion-item>
+                                </ion-reorder>
+                            </ion-reorder-group>
+                        </ion-col>
+                    </ion-row>
+        </ion-grid> -->
+            <ion-footer>
+                <ng-container class="ion-no-border ion-padding-horizontal">
+                    <ion-button [disabled]="!fourThirdpositions" color="tertiary" expand="full" fill="solid"
+                        (click)="save()">
+                        <span>Opslaan</span>
+                    </ion-button>
+                </ng-container>
+            </ion-footer>
+        </ion-content>
+
+    </ng-template>
+</ion-modal>
+  
+    </ion-content>
 <ion-footer *ngIf="uiService.isRegistrationOpen$ | async">
     <ng-container class="ion-no-border ion-padding-horizontal">
-        <ion-button color="tertiary" expand="full" fill="solid" [disabled]="arePoulesInComplete()" (click)="save()">
+        <ion-button id="open-modal" color="tertiary" expand="full" fill="solid" [disabled]="arePoulesInComplete()">
             <span *ngIf="arePoulesInComplete()">Voorspel eerst de wedstrijden</span>
-            <span *ngIf="!arePoulesInComplete()">Opslaan</span>
+            <span *ngIf="!arePoulesInComplete()">Verder</span>
         </ion-button>
     </ng-container>
 </ion-footer>
+
