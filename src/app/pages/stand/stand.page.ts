@@ -31,9 +31,9 @@ export class StandPage {
         this.unsubscribe = new Subject<void>();
 
         combineLatest([
-                    this.uiService.totaalstand$,
-                    this.searchTerm$,
-                    this.uiService.participant$])
+            this.uiService.totaalstand$,
+            this.searchTerm$,
+            this.uiService.participant$])
             .subscribe(([stand, searchTerm, participant]) => {
                 console.log(stand)
                 this.stand = this.uiService.filterDeelnemers(searchTerm, stand.map(line => {
@@ -48,6 +48,11 @@ export class StandPage {
             });
     }
 
+    changeStand(isMatchStandActive) {
+        this.isMatchStandActive = !isMatchStandActive
+        this.stand = this.stand.sort((a,b) => this.isMatchStandActive ? a.matchPosition - b.matchPosition : a.position - b.position)
+
+    }
     search($event) {
         this.searchTerm$.next($event.detail.value);
     }
@@ -74,7 +79,7 @@ export class StandPage {
     }
 
     // async toggleMatchStand() {
-        
-    //     this.uiService.isMatchStandActive$.next(!this.uiService.isMatchStandActive$.getValue());
+
+    // this.uiService.isMatchStandActive$.next(!this.uiService.isMatchStandActive$.getValue());
     // }
 }

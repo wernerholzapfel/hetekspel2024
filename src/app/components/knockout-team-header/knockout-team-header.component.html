@@ -1,15 +1,15 @@
 <ion-row class="ion-align-items-center hes-background">
-  <ion-col>
-    <ion-col>
+  <ion-col class="hes-padding-start-small">
       <span class="fi fi-{{team?.logoUrl}} fis"></span>
       {{team?.name}}
-    </ion-col>
+      <span *ngIf="count != undefined">
+        <br><ion-text color="medium">{{count}}x voorspeld</ion-text>
+      </span>
   </ion-col>
-  <ion-col size="3" class="ion-align-items-stretch hes-background-secondary-accent hes-no-padding-start">
-    <ion-row>
+  <ion-col size="3" class="hes-background-secondary-accent hes-no-padding-start" style="height:100%">
+    <ion-row class="ion-justify-content-center">
       <ion-col size="4" class="ion-text-start ion-align-self-center">
-        <ion-icon [name]="icon"
-                  [color]="iconColor"></ion-icon>
+        <ion-icon [name]="icon" [color]="iconColor"></ion-icon>
       </ion-col>
       <ion-col size="8" class="ion-no-padding ion-text-center ion-align-self-center">
         <ion-chip color="secondary" *ngIf="punten > 0 || this.icon === 'close-outline'">

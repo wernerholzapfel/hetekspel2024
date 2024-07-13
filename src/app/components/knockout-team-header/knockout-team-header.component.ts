@@ -11,6 +11,7 @@ export class KnockoutTeamHeaderComponent {
   private _team: ITeam;
   private _punten: number;
   private _round: string;
+  private _count: string;
 
 
   @Input() set team(value) {
@@ -22,6 +23,14 @@ export class KnockoutTeamHeaderComponent {
 
   get team() {
     return this._team;
+  }
+
+  @Input() set count(value) {
+    this._count = value;
+  }
+
+  get count() {
+    return this._count;
   }
 
   @Input() set punten(value) {

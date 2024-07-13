@@ -82,3 +82,8 @@ to
     echo "Symlinked..."
     source="$(readlink -f "${source}")"
   fi
+
+
+  push notificaties ios na volledig opnieuw aanmaken project dit handmatig wijzigen in xcode:
+  https://capacitorjs.com/docs/guides/push-notifications-firebase
+  

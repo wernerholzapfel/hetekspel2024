@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UiService } from '../../../services/ui.service';
 import { IStandLine } from '../../../models/stand.model';
 import { switchMap, takeUntil } from 'rxjs/operators';
+import { Gesture } from 'src/app/directives/gestures.directive';
 
 @Component({
     selector: 'app-knockout',
@@ -21,6 +22,11 @@ export class KnockoutPage {
     winnaarTroostFinale: any;
     europeesKampioen: any;
     unsubscribe = new Subject<void>();
+    gestureOpts: Gesture[] = [
+        { name: 'swipe' }
+    ];
+    stand: IStandLine[];
+    standIndex: number;
 
     constructor(private knockoutPredictionService: KnockoutPredictionsService,
         private knockoutService: KnockoutService,
@@ -39,10 +45,23 @@ export class KnockoutPage {
             .pipe(takeUntil(this.unsubscribe))
             .subscribe(([stand, params]) => {
                 if (stand && params.id) {
+                    this.stand = stand;
                     this.standLine = stand.find(line => line.id === params.id);
+                    this.standIndex = stand.findIndex(line => line.id === params.id);
                 }
             })
 
+    }
+    onSwipe($event) {
+        if ($event.swipeType === 'moveend') {
+            this.standIndex = $event.dirX === 'right' && this.standIndex === 0 ?
+                0 : $event.dirX === 'right' ? this.standIndex - 1 :
+                    (this.standIndex + 1 === this.stand.length) ?
+                        this.standIndex : this.standIndex + 1;
+
+            this.router.navigate([`deelnemer/deelnemer/${this.stand[this.standIndex].id}/knockout/`]);
+
+        }
     }
 
     refresh(event): void {
@@ -75,7 +94,7 @@ export class KnockoutPage {
                                     schema.awayTeam && prediction.awayTeam.id === schema.awayTeam.id);
                         }),
                     };
-                });
+                }).sort((a,b) => parseInt(a.knockout.round) - parseInt(b.knockout.round));
                 console.log(this.predictions)
             });
         if (event) {

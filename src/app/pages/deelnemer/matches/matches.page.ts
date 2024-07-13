@@ -19,10 +19,7 @@ export class MatchesPage {
     unsubscribe = new Subject<void>();
     predictions: IMatchPrediction[];
     gestureOpts: Gesture[] = [
-        // {name: 'tap'},
-        // {name: 'doubleTap'},
-        // {name: 'press'},
-        { name: 'swipe' },
+        { name: 'swipe' }
     ];
     stand: IStandLine[];
     standIndex: number;
@@ -84,11 +81,6 @@ export class MatchesPage {
         }
     }
 
-    onDoubleTap($event) {
-    }
-
-    onPress($event) {
-    }
     ionViewDidLeave(): void {
         this.unsubscribe.next();
         this.unsubscribe.unsubscribe();

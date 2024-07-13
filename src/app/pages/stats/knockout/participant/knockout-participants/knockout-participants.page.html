@@ -11,7 +11,7 @@
         <ion-row>
             <ion-col>{{koTeamStats?.round | roundText}} </ion-col>
         </ion-row>
-        <app-knockout-team-header [team]="koTeamStats?.team" [punten]="koTeamStats?.team.points"
+        <app-knockout-team-header [team]="koTeamStats?.team" [punten]="koTeamStats?.team.points" [count]="koTeamStats?.participants.length"
             [round]="koTeamStats?.round"></app-knockout-team-header>
     </ion-grid>
     <ion-grid>

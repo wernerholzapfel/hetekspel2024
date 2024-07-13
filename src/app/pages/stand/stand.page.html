@@ -3,7 +3,7 @@
     </app-menu-toolbar>
 </ion-header>
 <!-- <ion-toolbar color="accent" mode="ios"> -->
-    <ion-segment  value="totaalstand" mode="md" (ionChange)="isMatchStandActive = ! isMatchStandActive">
+    <ion-segment  value="totaalstand" mode="md" (ionChange)="changeStand(isMatchStandActive)">
         <ion-segment-button value="totaalstand">
             <ion-label>Totaal</ion-label>
         </ion-segment-button>
@@ -17,7 +17,7 @@
         <ion-row (click)="navigateToParticipant(mijnStand?.id)">
             <ion-col>
                 <span class="hes-position">
-                    {{mijnStand?.position}}
+                    {{isMatchStandActive ? mijnStand?.matchPosition : mijnStand?.position}}
                     <ion-icon *ngIf="!isMatchStandActive"
                     [name]="mijnStand?.previousPosition > mijnStand?.position ? 'caret-up-outline' : mijnStand?.previousPosition < mijnStand?.position ? 'caret-down-outline' : 'caret-forward-outline'"
                     [color]="mijnStand?.previousPosition > mijnStand?.position ? 'success' :  mijnStand?.previousPosition < mijnStand?.position  ? 'danger' : 'medium'">
@@ -81,7 +81,7 @@
                     <ion-row (click)="navigateToParticipant(line.id)">
                         <ion-col>
                             <span class="hes-position">
-                                {{line.position}}
+                    {{isMatchStandActive ? line?.matchPosition : line?.position}}
                                 <ion-icon *ngIf="!isMatchStandActive"
                                 [name]="line?.previousPosition > line?.position ? 'caret-up-outline' : line?.previousPosition < line?.position ? 'caret-down-outline' : 'caret-forward-outline'"
                                 [color]="line?.previousPosition > line?.position ? 'success' :  line?.previousPosition < line?.position  ? 'danger' : 'medium'">

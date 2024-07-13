@@ -1,6 +1,6 @@
 <ion-header>
     <app-menu-toolbar (emitIconClick)="showFilter = !showFilter"
-                      [iconColor]="(selectedUitslagen$ | async).length > 0 ? 'secondary' : ''"
+                      [iconColor]="(selectedUitslagen$ | async).length > 0 || showFilter ? 'tertiary' : ''"
                       rightCornerIcon="funnel"></app-menu-toolbar>
 </ion-header>
 <ion-toolbar color="background" *ngIf="match" class="ion-no-padding" mode="ios">
@@ -23,16 +23,16 @@
             </ion-row>
             <ion-row *ngFor="let uitslag of toto.uitslagen" (click)="filterUitslag(uitslag)">
                 <ion-col class="ion-align-self-start">
-                    <ion-badge [color]="uitslag.active ? 'secondary' : 'primary'">
+                    <ion-badge [color]="uitslag.active ? 'tertiary' : 'primary'">
                         {{uitslag.homeScore}} - {{uitslag.awayScore}}</ion-badge>
                 </ion-col>
                 <ion-col size="6" class="ion-align-self-center">
                     <ion-progress-bar
-                            [color]="uitslag.active ? 'secondary' : 'primary'"
+                            [color]="uitslag.active ? 'tertiary' : 'primary'"
                             style="height: 20px" [value]="uitslag.count"></ion-progress-bar>
                 </ion-col>
                 <ion-col class="ion-align-self-end ion-text-end">
-                    <ion-badge [color]="uitslag.active ? 'secondary' : 'primary'"
+                    <ion-badge [color]="uitslag.active ? 'tertiary' : 'primary'"
                     >{{uitslag.aantal}}</ion-badge>
                 </ion-col>
             </ion-row>
@@ -40,7 +40,7 @@
         <ion-row class="hes-background"
                  (click)="resetFilter()">
             <ion-col size="12" class="ion-align-self-center ion-text-center">
-                <ion-text color="dark">Reset filter</ion-text>
+                <ion-chip color="dark">Reset filter</ion-chip>
             </ion-col>
         </ion-row>
     </ion-grid>
@@ -49,16 +49,16 @@
             <ion-row class="hes-background" (click)="showFilter = !showFilter"
                      *ngFor="let uitslag of (selectedUitslagen$ | async)">
                 <ion-col class="ion-align-self-start">
-                    <ion-badge [color]="'secondary'">
+                    <ion-badge [color]="'tertiary'">
                         {{uitslag.homeScore}} - {{uitslag.awayScore}}</ion-badge>
                 </ion-col>
                 <ion-col size="6" class="ion-align-self-center">
                     <ion-progress-bar
-                            color="secondary"
+                            color="tertiary"
                             style="height: 20px" [value]="uitslag.count"></ion-progress-bar>
                 </ion-col>
                 <ion-col class="ion-align-self-end ion-text-end">
-                    <ion-badge color="secondary">{{uitslag.aantal}}</ion-badge>
+                    <ion-badge color="tertiary">{{uitslag.aantal}}</ion-badge>
                 </ion-col>
             </ion-row>
         </ion-grid>
