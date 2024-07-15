@@ -85,6 +85,7 @@ export class HomePage implements OnInit, OnDestroy {
         combineLatest([this.uiService.totaalstand$, this.uiService.participant$])
             .pipe(takeUntil(this.unsubscribe))
             .subscribe(([s, participant]) => {
+                console.log(participant)
                 this.standLine = s[0];
                 this.participantStandLine = s.find(line => participant && line.id === participant.id);
             });

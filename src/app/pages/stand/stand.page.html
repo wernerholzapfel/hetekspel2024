@@ -12,7 +12,7 @@
         </ion-segment-button>
     </ion-segment>
 <!-- </ion-toolbar> -->
-<ion-item lines="full" class="ion-no-padding" color="tertiary-accent">
+<ion-item lines="full" class="ion-no-padding" color="tertiary-accent" *ngIf="mijnStand">
     <ion-grid>
         <ion-row (click)="navigateToParticipant(mijnStand?.id)">
             <ion-col>

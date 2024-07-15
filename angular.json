@@ -91,9 +91,6 @@
           "configurations": {
             "production": {
               "buildTarget": "app:build:production"
-            },
-            "ci": {
-              "progress": false
             }
           }
         },
