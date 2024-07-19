@@ -8,7 +8,7 @@ import { ITeam } from '../../models/poule.model';
 })
 export class KnockoutTeamHeaderComponent {
 
-  private _team: ITeam;
+  private _team: any; //todo
   private _punten: number;
   private _round: string;
   private _count: string;
@@ -61,7 +61,7 @@ export class KnockoutTeamHeaderComponent {
   }
 
   determineIcon() {
-    if (this.punten > 0) {
+    if (this.team.eliminationState === 'qualified') {
       this.icon = 'checkmark-outline'
       this.iconColor = 'success'
     }
@@ -72,9 +72,7 @@ export class KnockoutTeamHeaderComponent {
     // this.round.Id === 2 =>
     // eliminiated || halve finalist met active round 3 en !eliminated
 
-    else if ((this.team && this.team.isEliminated && parseInt(this.team.latestActiveRound) > parseInt(this.round)) ||
-      (this.round === '3' && this.team && !this.team.isEliminated && (this.team.latestActiveRound === '2' || this.team.latestActiveRound === '1')) ||
-      ((this.round === '1' || this.round === '2') && this.team && !this.team.isEliminated && (this.team.latestActiveRound === '3' || this.team.latestActiveRound === '2,5'))) {
+    else if (this.team.eliminationState === 'eliminated') {
       this.icon = 'close-outline';
       this.iconColor = 'danger'
       this.punten = 0

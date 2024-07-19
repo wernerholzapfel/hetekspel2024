@@ -7,6 +7,7 @@ import { UiService } from '../../../services/ui.service';
 import { IStandLine } from '../../../models/stand.model';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { Gesture } from 'src/app/directives/gestures.directive';
+import { IKnockout } from 'src/app/models/knockout.model';
 
 @Component({
     selector: 'app-knockout',
@@ -15,7 +16,7 @@ import { Gesture } from 'src/app/directives/gestures.directive';
 })
 export class KnockoutPage {
 
-    predictions: any[]; // todo model
+    predictions: IKnockout[]; // todo model
     speelschema: any[]; // todo model
     standLine: IStandLine;
     showWinnaarTroostFinale = false;
@@ -66,49 +67,19 @@ export class KnockoutPage {
 
     refresh(event): void {
         this.route.params.pipe(switchMap((params) => {
-            return combineLatest([
-                this.knockoutPredictionService.getKnockoutForParticipant(params.id),
-                this.knockoutService.getOriginalSpeelschema()])
+            return this.knockoutPredictionService.getKnockoutForParticipant(params.id)
         }))
             .pipe(takeUntil(this.unsubscribe))
-            .subscribe(([results, speelschema]) => {
-                this.speelschema = speelschema;
-                this.predictions = results.map(prediction => {
-                    if (prediction.knockout.round === '2') {
-                        this.setEuropeesKampioen(prediction);
-                    }
-                    if (prediction.knockout.round === '3') {
-                        console.log('alleen wk')
-                        this.setWinnaarTroostFinale(prediction);
-                    }
-                    return {
-                        ...prediction,
-                        homeInRound: !!speelschema.find(schema => {
-                            return schema.round === prediction.knockout.round &&
-                                (schema.homeTeam && prediction.homeTeam.id === schema.homeTeam.id ||
-                                    schema.awayTeam && prediction.homeTeam.id === schema.awayTeam.id);
-                        }),
-                        awayInRound: !!speelschema.find(schema => {
-                            return schema.round === prediction.knockout.round &&
-                                (schema.homeTeam && prediction.awayTeam.id === schema.homeTeam.id ||
-                                    schema.awayTeam && prediction.awayTeam.id === schema.awayTeam.id);
-                        }),
-                    };
-                }).sort((a,b) => parseInt(a.knockout.round) - parseInt(b.knockout.round));
-                console.log(this.predictions)
+            .subscribe((results) => {
+                this.predictions = results.knockouts;
+                this.europeesKampioen = results.europeeskampioen
+                this.winnaarTroostFinale = results.winnaarTroostFinale
             });
         if (event) {
             event.target.complete();
         }
     }
 
-    setEuropeesKampioen(finaleWedstrijd: any) {
-        this.europeesKampioen = {
-            team: finaleWedstrijd.selectedTeam,
-            winnerSpelpunten: finaleWedstrijd.winnerSpelpunten
-        };
-        console.log(this.europeesKampioen)
-    }
     setWinnaarTroostFinale(finaleWedstrijd: any) {
         this.winnaarTroostFinale = {
             team: finaleWedstrijd.selectedTeam,
