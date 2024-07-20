@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { IParticipant } from 'src/app/models/participant.model';
 import { ParticipantService } from 'src/app/services/participant.service';
 import { UiService } from 'src/app/services/ui.service';
 import { CapacitorUpdater } from '@capgo/capacitor-updater'
+import { AngularFireDatabase } from '@angular/fire/compat/database';
 
 @Component({
   selector: 'app-profile',
@@ -14,7 +15,8 @@ import { CapacitorUpdater } from '@capgo/capacitor-updater'
 export class ProfilePage {
 
   constructor(public uiService: UiService,
-    private participantService: ParticipantService) {
+    private participantService: ParticipantService,
+    private db: AngularFireDatabase) {
   }
 
   unsubscribe = new Subject<void>();
@@ -28,8 +30,12 @@ export class ProfilePage {
     native: string;
   }
   versionState: any;
+  offlineMode$: Observable<boolean>;
 
   ionViewWillEnter() {
+
+    this.offlineMode$ = this.db.object<boolean>('offlineMode').valueChanges()
+
     this.uiService.participant$
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(participant => {

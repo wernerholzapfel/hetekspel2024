@@ -10,7 +10,7 @@
             </ion-card-subtitle>
         </ion-card-header>
         <ion-card-content class="ion-no-padding">
-            <ion-item lines="none" lines="inset">
+            <ion-item lines="none" lines="inset" *ngIf="!(offlineMode$ | async)">
                 Wijzig je naam
                 <ion-button slot="end" size="small" color="tertiary" (click)="editNewDisplayName = !editNewDisplayName">
                     <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>

@@ -51,13 +51,13 @@ export class AppComponent implements OnInit, OnDestroy {
 
 
     initializeApp() {
-        this.checkDeadline();
+        this.checkDeadline();  // todo only when not offline
         this.checkDarkmode();
         this.platform.ready().then(async () => {
 
             if (this.platform.is('hybrid')) {
 
-               await CapacitorUpdater.notifyAppReady();
+                await CapacitorUpdater.notifyAppReady();
 
                 // await StatusBar.styleDefault();
                 await SplashScreen.hide();
@@ -108,6 +108,7 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+
         this.menuService.appPages$.pipe(takeUntil(this.unsubscribe)).subscribe(menu => {
             if (menu) {
                 this.appPages = menu;
@@ -176,15 +177,19 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     checkDeadline() {
-        this.hetwkspelService.getHetwkspel().pipe(take(1))
-            .pipe(switchMap((hetwkspel) => {
-                const deadline = moment(hetwkspel.deadline);
-                const now = moment(new Date());
-                const diffDays = deadline.diff(now, 'milliseconds');
-                console.log(diffDays)
-                this.uiService.isRegistrationOpen$.next(diffDays > 0);
 
-                return timer(diffDays);
+        this.db.object<any>(`offlineMode`).valueChanges().pipe(switchMap(offlineMode => {
+            return offlineMode ? of(null) : this.hetwkspelService.getHetwkspel().pipe(take(1))
+        }))
+            .pipe(switchMap((hetwkspel) => {
+                if (hetwkspel) {
+                    const deadline = moment(hetwkspel.deadline);
+                    const now = moment(new Date());
+                    const diffDays = deadline.diff(now, 'milliseconds');
+                    this.uiService.isRegistrationOpen$.next(diffDays > 0);
+
+                    return timer(diffDays);
+                }
             }))
             .pipe(takeUntil(this.unsubscribe)).subscribe(
                 (x) => { },

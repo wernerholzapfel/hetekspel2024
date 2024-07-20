@@ -72,6 +72,7 @@ export class KnockoutTeamHeaderComponent {
     // this.round.Id === 2 =>
     // eliminiated || halve finalist met active round 3 en !eliminated
 
+
     else if (this.team.eliminationState === 'eliminated') {
       this.icon = 'close-outline';
       this.iconColor = 'danger'
