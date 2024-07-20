@@ -8,10 +8,12 @@ import {ITeam} from '../../models/poule.model';
 })
 export class KnockoutIconRowComponent implements OnInit {
 
-  @Input() punten: number;
-  @Input() round: string;
-  @Input() isEliminated: boolean;
-  @Input() eliminationRound: string;
+  // @Input() punten: number;
+  // @Input() round: string;
+  // @Input() isEliminated: boolean;
+  // @Input() eliminationRound: string;
+  @Input() eliminationState: string;
+  
   public icon: string;
   public iconColor: string;
 
@@ -19,10 +21,11 @@ export class KnockoutIconRowComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.punten > 0) {
+    console.log(this.eliminationState)
+    if (this.eliminationState === 'qualified') {
       this.icon = 'checkmark-outline'
       this.iconColor = 'success'
-    } else if (this.isEliminated && this.eliminationRound && parseInt(this.eliminationRound) > parseInt(this.round)) {
+    } else if (this.eliminationState === 'eliminated') {
       this.icon = 'close-outline';
       this.iconColor = 'danger'
     } else {

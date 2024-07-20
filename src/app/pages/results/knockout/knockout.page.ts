@@ -156,27 +156,6 @@ export class KnockoutPage {
         return team;
     }
 
-    // setTeam(speelschema, id, round, selectedTeam: string): ITeam {
-    //     if (round === '16') {
-    //         return this.poules.find(p => id === `${p.positie}${p.poule}`).team
-    //     } else {
-    //         const matchWinner = speelschema.find(sp => sp.matchId === id)
-    //         const team = selectedTeam ?
-    //             matchWinner.homeTeam && matchWinner.homeTeam.id === selectedTeam ?
-    //                 matchWinner.homeTeam :
-    //                 matchWinner.awayTeam :
-    //             matchWinner && matchWinner.prediction ?
-    //                 matchWinner.prediction.selectedTeam :
-    //                 matchWinner.selectedTeam ?
-    //                     matchWinner.homeTeam.id === matchWinner.selectedTeam.id ?
-    //                         matchWinner.homeTeam :
-    //                         matchWinner.awayTeam :
-    //                     {name: id}
-    //         return team;
-    //     }
-    // }
-
-
     selectKnockoutRound($event) {
         this.activeKnockoutRound = $event.detail.value;
     }

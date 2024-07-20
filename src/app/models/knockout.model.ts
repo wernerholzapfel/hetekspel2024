@@ -1,5 +1,5 @@
 import {ITeam} from './poule.model';
-import {ISaveKnockoutPredictionsBody} from './knockout-predictions.model';
+import {IKnockoutPrediction, ISaveKnockoutPredictionsBody} from './knockout-predictions.model';
 
 export interface IKnockout {
     id: string;
@@ -18,6 +18,9 @@ export interface IKnockout {
     isLoading?: boolean;
 }
 
+export interface IDeelnemerSpeelschema {
+    europeeskampioen: IKnockoutPrediction; winnaarTroostFinale: IKnockoutPrediction; knockouts: IKnockout[]
+}
 export class UpdateKnockoutDto {
     id: string;
     homeTeam: { id: string };
