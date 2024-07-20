@@ -72,7 +72,7 @@ export class KnockoutTeamHeaderComponent {
     // this.round.Id === 2 =>
     // eliminiated || halve finalist met active round 3 en !eliminated
 
-    else if ((this.team && this.team.isEliminated && parseInt(this.team.latestActiveRound) > parseInt(this.round)) ||
+    else if ((this.team && this.team.isEliminated && parseFloat(this.team.latestActiveRound) > parseFloat(this.round)) ||
       (this.round === '3' && this.team && !this.team.isEliminated && (this.team.latestActiveRound === '2' || this.team.latestActiveRound === '1')) ||
       ((this.round === '1' || this.round === '2') && this.team && !this.team.isEliminated && (this.team.latestActiveRound === '3' || this.team.latestActiveRound === '2,5'))) {
       this.icon = 'close-outline';

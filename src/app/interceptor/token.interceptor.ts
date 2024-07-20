@@ -10,7 +10,7 @@ export class TokenInterceptor implements HttpInterceptor {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
+        console.log('httpinterceptor')
         // todo asks codereview
         return this.authService.isLoggedIn()
             .pipe(take(1))
