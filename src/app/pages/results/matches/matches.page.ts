@@ -9,6 +9,7 @@ import {IMatch} from '../../../models/poule.model';
     selector: 'app-matches',
     templateUrl: './matches.page.html',
     styleUrls: ['./matches.page.scss'],
+    standalone: false
 })
 export class MatchesPage {
     matches: IMatch[];

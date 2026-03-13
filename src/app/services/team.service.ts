@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ITeam, UpdateTeamPositionDto} from '../models/poule.model';
 import {Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'

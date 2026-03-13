@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-  selector: 'app-offline',
-  templateUrl: './offline.page.html',
-  styleUrls: ['./offline.page.scss'],
+    selector: 'app-offline',
+    templateUrl: './offline.page.html',
+    styleUrls: ['./offline.page.scss'],
+    standalone: false
 })
 export class OfflinePage implements OnInit {
 

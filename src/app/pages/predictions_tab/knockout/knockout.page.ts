@@ -17,6 +17,7 @@ import { KnockoutPredictionsService } from 'src/app/services/knockout-prediction
     selector: 'app-knockout',
     templateUrl: './knockout.page.html',
     styleUrls: ['./knockout.page.scss'],
+    standalone: false
 })
 export class KnockoutPage {
     @ViewChild('topScrollAnchor') topScroll: ElementRef;

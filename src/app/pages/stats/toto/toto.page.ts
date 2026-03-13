@@ -8,6 +8,7 @@ import {Router} from '@angular/router';
     selector: 'app-knockout',
     templateUrl: './toto.page.html',
     styleUrls: ['./toto.page.scss'],
+    standalone: false
 })
 export class TotoPage {
 

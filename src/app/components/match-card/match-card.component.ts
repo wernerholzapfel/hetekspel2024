@@ -9,6 +9,7 @@ import { LoadingController } from '@ionic/angular';
     selector: 'app-match-card',
     templateUrl: './match-card.component.html',
     styleUrls: ['./match-card.component.scss'],
+    standalone: false
 })
 export class MatchCardComponent implements OnInit {
 

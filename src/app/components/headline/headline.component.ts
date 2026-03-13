@@ -11,6 +11,7 @@ import {takeUntil} from 'rxjs/operators';
     selector: 'app-headline',
     templateUrl: './headline.component.html',
     styleUrls: ['./headline.component.scss'],
+    standalone: false
 })
 export class HeadlineComponent implements OnInit, OnDestroy {
 

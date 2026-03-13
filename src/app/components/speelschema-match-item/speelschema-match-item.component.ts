@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
     selector: 'app-speelschema-match-item',
     templateUrl: './speelschema-match-item.component.html',
     styleUrls: ['./speelschema-match-item.component.scss'],
+    standalone: false
 })
 export class SpeelschemaMatchItemComponent implements OnInit {
 

@@ -8,6 +8,7 @@ import {PoulepredictionService} from '../../../services/pouleprediction.service'
     selector: 'app-poule',
     templateUrl: './poule.page.html',
     styleUrls: ['./poule.page.scss'],
+    standalone: false
 })
 export class PoulePage {
 

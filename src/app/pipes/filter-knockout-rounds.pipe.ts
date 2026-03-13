@@ -1,7 +1,8 @@
 import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({
-    name: 'filterKnockoutRounds'
+    name: 'filterKnockoutRounds',
+    standalone: false
 })
 export class FilterKnockoutRoundsPipe implements PipeTransform {
 

@@ -5,9 +5,10 @@ import { KnockoutService } from 'src/app/services/knockout.service';
 import { MatchService } from 'src/app/services/match.service';
 
 @Component({
-  selector: 'app-speelschema',
-  templateUrl: './speelschema.page.html',
-  styleUrls: ['./speelschema.page.scss'],
+    selector: 'app-speelschema',
+    templateUrl: './speelschema.page.html',
+    styleUrls: ['./speelschema.page.scss'],
+    standalone: false
 })
 export class SpeelschemaPage implements OnInit {
 

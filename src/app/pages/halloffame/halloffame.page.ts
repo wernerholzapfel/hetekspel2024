@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
     selector: 'app-halloffame',
     templateUrl: './halloffame.page.html',
     styleUrls: ['./halloffame.page.scss'],
+    standalone: false
 })
 export class HalloffamePage implements OnInit {
 

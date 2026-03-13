@@ -6,6 +6,7 @@ import {UiService} from '../../services/ui.service';
     selector: 'app-toggle-stand-list',
     templateUrl: './toggle-stand-list.component.html',
     styleUrls: ['./toggle-stand-list.component.scss'],
+    standalone: false
 })
 export class ToggleStandListComponent implements OnInit {
 

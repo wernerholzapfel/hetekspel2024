@@ -9,5 +9,5 @@ export const environment = {
     messagingSenderId: "309318087423",
     appId: "1:309318087423:web:39cbb20dea0caadf40d2ca",
     databaseUrl: "https://hetekspel-24-default-rtdb.firebaseio.com/"
-  }
+                                   }
 };

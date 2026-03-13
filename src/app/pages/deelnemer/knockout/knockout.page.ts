@@ -13,6 +13,7 @@ import { IKnockout } from 'src/app/models/knockout.model';
     selector: 'app-knockout',
     templateUrl: './knockout.page.html',
     styleUrls: ['./knockout.page.scss'],
+    standalone: false
 })
 export class KnockoutPage {
 

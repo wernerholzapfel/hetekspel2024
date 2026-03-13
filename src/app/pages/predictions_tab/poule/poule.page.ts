@@ -13,6 +13,7 @@ import { AlertController, IonModal } from '@ionic/angular';
     selector: 'app-poule',
     templateUrl: './poule.page.html',
     styleUrls: ['./poule.page.scss'],
+    standalone: false
 })
 export class PoulePage {
     @ViewChild(IonModal) modal: IonModal;

@@ -18,6 +18,7 @@ import { HeadlineService } from 'src/app/services/headline.service';
     selector: 'app-home',
     templateUrl: 'home.page.html',
     styleUrls: ['home.page.scss'],
+    standalone: false
 })
 export class HomePage implements OnInit, OnDestroy {
 

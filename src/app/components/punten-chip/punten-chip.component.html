@@ -1,13 +1,13 @@
 <ion-col>
-    <ion-chip [color]="color">
-        <ion-icon [name]="iconName"></ion-icon>
-        <ion-label>
-            {{points}}
-            <ion-text [color]="color"
-                    class="hes-delta-text"
-                    *ngIf="deltaPoints > 0">
-                (+{{deltaPoints}})
-            </ion-text>
-        </ion-label>
-    </ion-chip>
+  <ion-chip [color]="color">
+    <ion-icon [name]="iconName"></ion-icon>
+    <ion-label>
+      {{ points }}
+      @if (deltaPoints > 0) {
+      <ion-text [color]="color" class="hes-delta-text">
+        (+{{ deltaPoints }})
+      </ion-text>
+      }
+    </ion-label>
+  </ion-chip>
 </ion-col>

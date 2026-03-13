@@ -2,7 +2,8 @@ import {Directive, ElementRef, Input, OnInit, Renderer2} from '@angular/core';
 import {DomController} from '@ionic/angular';
 
 @Directive({
-  selector: '[myScrollVanish]'
+    selector: '[myScrollVanish]',
+    standalone: false
 })
 export class ScrollVanishDirective implements OnInit {
   @Input('myScrollVanish') scrollArea;

@@ -1,90 +1,100 @@
 <ion-header>
-    <app-menu-toolbar title="Finaleronde"></app-menu-toolbar>
+  <app-menu-toolbar title="Finaleronde"></app-menu-toolbar>
 </ion-header>
-<ion-content appGestures
-[gestureOpts]="gestureOpts"
-(swipe)="onSwipe($event)">
-    <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
-        <ion-refresher-content></ion-refresher-content>
-    </ion-refresher>
-    <ion-card class="message" color="tertiary">
-        <ion-card-content *ngIf="standLine">
-            {{standLine?.displayName}} staat {{standLine?.position}}e met {{standLine?.totalPoints}} punten, waarvan {{standLine?.knockoutPoints}}
-            punten voor de finaleronde.
-        </ion-card-content>
-    </ion-card>
+<ion-content appGestures [gestureOpts]="gestureOpts" (swipe)="onSwipe($event)">
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-card class="message" color="tertiary">
+    @if (standLine) {
+    <ion-card-content>
+      {{standLine?.displayName}} staat {{standLine?.position}}e met
+      {{standLine?.totalPoints}} punten, waarvan {{standLine?.knockoutPoints}}
+      punten voor de finaleronde.
+    </ion-card-content>
+    }
+  </ion-card>
+  <ion-grid>
+    @if (predictions) {
     <ion-grid>
-        <ng-container *ngIf="predictions">
-            <ion-grid>
-               <ion-row>
-                   <ion-col>Europees kampioen
-                   </ion-col>
-               </ion-row>
-           </ion-grid>
-           <ion-grid (click)="openKoTeam(europeesKampioen?.team.id, 1)">
-               <app-knockout-team-header 
-               [team]="europeesKampioen?.selectedTeam"
-               [round]="europeesKampioen.round"
-               [punten]="europeesKampioen?.spelpunten">
-           </app-knockout-team-header>
-           </ion-grid>
-       </ng-container>
-        <ng-container *ngFor="let prediction of predictions;let i = index">
-         <ng-container *ngIf="prediction.round !== '3'">
-            <ion-row *ngIf="i === 0 || predictions[i-1].round !== prediction.round">
-                <ion-col>{{prediction.round | roundText}}
-                </ion-col>
-            </ion-row>
-            <ion-row class="ion-no-padding hes-border-bottom">
-                <ion-col class="hes-background">
-                    <ion-row>
-                        <ion-col (click)="openKoTeam(prediction.homeTeam?.id, prediction.round)">
-                            <span class="fi fi-{{prediction.homeTeam?.logoUrl}} fis"></span>
-                            {{prediction.homeTeam?.name}}
-                        </ion-col>
-                    </ion-row>
-                    <ion-row>
-                        <ion-col (click)="openKoTeam(prediction.awayTeam?.id, prediction.round)">
-                            <span class="fi fi-{{prediction.awayTeam?.logoUrl}} fis"></span>
-                            {{prediction.awayTeam?.name}}
-                        </ion-col>
-                    </ion-row>
-                </ion-col>
-                <ion-col size="3" class="hes-background-secondary-accent">
-                    <ion-row>
-                        <ion-col size="4" class="ion-no-padding ion-text-start">
-                            <app-knockout-icon-row
-                            [eliminationState]="prediction?.homeTeam?.eliminationState"
-                            ></app-knockout-icon-row>
-                           <app-knockout-icon-row
-                            [eliminationState]="prediction?.awayTeam?.eliminationState">
-                            </app-knockout-icon-row>
-                        </ion-col>
-                        <ion-col size="8"
-                                 class="ion-no-padding ion-align-self-center ion-text-center">
-                            <ion-chip color="secondary"
-                                      *ngIf="prediction.homeTeam?.eliminationState !== 'unknown' || prediction.awayTeam?.eliminationState !== 'unknown'">
-                                {{prediction.homeTeam.spelpunten + prediction.awayTeam?.spelpunten}}
-                            </ion-chip>
-                        </ion-col>
-                    </ion-row>
-                </ion-col>
-            </ion-row>
-        </ng-container>
-    </ng-container>
+      <ion-row>
+        <ion-col>Europees kampioen </ion-col>
+      </ion-row>
     </ion-grid>
-    <ng-container *ngIf="predictions && winnaarTroostFinale && showWinnaarTroostFinale">
-        <ion-grid>
-            <ion-row>
-                <ion-col>Winnaar troostfinale
-                </ion-col>
-            </ion-row>
-        </ion-grid>
-        <ion-grid (click)="openKoTeam(winnaarTroostFinale?.team.id, '3')">
-            <app-knockout-team-header [team]="winnaarTroostFinale?.selectedTeam"
-                                      [round]="winnaarTroostFinale?.round"
-                                      [punten]="winnaarTroostFinale?.spelpunten"></app-knockout-team-header>
-        </ion-grid>
-    </ng-container>
-   
+    <ion-grid (click)="openKoTeam(europeesKampioen?.team.id, 1)">
+      <app-knockout-team-header
+        [team]="europeesKampioen?.selectedTeam"
+        [round]="europeesKampioen.round"
+        [punten]="europeesKampioen?.spelpunten"
+      >
+      </app-knockout-team-header>
+    </ion-grid>
+    } @for (prediction of predictions; track prediction; let i = $index) { @if
+    (prediction.round !== '3') { @if (i === 0 || predictions[i-1].round !==
+    prediction.round) {
+    <ion-row>
+      <ion-col>{{prediction.round | roundText}} </ion-col>
+    </ion-row>
+    }
+    <ion-row class="ion-no-padding hes-border-bottom">
+      <ion-col class="hes-background">
+        <ion-row>
+          <ion-col
+            (click)="openKoTeam(prediction.homeTeam?.id, prediction.round)"
+          >
+            <span class="fi fi-{{prediction.homeTeam?.logoUrl}} fis"></span>
+            {{prediction.homeTeam?.name}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col
+            (click)="openKoTeam(prediction.awayTeam?.id, prediction.round)"
+          >
+            <span class="fi fi-{{prediction.awayTeam?.logoUrl}} fis"></span>
+            {{prediction.awayTeam?.name}}
+          </ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col size="3" class="hes-background-secondary-accent">
+        <ion-row>
+          <ion-col size="4" class="ion-no-padding ion-text-start">
+            <app-knockout-icon-row
+              [eliminationState]="prediction?.homeTeam?.eliminationState"
+            ></app-knockout-icon-row>
+            <app-knockout-icon-row
+              [eliminationState]="prediction?.awayTeam?.eliminationState"
+            >
+            </app-knockout-icon-row>
+          </ion-col>
+          <ion-col
+            size="8"
+            class="ion-no-padding ion-align-self-center ion-text-center"
+          >
+            @if (prediction.homeTeam?.eliminationState !== 'unknown' ||
+            prediction.awayTeam?.eliminationState !== 'unknown') {
+            <ion-chip color="secondary">
+              {{prediction.homeTeam.spelpunten +
+              prediction.awayTeam?.spelpunten}}
+            </ion-chip>
+            }
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    } }
+  </ion-grid>
+  @if (predictions && winnaarTroostFinale && showWinnaarTroostFinale) {
+  <ion-grid>
+    <ion-row>
+      <ion-col>Winnaar troostfinale </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid (click)="openKoTeam(winnaarTroostFinale?.team.id, '3')">
+    <app-knockout-team-header
+      [team]="winnaarTroostFinale?.selectedTeam"
+      [round]="winnaarTroostFinale?.round"
+      [punten]="winnaarTroostFinale?.spelpunten"
+    ></app-knockout-team-header>
+  </ion-grid>
+  }
 </ion-content>

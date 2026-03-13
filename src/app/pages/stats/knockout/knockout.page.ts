@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
     selector: 'app-poule',
     templateUrl: './knockout.page.html',
     styleUrls: ['./knockout.page.scss'],
+    standalone: false
 })
 export class KnockoutPage {
     knockoutStats: any[];

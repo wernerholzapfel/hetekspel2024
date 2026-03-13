@@ -11,6 +11,7 @@ import { UiService } from '../../../../../services/ui.service';
     selector: 'app-knockout-participants',
     templateUrl: './knockout-participants.page.html',
     styleUrls: ['./knockout-participants.page.scss'],
+    standalone: false
 })
 export class KnockoutParticipantsPage implements OnInit, OnDestroy {
 

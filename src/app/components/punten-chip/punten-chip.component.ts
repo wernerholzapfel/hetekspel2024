@@ -2,9 +2,10 @@ import {Component, Input, OnInit} from '@angular/core';
 import { UiService } from 'src/app/services/ui.service';
 
 @Component({
-  selector: 'app-punten-chip',
-  templateUrl: './punten-chip.component.html',
-  styleUrls: ['./punten-chip.component.scss'],
+    selector: 'app-punten-chip',
+    templateUrl: './punten-chip.component.html',
+    styleUrls: ['./punten-chip.component.scss'],
+    standalone: false
 })
 export class PuntenChipComponent implements OnInit {
 

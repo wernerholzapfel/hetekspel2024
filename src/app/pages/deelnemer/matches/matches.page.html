@@ -1,81 +1,92 @@
 <ion-header>
-    <ion-toolbar mode="ios">
-        <ion-title>matches</ion-title>
-    </ion-toolbar>
+  <ion-toolbar mode="ios">
+    <ion-title>matches</ion-title>
+  </ion-toolbar>
 </ion-header>
 
-<ion-content appGestures
-             [gestureOpts]="gestureOpts"
-             (swipe)="onSwipe($event)">
-            <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
-                <ion-refresher-content></ion-refresher-content>
-            </ion-refresher>
-    <ion-card class="message" color="tertiary">
-        <ion-card-content *ngIf="standLine">
-            {{standLine?.displayName}} staat {{standLine?.position}}e met {{standLine?.totalPoints}} punten, waarvan {{standLine?.matchPoints}}
-            punten voor de wedstrijden.
-        </ion-card-content>
-    </ion-card>
-    <ng-container *ngIf="predictions">
-            <ion-item *ngFor="let prediction of predictions; let i = index;" (click)="openMatch(prediction.match.id)" class="ion-no-padding"
-                      lines="none">
-                <ion-grid class="ion-no-padding ion-padding-start">
-                    <ion-row style="font-size: x-small">
-                        <ion-col size="6" class="ion-padding-vertical ion-text-start hes-background">
-                            <ion-text color="medium">
-                                {{prediction.match.date | date : 'dd MMMM  HH:mm'}}
-                            </ion-text>
-                        </ion-col>
-                        <ion-col size="6" class="ion-padding ion-text-end hes-background">
-                            <ion-text color="medium">
-                                Poule {{prediction.match.poule}}
-                            </ion-text>
-                        </ion-col>
-                    </ion-row>
-                    <ion-row class="hes-border-bottom">
-                        <ion-col class="hes-background">
-                            <ion-row>
-                                <ion-col class="ion-padding-vertical">
-                                    {{prediction.match.homeScore}}
-                                    <span class="fi fi-{{prediction.match.homeTeam.logoUrl}} fis"></span>
-                                    {{prediction.match.homeTeam.name}}
-                                </ion-col>
-                        </ion-row>
-                        <ion-row>
-                            <ion-col class="ion-padding-vertical">
-                                {{prediction.match.awayScore}}
-                                <span class="fi fi-{{prediction.match.awayTeam.logoUrl}} fis"></span>
-                                {{prediction.match.awayTeam.name}}
-                            </ion-col>
-                        </ion-row>
-                    </ion-col>
-                    <ion-col size="3" class="hes-background-secondary-accent">
-                        <ion-row>
-                            <ion-col size="6" class="ion-no-padding ion-text-start">
-                                <ion-row class="ion-no-padding">
-                                    <ion-col
-                                            class="ion-padding-vertical ion-padding-start ion-text-start">{{prediction.homeScore}}</ion-col>
-                                </ion-row>
-                                <ion-row class="ion-no-padding">
-                                    <ion-col
-                                            class="ion-padding-vertical ion-padding-start ion-text-start">{{prediction.awayScore}}</ion-col>
-                                </ion-row>
-                            </ion-col>
-                            <ion-col size="6"
-                                     class="ion-padding-vertical ion-no-padding ion-text-center ion-align-self-center">
-                                <ion-chip color="secondary" *ngIf="prediction.spelpunten != null">
-                                    {{prediction.spelpunten}}
-                                </ion-chip>
-                            </ion-col>
-                        </ion-row>
-                    </ion-col>
-                    </ion-row>
-                </ion-grid>
-            </ion-item>
-    </ng-container>
+<ion-content appGestures [gestureOpts]="gestureOpts" (swipe)="onSwipe($event)">
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-card class="message" color="tertiary">
+    @if (standLine) {
+    <ion-card-content>
+      {{standLine?.displayName}} staat {{standLine?.position}}e met
+      {{standLine?.totalPoints}} punten, waarvan {{standLine?.matchPoints}}
+      punten voor de wedstrijden.
+    </ion-card-content>
+    }
+  </ion-card>
+  @if (predictions) { @for (prediction of predictions; track prediction; let i =
+  $index) {
+  <ion-item
+    (click)="openMatch(prediction.match.id)"
+    class="ion-no-padding"
+    lines="none"
+  >
+    <ion-grid class="ion-no-padding ion-padding-start">
+      <ion-row style="font-size: x-small">
+        <ion-col
+          size="6"
+          class="ion-padding-vertical ion-text-start hes-background"
+        >
+          <ion-text color="medium">
+            {{prediction.match.date | date : 'dd MMMM HH:mm'}}
+          </ion-text>
+        </ion-col>
+        <ion-col size="6" class="ion-padding ion-text-end hes-background">
+          <ion-text color="medium"> Poule {{prediction.match.poule}} </ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row class="hes-border-bottom">
+        <ion-col class="hes-background">
+          <ion-row>
+            <ion-col class="ion-padding-vertical">
+              {{prediction.match.homeScore}}
+              <span
+                class="fi fi-{{prediction.match.homeTeam.logoUrl}} fis"
+              ></span>
+              {{prediction.match.homeTeam.name}}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="ion-padding-vertical">
+              {{prediction.match.awayScore}}
+              <span
+                class="fi fi-{{prediction.match.awayTeam.logoUrl}} fis"
+              ></span>
+              {{prediction.match.awayTeam.name}}
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size="3" class="hes-background-secondary-accent">
+          <ion-row>
+            <ion-col size="6" class="ion-no-padding ion-text-start">
+              <ion-row class="ion-no-padding">
+                <ion-col
+                  class="ion-padding-vertical ion-padding-start ion-text-start"
+                  >{{prediction.homeScore}}</ion-col
+                >
+              </ion-row>
+              <ion-row class="ion-no-padding">
+                <ion-col
+                  class="ion-padding-vertical ion-padding-start ion-text-start"
+                  >{{prediction.awayScore}}</ion-col
+                >
+              </ion-row>
+            </ion-col>
+            <ion-col
+              size="6"
+              class="ion-padding-vertical ion-no-padding ion-text-center ion-align-self-center"
+            >
+              @if (prediction.spelpunten != null) {
+              <ion-chip color="secondary"> {{prediction.spelpunten}} </ion-chip>
+              }
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+  } }
 </ion-content>
-
-
-
-
-

@@ -10,6 +10,7 @@ import { takeUntil } from 'rxjs/operators';
     selector: 'app-stand-card',
     templateUrl: './stand-card.component.html',
     styleUrls: ['./stand-card.component.scss'],
+    standalone: false
 })
 export class StandCardComponent implements OnInit, OnDestroy {
     @ViewChild(IonReorderGroup, { static: true }) reorderGroup: IonReorderGroup;

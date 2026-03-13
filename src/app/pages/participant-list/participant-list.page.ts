@@ -8,6 +8,7 @@ import {RouteStateService} from '../../services/route-state.service';
     selector: 'app-participant-list',
     templateUrl: './participant-list.page.html',
     styleUrls: ['./participant-list.page.scss'],
+    standalone: false
 })
 export class ParticipantListPage implements OnDestroy {
 

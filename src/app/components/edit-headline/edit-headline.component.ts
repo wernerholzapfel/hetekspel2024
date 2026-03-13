@@ -7,6 +7,7 @@ import {ModalController} from '@ionic/angular';
     selector: 'app-edit-headline',
     templateUrl: './edit-headline.component.html',
     styleUrls: ['./edit-headline.component.scss'],
+    standalone: false
 })
 export class EditHeadlineComponent implements OnInit {
 

@@ -10,7 +10,7 @@ import { AngularFireMessagingModule } from '@angular/fire/compat/messaging';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { ParticipantService } from './services/participant.service';
 import { environment } from '../environments/environment';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { TokenInterceptor } from './interceptor/token.interceptor';
 import { LoaderInterceptor } from './interceptor/loader.interceptor';
 import { HttpErrorInterceptor } from './interceptor/http-error.interceptor';
@@ -34,23 +34,18 @@ import { getMessaging, provideMessaging } from '@angular/fire/messaging';
 registerLocaleData(localeNl);
 
 
-@NgModule({
-    declarations: [AppComponent],
-    imports: [
-        BrowserModule,
+@NgModule({ declarations: [AppComponent],
+    bootstrap: [AppComponent], imports: [BrowserModule,
         IonicModule.forRoot({
             animated: true,
             rippleEffect: false,
             mode: 'md'
         }),
         AppRoutingModule,
-        HttpClientModule,
         AngularFireModule.initializeApp(environment.firebase, 'angular-auth-firebase'),
         AngularFireDatabaseModule,
         AngularFireAuthModule,
-        LoaderModule,
-    ],
-    providers: [
+        LoaderModule], providers: [
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         {
             provide: HTTP_INTERCEPTORS,
@@ -80,8 +75,7 @@ registerLocaleData(localeNl);
         FromNowPipe,
         FilterPoulePositionPipe,
         KnockoutHelperService,
-    ],
-    bootstrap: [AppComponent]
-})
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class AppModule {
 }

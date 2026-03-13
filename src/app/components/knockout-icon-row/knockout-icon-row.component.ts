@@ -2,9 +2,10 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ITeam} from '../../models/poule.model';
 
 @Component({
-  selector: 'app-knockout-icon-row',
-  templateUrl: './knockout-icon-row.component.html',
-  styleUrls: ['./knockout-icon-row.component.scss'],
+    selector: 'app-knockout-icon-row',
+    templateUrl: './knockout-icon-row.component.html',
+    styleUrls: ['./knockout-icon-row.component.scss'],
+    standalone: false
 })
 export class KnockoutIconRowComponent implements OnInit {
 

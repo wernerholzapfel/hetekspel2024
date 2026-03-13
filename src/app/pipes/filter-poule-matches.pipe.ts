@@ -1,9 +1,9 @@
 import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({
-  name: 'filterPouleMatches',
-  pure: false
-  
+    name: 'filterPouleMatches',
+    pure: false,
+    standalone: false
 })
 export class FilterPouleMatchesPipe implements PipeTransform {
 

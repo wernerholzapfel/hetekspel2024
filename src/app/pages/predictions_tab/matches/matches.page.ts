@@ -14,6 +14,7 @@ import { PoulepredictionService } from 'src/app/services/pouleprediction.service
     selector: 'app-matches',
     templateUrl: './matches.page.html',
     styleUrls: ['./matches.page.scss'],
+    standalone: false
 })
 export class MatchesPage {
     @ViewChild('topScrollAnchor') topScroll: ElementRef;

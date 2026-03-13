@@ -9,6 +9,7 @@ import {takeUntil} from 'rxjs/operators';
     selector: 'app-deelnemer',
     templateUrl: './deelnemer.page.html',
     styleUrls: ['./deelnemer.page.scss'],
+    standalone: false
 })
 export class DeelnemerPage {
 

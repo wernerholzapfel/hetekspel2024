@@ -12,6 +12,7 @@ import { ToggleStandListComponent } from '../../components/toggle-stand-list/tog
     selector: 'app-stand',
     templateUrl: './stand.page.html',
     styleUrls: ['./stand.page.scss'],
+    standalone: false
 })
 export class StandPage {
 

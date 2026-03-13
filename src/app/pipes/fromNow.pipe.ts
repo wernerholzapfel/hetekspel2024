@@ -2,7 +2,8 @@ import {Pipe, PipeTransform} from '@angular/core';
 import * as moment from 'moment';
 
 @Pipe({
-    name: 'fromNow'
+    name: 'fromNow',
+    standalone: false
 })
 export class FromNowPipe implements PipeTransform {
 

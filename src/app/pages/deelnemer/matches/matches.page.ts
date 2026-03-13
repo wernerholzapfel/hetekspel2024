@@ -12,6 +12,7 @@ import { Gesture } from '../../../directives/gestures.directive';
     selector: 'app-matches',
     templateUrl: './matches.page.html',
     styleUrls: ['./matches.page.scss'],
+    standalone: false
 })
 export class MatchesPage {
 

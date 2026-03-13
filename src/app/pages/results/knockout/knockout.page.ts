@@ -12,6 +12,7 @@ import { switchMap } from 'rxjs/operators';
     selector: 'app-knockout',
     templateUrl: './knockout.page.html',
     styleUrls: ['./knockout.page.scss'],
+    standalone: false
 })
 export class KnockoutPage {
     constructor(private poulePredictionService: PoulepredictionService,

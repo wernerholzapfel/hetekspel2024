@@ -6,6 +6,7 @@ import {Router} from '@angular/router';
     selector: 'app-menu-toolbar',
     templateUrl: './menu-toolbar.component.html',
     styleUrls: ['./menu-toolbar.component.scss'],
+    standalone: false
 })
 export class MenuToolbarComponent implements OnInit {
 

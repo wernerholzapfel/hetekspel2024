@@ -8,9 +8,10 @@ import {PoulepredictionService} from '../../../services/pouleprediction.service'
 import {IPoulePrediction} from '../../../models/participant.model';
 
 @Component({
-  selector: 'app-poule',
-  templateUrl: './poule.page.html',
-  styleUrls: ['./poule.page.scss'],
+    selector: 'app-poule',
+    templateUrl: './poule.page.html',
+    styleUrls: ['./poule.page.scss'],
+    standalone: false
 })
 export class PoulePage {
 

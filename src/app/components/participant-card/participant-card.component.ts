@@ -7,6 +7,7 @@ import { UiService } from 'src/app/services/ui.service';
     selector: 'app-participant-card',
     templateUrl: './participant-card.component.html',
     styleUrls: ['./participant-card.component.scss'],
+    standalone: false
 })
 export class ParticipantCardComponent implements OnInit {
 

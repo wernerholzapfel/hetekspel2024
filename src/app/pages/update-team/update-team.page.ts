@@ -6,6 +6,7 @@ import {ModalController} from '@ionic/angular';
     selector: 'app-update-team',
     templateUrl: './update-team.page.html',
     styleUrls: ['./update-team.page.scss'],
+    standalone: false
 })
 export class UpdateTeamPage implements OnInit {
 

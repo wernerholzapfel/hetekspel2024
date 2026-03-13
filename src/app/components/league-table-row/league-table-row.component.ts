@@ -10,6 +10,7 @@ import {ToastService} from '../../services/toast.service';
     selector: 'app-league-table-row',
     templateUrl: './league-table-row.component.html',
     styleUrls: ['./league-table-row.component.scss'],
+    standalone: false
 })
 export class LeagueTableRowComponent implements OnInit {
 
