@@ -16,7 +16,7 @@ import { IKnockout } from 'src/app/models/knockout.model';
 })
 export class KnockoutPage {
 
-    predictions: IKnockout[]; // todo model
+    predictions: IKnockout[];
     speelschema: any[]; // todo model
     standLine: IStandLine;
     showWinnaarTroostFinale = false;
@@ -30,7 +30,6 @@ export class KnockoutPage {
     standIndex: number;
 
     constructor(private knockoutPredictionService: KnockoutPredictionsService,
-        private knockoutService: KnockoutService,
         private uiService: UiService,
         private router: Router,
         private route: ActivatedRoute) {

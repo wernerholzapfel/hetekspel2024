@@ -21,7 +21,7 @@
             </ion-row>
             <ion-row>
                 <ion-col size="12" size-md="6" size-lg="6" size-xl="4" *ngFor="let poule of poules">
-                    <app-stand-card [editMode]="!arePoulesInComplete()" [stand]="poule.stand"
+                    <app-stand-card [editMode]="arePoulesComplete" [stand]="poule.stand"
                         [showSortedCorrectly]="true" [poule]="poule"></app-stand-card>
                 </ion-col>
             </ion-row>
@@ -30,7 +30,7 @@
     <ng-template>
         <ion-toolbar color="primary" mode="ios">
             <ion-title>
-                <img [src]="(uiService.prefersDark$ | async) ? '/assets/header_hetekspel2024_dark_mode.png' : '/assets/header_hetekspel2024_dark_mode.png'"
+                <img [src]="(uiService.prefersDark$ | async) ? '/assets/header_hetwkspel_dark_mode.png' : '/assets/header_hetwkspel_dark_mode.png'"
                     height="36px;">
             </ion-title>
             <ion-buttons slot="start">
@@ -43,9 +43,9 @@
                 <ion-col size="12">
                     <ion-card color="secondary">
                         <ion-card-content>
-                            De vier beste nummers drie uit de poules gaan door naar de 1/8e finales. 
+                            De acht beste nummers drie uit de poules gaan door naar de 1/16e finales. 
                             <br>Hieronder staan de nummers drie op basis van jouw poulestanden.
-                            <br>De vier geselecteerde landen gaan door naar de 1/8e finales, je kunt eventueel zelf de selectie veranderen.
+                            <br>De acht geselecteerde landen gaan door naar de 1/16e finales, je kunt eventueel zelf de selectie veranderen.
                         </ion-card-content>
                     </ion-card>
                 </ion-col>
@@ -57,7 +57,7 @@
                         <ion-row class="ion-no-padding">
                             <ion-col class="ion-align-self-center">
                                 <ion-card-subtitle class="ion-no-margin">
-                                    Kies je vier beste nummers drie
+                                    Kies je acht beste nummers drie
                                 </ion-card-subtitle>
                             </ion-col>
                             <!-- <ion-col size="1" class="ion-align-self-end" *ngIf="editMode && !poule?.isSortDisabled && uiService?.isRegistrationOpen$ | async"> -->
@@ -117,8 +117,8 @@
                                     <ion-icon *ngIf="line.selected" name="checkmark-outline"
                                         color="success"></ion-icon> -->
                                 <ion-checkbox color="success" [(ngModel)]="line.selected"
-                                    [checked]="line.selected" [disabled]="!line.selected && fourThirdpositions"
-                                    (ionChange)="recalcFourThirdpositions($event)">
+                                    [checked]="line.selected" [disabled]="!line.selected && eightBestThirdpositions"
+                                    (ionChange)="recalcEightBestThirdpositions($event)">
                                 </ion-checkbox>
                             </ion-col>
                         </ion-row>
@@ -194,7 +194,7 @@
         </ion-grid> -->
             <ion-footer>
                 <ng-container class="ion-no-border ion-padding-horizontal">
-                    <ion-button [disabled]="!fourThirdpositions" color="tertiary" expand="full" fill="solid"
+                    <ion-button [disabled]="!eightBestThirdpositions" color="tertiary" expand="full" fill="solid"
                         (click)="save()">
                         <span>Opslaan</span>
                     </ion-button>
@@ -208,9 +208,9 @@
     </ion-content>
 <ion-footer *ngIf="uiService.isRegistrationOpen$ | async">
     <ng-container class="ion-no-border ion-padding-horizontal">
-        <ion-button id="open-modal" color="tertiary" expand="full" fill="solid" [disabled]="arePoulesInComplete()">
-            <span *ngIf="arePoulesInComplete()">Voorspel eerst de wedstrijden</span>
-            <span *ngIf="!arePoulesInComplete()">Verder</span>
+        <ion-button id="open-modal" color="tertiary" expand="full" fill="solid" [disabled]="!arePoulesComplete">
+            <span *ngIf="!arePoulesComplete">Voorspel eerst de wedstrijden</span>
+            <span *ngIf="arePoulesComplete">Verder</span>
         </ion-button>
     </ng-container>
 </ion-footer>

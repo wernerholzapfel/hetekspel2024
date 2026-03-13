@@ -28,7 +28,7 @@ export class AuthService {
         this.user$ = fireAuth.user;
 
         combineLatest([this.getTokenResult(), this.uiService.isRegistrationOpen$, this.db.object<any>(`offlineMode`)
-        .valueChanges()])
+            .valueChanges()])
             .subscribe(
                 ([tokenResult, isRegistrationOpen, offlineMode]) => {
                     console.log("isRegistrationOpen")
@@ -48,13 +48,13 @@ export class AuthService {
 
         this.user$.pipe(distinctUntilChanged())
             .pipe(switchMap(user => {
-                    return combineLatest([this.db.object<any>(`offlineMode`).valueChanges(),
-                    of(user)]);
+                return combineLatest([this.db.object<any>(`offlineMode`).valueChanges(),
+                of(user)]);
             })).pipe(switchMap(([offlineMode, user]) => {
                 if (offlineMode) {
                     return combineLatest([of(user), of(null)])
                 } else {
-                    return combineLatest([of(user), this.participantService.getParticipant()])
+                    return combineLatest([of(user), user ? this.participantService.getParticipant() : of(null)])
 
                 }
             }))
@@ -63,7 +63,7 @@ export class AuthService {
                     this.user = user;
                     this.displayName = user.displayName;
                     // done for offline mode
-                    this.uiService.participant$.next({...this.uiService.participant$.value, displayName: user.displayName})
+                    this.uiService.participant$.next({ ...this.uiService.participant$.value, displayName: user.displayName })
                     if (participant) {
                         this.uiService.participant$.next(participant);
                     }

@@ -45,7 +45,7 @@ export class UpdateTeamPositionDto {
     id: string;
     poulePosition: number;
     isEliminated: boolean;
-    eliminationRound: string;
+    eliminationRound: number;
     isPositionFinal: boolean;
 }
 

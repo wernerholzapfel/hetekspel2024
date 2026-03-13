@@ -20,7 +20,7 @@ export class KnockoutPage {
         private uiService: UiService) {
     }
 
-    public activeKnockoutRound = '16';
+    public activeKnockoutRound = 16;
     public speelschema: IKnockout[];
     private nummerDries: IPoulePrediction[];
     private nummerDrieIdentifier: string;
@@ -29,23 +29,25 @@ export class KnockoutPage {
 
     public rounds = [
         {
-            round: '16',
+            round: 16,
             text: '1/8 F',
-            next: '8'
+            next: 8
         }, {
-            round: '8',
+            round: 8,
             text: '1/4 F',
-            next: '4'
+            next: 4
         }, {
-            round: '4',
+            round: 4,
             text: '1/2 F',
-            next: '3'
-        }, {
-            round: '3',
-            text: '3/4 p',
-            next: '2'
-        }, {
-            round: '2',
+            next: 2
+        },
+        // {
+        //     round: '3',
+        //     text: '3/4 p',
+        //     next: '2'
+        // },
+        {
+            round: 2,
             text: 'F'
         },
     ]
@@ -56,9 +58,9 @@ export class KnockoutPage {
             .pipe(switchMap((pp) => {
                 this.poules = pp;
                 this.nummerDries = pp.filter(item => item.positie === 3)
-                .sort((a, b) => b.thirdPositionScore - a.thirdPositionScore)
-                .slice(0, 4);
-    
+                    .sort((a, b) => b.thirdPositionScore - a.thirdPositionScore)
+                    .slice(0, 8);
+
                 this.nummerDrieIdentifier = this.nummerDries.sort((a, b) => {
                     if (b.poule > a.poule) {
                         return -1;
@@ -68,25 +70,37 @@ export class KnockoutPage {
                     }
                     return 0;
                 }).reduce((acc: string, val) => acc + val.poule, '');
-    
+
                 return this.knockoutService.getOriginalSpeelschema()
             })).subscribe(speelschema => {
-                
+
                 const thirdplaces = this.poulePredictionService.getPositionForThirdPlacedTeams(this.nummerDrieIdentifier);
 
                 this.speelschema = speelschema.map(match => {
                     switch (match.awayId) {
+                        case 'WA':
+                            match.awayId = thirdplaces.WA;
+                            break;
                         case 'WB':
                             match.awayId = thirdplaces.WB;
                             break;
-                        case 'WC':
-                            match.awayId = thirdplaces.WC;
+                        case 'WD':
+                            match.awayId = thirdplaces.WD;
                             break;
                         case 'WE':
                             match.awayId = thirdplaces.WE;
                             break;
-                        case 'WF':
-                            match.awayId = thirdplaces.WF;
+                        case 'WG':
+                            match.awayId = thirdplaces.WG;
+                            break;
+                        case 'WI':
+                            match.awayId = thirdplaces.WI;
+                            break;
+                        case 'WK':
+                            match.awayId = thirdplaces.WK;
+                            break;
+                        case 'WL':
+                            match.awayId = thirdplaces.WL;
                             break;
                         default:
                         // code block
@@ -101,7 +115,7 @@ export class KnockoutPage {
     }
 
     setTeam(speelschema, id, round, selectedTeam: string): ITeam {
-        if (round === '16') {
+        if (round === 16) {
             let poule = this.poules.find(p => {
                 var combinedId = p.positie + p.poule
                 console.log(id)
@@ -115,7 +129,7 @@ export class KnockoutPage {
                 console.log('poule niet gevonden')
                 return this.poules[0].team
             }
-        } else if (round === '3') {
+        } else if (round === 3) {
             // uitzondering voor Verliezer
             const matchLoser = speelschema.find(sp => sp.matchId === id.substring(1));
             const team = this.getLoserTeam(matchLoser, selectedTeam, id)
@@ -206,6 +220,7 @@ export class KnockoutPage {
     save(match: IKnockout) {
         this.knockoutService.updateKnockout({
             id: match.id,
+            round: match.round, // todo match.round int maken
             winnerTeam: match.selectedTeam,
             homeTeam: { id: match.homeTeam.id },
             awayTeam: { id: match.awayTeam.id },

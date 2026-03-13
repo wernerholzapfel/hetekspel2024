@@ -5,14 +5,15 @@ import {IParticipant} from './participant.model';
 export interface ISaveKnockoutPredictionsBody {
     id?: string;
     selectedTeam: ITeam;
+    knockout?: { id: string };
+    round?: number|string;
+    matchId?: string;
     homeTeam?: ITeam;
     awayTeam?: ITeam;
-    knockout?: { id: string };
-    round?: string;
 }
 
 export interface ISaveKnockoutPredictionOneBody extends ISaveKnockoutPredictionsBody {
-    matchId: string;
+    // speelschema_position: string;
 }
 
 export interface IKnockoutPrediction {

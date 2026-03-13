@@ -6,15 +6,15 @@ export interface IKnockout {
     matchId: string;
     homeId: string;
     awayId: string;
-    round: string;
+    round: string; // ?? is dit zo
     city: string;
     date: string;
-    selectedTeam?: ITeam;
     homeTeam?: ITeam;
     awayTeam?: ITeam;
+    selectedTeam?: ITeam; 
     homeScore?: number;
     awayScore?: number;
-    prediction: ISaveKnockoutPredictionsBody; // todo prediction get body?
+    prediction: any; // todo prediction get body?
     isLoading?: boolean;
 }
 
@@ -23,6 +23,7 @@ export interface IDeelnemerSpeelschema {
 }
 export class UpdateKnockoutDto {
     id: string;
+    round: string;
     homeTeam: { id: string };
     awayTeam: { id: string };
     winnerTeam: { id: string };

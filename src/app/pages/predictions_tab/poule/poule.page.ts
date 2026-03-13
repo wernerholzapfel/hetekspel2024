@@ -20,7 +20,8 @@ export class PoulePage {
     unsubscribe = new Subject<void>();
     poules = [];
     thirdpositions = [];
-    fourThirdpositions: boolean;
+    eightBestThirdpositions: boolean;
+    arePoulesComplete: boolean = false; 
 
     constructor(private matchService: MatchService,
         private poulepredictionService: PoulepredictionService,
@@ -36,7 +37,7 @@ export class PoulePage {
                 this.thirdpositions = poulePrediction.filter(pp => pp.positie === 3)
                     .sort((a, b) => b.thirdPositionScore - a.thirdPositionScore)
 
-                this.fourThirdpositions = this.thirdpositions.filter(tp => tp.selected).length === 4
+                this.eightBestThirdpositions = this.thirdpositions.filter(tp => tp.selected).length === 8
 
                 this.uiService.isDirty$.next(this.isFirstTime(poulePrediction));
                 this.poules = [{
@@ -68,7 +69,39 @@ export class PoulePage {
                     poule: 'F',
                     stand: this.createStand(poulePrediction, 'F'),
                     isSortDisabled: true
+                },
+                {
+                    poule: 'G',
+                    stand: this.createStand(poulePrediction, 'G'),
+                    isSortDisabled: true
+                },
+                {
+                    poule: 'H',
+                    stand: this.createStand(poulePrediction, 'H'),
+                    isSortDisabled: true
+                },
+                {
+                    poule: 'I',
+                    stand: this.createStand(poulePrediction, 'I'),
+                    isSortDisabled: true
+                },
+                {
+                    poule: 'J',
+                    stand: this.createStand(poulePrediction, 'J'),
+                    isSortDisabled: true
+                },
+                {
+                    poule: 'K',
+                    stand: this.createStand(poulePrediction, 'K'),
+                    isSortDisabled: true
+                },
+                {
+                    poule: 'L',
+                    stand: this.createStand(poulePrediction, 'L'),
+                    isSortDisabled: true
                 }];
+
+                this.arePoulesComplete = !this.arePoulesInComplete();
             });
 
         this.uiService.updatePouleStand$.pipe(takeUntil(this.unsubscribe))
@@ -87,7 +120,7 @@ export class PoulePage {
                     return tp.poule === team.poule ? { ...team } : { ...tp }
                 }).sort((a, b) => b.thirdPositionScore - a.thirdPositionScore)
 
-                this.fourThirdpositions = this.thirdpositions.filter(tp => tp.selected).length === 4
+                this.eightBestThirdpositions = this.thirdpositions.filter(tp => tp.selected).length === 8
 
             })
 
@@ -98,55 +131,45 @@ export class PoulePage {
             .sort((a, b) => a.positie - b.positie);
     }
 
-    canDeactivate(): Observable<boolean> | Promise<boolean> {
-        if (this.uiService.isDirty$.value && !this.arePoulesInComplete()) {
-            return this.toastService.presentAlertConfirm().then(alertResponse => {
-                return alertResponse;
-            });
-        } else {
-            return of(true);
-        }
-    }
+    // canDeactivate(): Observable<boolean> | Promise<boolean> {
+    //     if (this.uiService.isDirty$.value && !this.arePoulesInComplete()) {
+    //         return this.toastService.presentAlertConfirm().then(alertResponse => {
+    //             return alertResponse;
+    //         });
+    //     } else {
+    //         return of(true);
+    //     }
+    // }
 
 
     isFirstTime(poulePredictions): boolean {
         return !poulePredictions.find(p => p.id);
     }
 
-    arePoulesInComplete(): boolean {
+    private arePoulesInComplete(): boolean {
         const newPoules = this.poules.reduce((accumulator, poule) => [...accumulator, poule.stand], []);
-        return [].concat(...newPoules).filter(item => item.gespeeld !== 3).length > 0;
+        const pouleLijst = [].concat(...newPoules)
+        return pouleLijst.filter(item => item.gespeeld !== 3).length > 0;
     }
 
     save() {
-        if (this.thirdpositions.filter(tp => tp.selected).length === 4) {
+        if (this.thirdpositions.filter(tp => tp.selected).length === 8) {
             console.log(this.thirdpositions)
-            this.poulepredictionService.savePoulePredictions([
-                ...this.poules[0].stand.map(line => line.positie === 3 ? this.thirdpositions.find(tp => tp.poule === this.poules[0].poule) : {
-                    ...line,
-                    selected: line.positie != 4
-                }),
-                ...this.poules[1].stand.map(line => line.positie === 3 ? this.thirdpositions.find(tp => tp.poule === this.poules[1].poule) : {
-                    ...line,
-                    selected: line.positie != 4
-                }),
-                ...this.poules[2].stand.map(line => line.positie === 3 ? this.thirdpositions.find(tp => tp.poule === this.poules[2].poule) : {
-                    ...line,
-                    selected: line.positie != 4
-                }),
-                ...this.poules[3].stand.map(line => line.positie === 3 ? this.thirdpositions.find(tp => tp.poule === this.poules[3].poule) : {
-                    ...line,
-                    selected: line.positie != 4
-                }),
-                ...this.poules[4].stand.map(line => line.positie === 3 ? this.thirdpositions.find(tp => tp.poule === this.poules[4].poule) : {
-                    ...line,
-                    selected: line.positie != 4
-                }),
-                ...this.poules[5].stand.map(line => line.positie === 3 ? this.thirdpositions.find(tp => tp.poule === this.poules[5].poule) : {
-                    ...line,
-                    selected: line.positie != 4
-                }),
-            ]).subscribe(() => {
+            this.poulepredictionService.savePoulePredictions(([] as any[]).concat(
+                ...this.poules.slice(0, 12).map(poule =>
+                    poule.stand.map(line =>
+                        line.positie === 3
+                            ? {
+                                ...this.thirdpositions.find(tp => tp.poule === poule.poule),
+                                selected: !!this.thirdpositions.find(tp => tp.team.id === line.team.id).selected
+                            }
+                            : {
+                                ...line,
+                                selected: line.positie !== 4
+                            }
+                    )
+                )
+            )).subscribe(() => {
                 this.modal.dismiss(null, 'save');
 
                 this.toastService.presentToast('Opslaan is gelukt');
@@ -157,7 +180,7 @@ export class PoulePage {
 
             });
         } else {
-            this.uiService.presentToast('Er zijn te veel teams geselecteerd. Sleep de teams zodat er achter exact 4 teams een vinkje staat', 'danger')
+            this.uiService.presentToast('Er zijn te veel teams geselecteerd. Sleep de teams zodat er achter exact 8 teams een vinkje staat', 'danger')
         }
 
     }
@@ -172,7 +195,7 @@ export class PoulePage {
         this.thirdpositions = ev.detail.complete(this.thirdpositions).map((line, index) => {
             return {
                 ...line,
-                selected: index < 4
+                selected: index < 8
             };
         });
 
@@ -197,7 +220,7 @@ export class PoulePage {
             }
         })
 
-        this.recalcFourThirdpositions(ev)
+        this.recalcEightBestThirdpositions(ev)
         // After complete is called the items will be in the new order
     }
 
@@ -209,8 +232,8 @@ export class PoulePage {
         return role !== 'gesture';
     }
 
-    recalcFourThirdpositions(event) {
-        this.fourThirdpositions = this.thirdpositions.filter(tp => tp.selected).length === 4
+    recalcEightBestThirdpositions(event) {
+        this.eightBestThirdpositions = this.thirdpositions.filter(tp => tp.selected).length === 8
 
     }
     onWillDismiss(event: Event) {

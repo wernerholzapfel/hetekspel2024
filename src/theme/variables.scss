@@ -7,28 +7,47 @@
 
   --ion-text-color: #3f3f3e;
 
-  --ion-color-primary: #002c92;
-	--ion-color-primary-rgb: 0,44,146;
+  // Primary: FIFA WK 2026 blauw (USA) — #2A398D
+  --ion-color-primary: #2A398D;
+	--ion-color-primary-rgb: 42,57,141;
 	--ion-color-primary-contrast: #ffffff;
 	--ion-color-primary-contrast-rgb: 255,255,255;
-	--ion-color-primary-shade: #002780;
-	--ion-color-primary-tint: #1a419d;
+	--ion-color-primary-shade: #25327c;
+	--ion-color-primary-tint: #3f4d99;
 
-  --ion-color-secondary: #143cdb;
-	--ion-color-secondary-rgb: 20,60,219;
+  // Secondary: FIFA WK 2026 groen (Mexico) — #3CAC3B
+  --ion-color-tertiary: #3CAC3B;
+	--ion-color-tertiary-rgb: 60,172,59;
+	--ion-color-tertiary-contrast: #ffffff;
+	--ion-color-tertiary-contrast-rgb: 255,255,255;
+	--ion-color-tertiary-shade: #359734;
+	--ion-color-tertiary-tint: #50b44f;
+
+  // Tertiary: FIFA WK 2026 rood (Canada) — #E61D25
+	--ion-color-secondary: #E61D25;
+	--ion-color-secondary-rgb: 230,29,37;
 	--ion-color-secondary-contrast: #ffffff;
 	--ion-color-secondary-contrast-rgb: 255,255,255;
-	--ion-color-secondary-shade: #1235c1;
-	--ion-color-secondary-tint: #2c50df;
+	--ion-color-secondary-shade: #ca1921;
+	--ion-color-secondary-tint: #e93439;
 
-	--ion-color-tertiary: #f9bf4b;
-	--ion-color-tertiary-rgb: 249,191,75;
-	--ion-color-tertiary-contrast: #000000;
-	--ion-color-tertiary-contrast-rgb: 0,0,0;
-	--ion-color-tertiary-shade: #dba842;
-	--ion-color-tertiary-tint: #fac55d;
+  // // Secondary: FIFA WK 2026 groen (Mexico) — #3CAC3B
+  // --ion-color-secondary: #3CAC3B;
+	// --ion-color-secondary-rgb: 60,172,59;
+	// --ion-color-secondary-contrast: #ffffff;
+	// --ion-color-secondary-contrast-rgb: 255,255,255;
+	// --ion-color-secondary-shade: #359734;
+	// --ion-color-secondary-tint: #50b44f;
 
-	// --ion-color-secondary: #f9bf4b;
+  // // Tertiary: FIFA WK 2026 rood (Canada) — #E61D25
+	// --ion-color-tertiary: #E61D25;
+	// --ion-color-tertiary-rgb: 230,29,37;
+	// --ion-color-tertiary-contrast: #ffffff;
+	// --ion-color-tertiary-contrast-rgb: 255,255,255;
+	// --ion-color-tertiary-shade: #ca1921;
+	// --ion-color-tertiary-tint: #e93439;
+
+  // --ion-color-secondary: #f9bf4b;
 	// --ion-color-secondary-rgb: 249,191,75;
 	// --ion-color-secondary-contrast: #000000;
 	// --ion-color-secondary-contrast-rgb: 0,0,0;

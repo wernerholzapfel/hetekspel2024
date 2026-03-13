@@ -16,7 +16,7 @@
             <ion-col size="12" size-md="6" size-lg="6" size-xl="4"
                      *ngFor="let match of speelschema | filterKnockoutRounds:activeKnockoutRound">
                 <ion-card>
-                    <app-city-card-header [match]="match"></app-city-card-header>
+                    <app-city-card-header [showImage]="false" [match]="match"></app-city-card-header>
                     <ion-radio-group [value]="match.selectedTeam?.id" (ionChange)="setSelectedTeam(match, $event)">
                         <ion-item lines="none">
                             <ion-radio justify="space-between" [value]="match.homeTeam?.id">

@@ -35,12 +35,12 @@
 </ion-content>
 <ion-footer>
     <ng-container class="ion-no-border ion-padding-horizontal">
-        <ion-button *ngIf="(isRegistrationOpen$ | async) && activePoule?.current !== 'F'"
+        <ion-button *ngIf="(isRegistrationOpen$ | async) && activePoule?.next !== null"
             [disabled]="!activePoule?.isFinal" color="tertiary" expand="full" fill="solid"
             (click)="next(activePoule.next)">
             Naar volgende poule
         </ion-button>
-        <ion-button *ngIf="(isRegistrationOpen$ | async) && activePoule?.current === 'F'"
+        <ion-button *ngIf="(isRegistrationOpen$ | async) && activePoule?.next === null"
             [disabled]="!activePoule?.isFinal" color="tertiary" expand="full" fill="solid"
             (click)="navigateToPoulePredictions()">
             Voorspel de poulestanden

@@ -8,7 +8,7 @@ import {Component, Input, OnInit} from '@angular/core';
 export class CityCardHeaderComponent implements OnInit {
 
     @Input() match: any;
-    @Input() showImage = true
+    @Input() showImage = false
     imageUrl: string
 
     constructor() {

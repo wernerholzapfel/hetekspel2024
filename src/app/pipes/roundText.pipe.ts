@@ -10,18 +10,18 @@ export class RoundTextPipe implements PipeTransform {
 
     transform(value: unknown, isSpeelschema?: boolean): unknown {
         switch (value) {
-            case '16':
+            case 16:
                 return 'Achtste finale';
-            case '8':
+            case 8:
                 return 'Kwartfinale';
-            case '4':
+            case 4:
                 return 'Halve Finale';
-            case '3':
+            case 3:
                 return isSpeelschema ? 'Troostfinale' : 'Winnaar troostfinale'
-            case '2':
+            case 2:
                 return 'Finale';
             default:
-                return 'Europees kampioen';
+                return 'Wereld kampioen';
         }
     }
 
