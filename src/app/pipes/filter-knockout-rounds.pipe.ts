@@ -6,7 +6,7 @@ import {Pipe, PipeTransform} from '@angular/core';
 })
 export class FilterKnockoutRoundsPipe implements PipeTransform {
 
-    transform(items: any[], args: number): unknown {
+    transform(items: any[], args: number): any[] {
         if (!items || !args) {
             return items;
         }

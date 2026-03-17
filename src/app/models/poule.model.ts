@@ -32,6 +32,8 @@ export interface ITeam {
     isEliminated?: boolean;
     eliminationRound?: string;
     latestActiveRound?: string;
+    eliminationState?: string; 
+    spelpunten?: number;
     poulePosition?: number;
 }
 

@@ -16,6 +16,7 @@ export interface IKnockout {
     awayScore?: number;
     prediction: any; // todo prediction get body?
     isLoading?: boolean;
+    roundText?: string;
 }
 
 export interface IDeelnemerSpeelschema {
