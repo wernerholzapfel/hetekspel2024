@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { EnvironmentInjector, Injectable, OnInit, runInInjectionContext } from '@angular/core';
 import { combineLatest, from, Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 import firebase from 'firebase/compat/app';
@@ -23,7 +23,8 @@ export class AuthService {
         private router: Router,
         private menuService: MenuService,
         private uiService: UiService,
-        private participantService: ParticipantService) {
+        private participantService: ParticipantService,
+        private injector: EnvironmentInjector) {
 
         this.user$ = fireAuth.user;
 
@@ -48,8 +49,9 @@ export class AuthService {
 
         this.user$.pipe(distinctUntilChanged())
             .pipe(switchMap(user => {
-                return combineLatest([this.db.object<any>(`offlineMode`).valueChanges(),
-                of(user)]);
+                return runInInjectionContext(this.injector, () =>
+                    combineLatest([this.db.object<any>(`offlineMode`).valueChanges(), of(user)])
+                );
             })).pipe(switchMap(([offlineMode, user]) => {
                 if (offlineMode) {
                     return combineLatest([of(user), of(null)])

@@ -71,8 +71,7 @@
             <ion-card-title> Mijn wedstrijden </ion-card-title>
           </ion-card-header>
           <ion-card-content class="ion-no-padding">
-            @for (prediction of todaysMatches?.matchPredictions; track
-            prediction; let itemBounds = $bounds let i) {
+            @for (prediction of todaysMatches?.matchPredictions; track prediction) {
             <ion-item
               (click)="openMatch(prediction.match.id)"
               class="ion-padding-end"
@@ -171,8 +170,7 @@
             <ion-card-title> Mijn wedstrijden </ion-card-title>
           </ion-card-header>
           <ion-card-content class="ion-no-padding">
-            @for (knockout of todaysMatches?.knockout; track knockout; let
-            itemBounds = $bounds let i) {
+            @for (knockout of todaysMatches?.knockout; track knockout) {
             <ion-item
               (click)="openMatch(knockout.match.id)"
               class="ion-padding-end"

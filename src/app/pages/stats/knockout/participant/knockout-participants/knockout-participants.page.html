@@ -24,8 +24,7 @@
     ></app-knockout-team-header>
   </ion-grid>
   <ion-grid>
-    @for (participant of koTeamStats?.participants; track participant; let
-    itemBounds = $bounds let i) {
+    @for (participant of koTeamStats?.participants; track participant) {
     <ion-row
       class="hes-border-bottom"
       (click)="openParticipant(participant.participant.id)"

@@ -13,7 +13,7 @@
   </ion-card-header>
   }
   <ion-list>
-    @for (p of participants; track p; let itemBounds = $bounds let i) {
+    @for (p of participants; track p; let i = $index) {
     <ion-item lines="full">
       {{i + 1}} {{p.displayName}} @if (isAdmin$ | async) {
       <ion-icon

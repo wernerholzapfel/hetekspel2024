@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EnvironmentInjector, Injectable, runInInjectionContext } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { UiService } from '../services/ui.service';
@@ -10,19 +10,21 @@ import { AngularFireDatabase } from '@angular/fire/compat/database';
     providedIn: 'root'
 })
 export class OfflineGuard {
-    constructor(private router: Router, private db: AngularFireDatabase) {
+    constructor(private router: Router, private db: AngularFireDatabase, private injector: EnvironmentInjector) {
     }
 
     canActivate(
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-        return this.db.object<any>(`offlineMode`)
-            .valueChanges()
-            .pipe(map(offlineMode => {
-                if (offlineMode) {
-                    return route.data && route.data.redirectUrl ? this.router.createUrlTree([route.data.redirectUrl]) : false;
-                }
-                else { return true }
-            }))
+        return runInInjectionContext(this.injector, () =>
+            this.db.object<any>(`offlineMode`)
+                .valueChanges()
+                .pipe(map(offlineMode => {
+                    if (offlineMode) {
+                        return route.data && route.data.redirectUrl ? this.router.createUrlTree([route.data.redirectUrl]) : false;
+                    }
+                    else { return true }
+                }))
+        );
     }
 }

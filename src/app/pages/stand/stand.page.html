@@ -105,7 +105,7 @@
 </ion-toolbar>
 
 <ion-content>
-  @for (line of stand; track line; let itemBounds = $bounds let i) {
+  @for (line of stand; track line; let i = $index) {
   <ion-item
     [color]="line?.isMine ? 'tertiary-accent' : i % 2 != 0 ? 'secondary-accent' : ''"
     lines="full"

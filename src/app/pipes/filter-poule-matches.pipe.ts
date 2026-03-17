@@ -7,7 +7,7 @@ import {Pipe, PipeTransform} from '@angular/core';
 })
 export class FilterPouleMatchesPipe implements PipeTransform {
 
-  transform(items: any[], args: string): unknown {
+  transform(items: any[], args: string): any[] {
     if (!items || !args) {
       return items;
     }

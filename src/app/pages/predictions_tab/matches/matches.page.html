@@ -7,7 +7,7 @@
     mode="md"
     [value]="pouleName"
   >
-    @for (poule of pouleNavigatie; track poule; let i = $index) {
+    @for (poule of pouleNavigatie; track poule.current; let i = $index) {
     <ion-segment-button [value]="poule.current">
       {{poule.text}}
     </ion-segment-button>
@@ -41,7 +41,7 @@
     }
     <ion-row>
       @for (matchPrediction of uiService.matchPredictions$ | async |
-      filterPouleMatches:activePoule?.current; track matchPrediction) {
+      filterPouleMatches:activePoule?.current; track matchPrediction.match.id) {
       <ion-col size="12" size-md="6" size-lg="6" size-xl="4">
         <app-match-card
           [isRegistrationOpen]="isRegistrationOpen$ | async"

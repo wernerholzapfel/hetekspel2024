@@ -153,8 +153,7 @@
   </ion-grid>
   }
   <ion-grid>
-    @for (prediction of match?.matchPredictions; track prediction; let
-    itemBounds = $bounds let i) {
+    @for (prediction of match?.matchPredictions; track prediction) {
     <ion-row
       class="hes-border-bottom"
       (click)="navigateToParticipant(prediction.participant.id)"

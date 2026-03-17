@@ -1,4 +1,4 @@
-import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { Component, EnvironmentInjector, NgZone, OnDestroy, OnInit, runInInjectionContext } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@capacitor/splash-screen';
@@ -45,7 +45,8 @@ export class AppComponent implements OnInit, OnDestroy {
         private hetwkspelService: HetwkspelService,
         private participantService: ParticipantService,
         private routeStateService: RouteStateService,
-        private ngZone: NgZone
+        private ngZone: NgZone,
+        private injector: EnvironmentInjector
     ) {
         this.initializeApp();
     }
@@ -116,19 +117,21 @@ export class AppComponent implements OnInit, OnDestroy {
             }
         });
 
-        this.db.list<any>(`totaal`)
-            .valueChanges()
-            .pipe(takeUntil(this.unsubscribe))
-            .subscribe(totaalstand => {
-                this.uiService.totaalstand$.next(totaalstand);
-            });
+        runInInjectionContext(this.injector, () => {
+            this.db.list<any>(`totaal`)
+                .valueChanges()
+                .pipe(takeUntil(this.unsubscribe))
+                .subscribe(totaalstand => {
+                    this.uiService.totaalstand$.next(totaalstand);
+                });
 
-        this.db.object<{ lastUpdated: number }>(`lastUpdated`)
-            .valueChanges()
-            .pipe(takeUntil(this.unsubscribe))
-            .subscribe(item => {
-                this.uiService.lastUpdated$.next(item);
-            });
+            this.db.object<{ lastUpdated: number }>(`lastUpdated`)
+                .valueChanges()
+                .pipe(takeUntil(this.unsubscribe))
+                .subscribe(item => {
+                    this.uiService.lastUpdated$.next(item);
+                });
+        });
 
 
         // set linkactive.
