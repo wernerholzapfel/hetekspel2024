@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { ToastService } from '../../../services/toast.service';
 import { UiService } from '../../../services/ui.service';
 import { takeUntil } from 'rxjs/operators';
-import { AlertController, IonModal } from '@ionic/angular';
+import { IonModal } from '@ionic/angular';
 
 @Component({
     selector: 'app-poule',
@@ -23,11 +23,10 @@ export class PoulePage {
     eightBestThirdpositions: boolean;
     arePoulesComplete: boolean = false; 
 
-    constructor(private matchService: MatchService,
+    constructor(
         private poulepredictionService: PoulepredictionService,
         private toastService: ToastService,
         public uiService: UiService,
-        private alertController: AlertController,
         private router: Router) {
     }
 
