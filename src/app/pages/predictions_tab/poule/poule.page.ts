@@ -22,7 +22,7 @@ export class PoulePage {
     poules = [];
     thirdpositions = [];
     eightBestThirdpositions: boolean;
-    arePoulesComplete: boolean = false; 
+    arePoulesComplete: boolean = false;
 
     constructor(private matchService: MatchService,
         private poulepredictionService: PoulepredictionService,
@@ -39,6 +39,16 @@ export class PoulePage {
                     .sort((a, b) => b.thirdPositionScore - a.thirdPositionScore)
 
                 this.eightBestThirdpositions = this.thirdpositions.filter(tp => tp.selected).length === 8
+                if (!this.eightBestThirdpositions) {
+                    this.thirdpositions = this.thirdpositions.map((tp, index) => {
+                        return {
+                            ...tp,
+                            selected: index < 8
+                        }
+                    })
+                    this.eightBestThirdpositions = this.thirdpositions.filter(tp => tp.selected).length === 8
+
+                }
 
                 this.uiService.isDirty$.next(this.isFirstTime(poulePrediction));
                 this.poules = [{
