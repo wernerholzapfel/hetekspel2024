@@ -6,7 +6,7 @@ import { PoulepredictionService } from '../../../services/pouleprediction.servic
 import { Router } from '@angular/router';
 import { ToastService } from '../../../services/toast.service';
 import { UiService } from '../../../services/ui.service';
-import { takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 import { AlertController, IonModal } from '@ionic/angular';
 
 @Component({
@@ -23,6 +23,7 @@ export class PoulePage {
     thirdpositions = [];
     eightBestThirdpositions: boolean;
     arePoulesComplete: boolean = false;
+    IsLatestPredictionBeforePoulePrediction: boolean = true;
 
     constructor(private matchService: MatchService,
         private poulepredictionService: PoulepredictionService,
@@ -33,20 +34,30 @@ export class PoulePage {
     }
 
     ionViewWillEnter() {
+        this.checkIfLatestPredictionBeforePoulePrediction();
+        this.createPouleStanden();
+    }
+
+    checkIfLatestPredictionBeforePoulePrediction() {
+         this.poulepredictionService.GetIsLatestPredictionBeforePoulePrediction().subscribe(result => {
+            this.IsLatestPredictionBeforePoulePrediction = result;
+        });
+    }
+    createPouleStanden() {
         this.poulepredictionService.getPoulePredictions().subscribe(
             poulePrediction => {
                 this.thirdpositions = poulePrediction.filter(pp => pp.positie === 3)
-                    .sort((a, b) => b.thirdPositionScore - a.thirdPositionScore)
+                    .sort((a, b) => b.thirdPositionScore - a.thirdPositionScore);
 
-                this.eightBestThirdpositions = this.thirdpositions.filter(tp => tp.selected).length === 8
+                this.eightBestThirdpositions = this.thirdpositions.filter(tp => tp.selected).length === 8;
                 if (!this.eightBestThirdpositions) {
                     this.thirdpositions = this.thirdpositions.map((tp, index) => {
                         return {
                             ...tp,
                             selected: index < 8
-                        }
-                    })
-                    this.eightBestThirdpositions = this.thirdpositions.filter(tp => tp.selected).length === 8
+                        };
+                    });
+                    this.eightBestThirdpositions = this.thirdpositions.filter(tp => tp.selected).length === 8;
 
                 }
 
@@ -120,23 +131,21 @@ export class PoulePage {
                 if (stand) {
                     this.poules = this.poules.map(item => {
                         if (item.poule === stand[0].poule) {
-                            return { ...item, stand: stand }
+                            return { ...item, stand: stand };
                         } else {
-                            return item
+                            return item;
                         }
-                    })
+                    });
                 }
                 this.thirdpositions = this.thirdpositions.map(tp => {
-                    const team = stand.find(line => line.positie === 3)
-                    return tp.poule === team.poule ? { ...team } : { ...tp }
-                }).sort((a, b) => b.thirdPositionScore - a.thirdPositionScore)
+                    const team = stand.find(line => line.positie === 3);
+                    return tp.poule === team.poule ? { ...team } : { ...tp };
+                }).sort((a, b) => b.thirdPositionScore - a.thirdPositionScore);
 
-                this.eightBestThirdpositions = this.thirdpositions.filter(tp => tp.selected).length === 8
+                this.eightBestThirdpositions = this.thirdpositions.filter(tp => tp.selected).length === 8;
 
-            })
-
+            });
     }
-
     createStand(poulePrediction, pouleName: string) {
         return poulePrediction.filter(p => p.poule === pouleName)
             .sort((a, b) => a.positie - b.positie);
@@ -246,6 +255,37 @@ export class PoulePage {
     recalcEightBestThirdpositions(event) {
         this.eightBestThirdpositions = this.thirdpositions.filter(tp => tp.selected).length === 8
 
+    }
+
+    async deletePoulePredictions() {
+        const alert = await this.alertController.create({
+            header: 'Weet je het zeker?',
+            subHeader: 'Verwijder poulestand voorspellingen',
+            message: 'Hiermee verwijder je al jouw poulestand voorspellingen. De voorspellingen van de wedstrijden blijven bewaard.',
+            buttons: [
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    cssClass: 'secondary',
+                    handler: (blah) => {
+                    }
+                }, {
+                    text: 'Verwijder',
+                    cssClass: 'hes-alert-danger',
+                    handler: () => {
+                        this.poulepredictionService.deletePoulePredictions()
+                            .pipe(take(1))
+                            .subscribe(res => {
+                                this.toastService.presentToast('Poule voorspellingen verwijderd. Sla de poule voorspellingen en beste nummers drie opnieuw op',
+                                    'success', true, 'OK', 5000);
+                                this.createPouleStanden();
+                            });
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
     }
     onWillDismiss(event: Event) {
         // const ev = event as CustomEvent<OverlayEventDetail<string>>;

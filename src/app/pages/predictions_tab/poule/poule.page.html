@@ -1,9 +1,23 @@
 <ion-header>
-  <app-menu-toolbar title="Eindstanden"></app-menu-toolbar>
+  <app-menu-toolbar title="Eindstanden"  [rightCornerIcon]="'trash-outline'"
+    (emitIconClick)="deletePoulePredictions()"></app-menu-toolbar>
 </ion-header>
 
 <ion-content #page>
+  
   <ion-grid class="ion-no-padding">
+    @if (!IsLatestPredictionBeforePoulePrediction) {
+    <ion-row>
+      <ion-col size="12">
+        <ion-card color="danger">
+          <ion-card-content>
+           De voorspellingen die je hebt ingevuld voor de wedstrijden zijn nieuwer dan de voorspellingen die je hebt ingevuld voor de poule. 
+           Je kunt de voorspellingen van de poulestanden verwijderen door op het prullenbakje rechts boven te klikken. Vergeet niet om daarna weer de voorspellingen voor de poule op te slaan.
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    }
     <ion-row>
       <ion-col size="12">
         <ion-card color="secondary">

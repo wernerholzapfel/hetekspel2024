@@ -7,59 +7,29 @@
 
   --ion-text-color: #3f3f3e;
 
-  // Primary: FIFA WK 2026 blauw (USA) — #2A398D
-  --ion-color-primary: #2A398D;
-	--ion-color-primary-rgb: 42,57,141;
+  // Primary: deep navy — stadium/premium feel
+  --ion-color-primary: #0F2044;
+	--ion-color-primary-rgb: 15,32,68;
 	--ion-color-primary-contrast: #ffffff;
 	--ion-color-primary-contrast-rgb: 255,255,255;
-	--ion-color-primary-shade: #25327c;
-	--ion-color-primary-tint: #3f4d99;
+	--ion-color-primary-shade: #0d1c3b;
+	--ion-color-primary-tint: #273657;
 
-  // Secondary: FIFA WK 2026 groen (Mexico) — #3CAC3B
-  --ion-color-tertiary: #3CAC3B;
-	--ion-color-tertiary-rgb: 60,172,59;
+  // Secondary: goud — trofee/score
+  --ion-color-secondary: #E8B400;
+	--ion-color-secondary-rgb: 232,180,0;
+	--ion-color-secondary-contrast: #000000;
+	--ion-color-secondary-contrast-rgb: 0,0,0;
+	--ion-color-secondary-shade: #cca000;
+	--ion-color-secondary-tint: #eabc1a;
+
+  // Tertiary: diep emerald — premium, voetbal
+  --ion-color-tertiary: #1B5E3B;
+	--ion-color-tertiary-rgb: 27,94,59;
 	--ion-color-tertiary-contrast: #ffffff;
 	--ion-color-tertiary-contrast-rgb: 255,255,255;
-	--ion-color-tertiary-shade: #359734;
-	--ion-color-tertiary-tint: #50b44f;
-
-  // Tertiary: FIFA WK 2026 rood (Canada) — #E61D25
-	--ion-color-secondary: #E61D25;
-	--ion-color-secondary-rgb: 230,29,37;
-	--ion-color-secondary-contrast: #ffffff;
-	--ion-color-secondary-contrast-rgb: 255,255,255;
-	--ion-color-secondary-shade: #ca1921;
-	--ion-color-secondary-tint: #e93439;
-
-  // // Secondary: FIFA WK 2026 groen (Mexico) — #3CAC3B
-  // --ion-color-secondary: #3CAC3B;
-	// --ion-color-secondary-rgb: 60,172,59;
-	// --ion-color-secondary-contrast: #ffffff;
-	// --ion-color-secondary-contrast-rgb: 255,255,255;
-	// --ion-color-secondary-shade: #359734;
-	// --ion-color-secondary-tint: #50b44f;
-
-  // // Tertiary: FIFA WK 2026 rood (Canada) — #E61D25
-	// --ion-color-tertiary: #E61D25;
-	// --ion-color-tertiary-rgb: 230,29,37;
-	// --ion-color-tertiary-contrast: #ffffff;
-	// --ion-color-tertiary-contrast-rgb: 255,255,255;
-	// --ion-color-tertiary-shade: #ca1921;
-	// --ion-color-tertiary-tint: #e93439;
-
-  // --ion-color-secondary: #f9bf4b;
-	// --ion-color-secondary-rgb: 249,191,75;
-	// --ion-color-secondary-contrast: #000000;
-	// --ion-color-secondary-contrast-rgb: 0,0,0;
-	// --ion-color-secondary-shade: #dba842;
-	// --ion-color-secondary-tint: #fac55d;
-
-	// --ion-color-tertiary: #143cdb;
-	// --ion-color-tertiary-rgb: 20,60,219;
-	// --ion-color-tertiary-contrast: #ffffff;
-	// --ion-color-tertiary-contrast-rgb: 255,255,255;
-	// --ion-color-tertiary-shade: #1235c1;
-	// --ion-color-tertiary-tint: #2c50df;
+	--ion-color-tertiary-shade: #185334;
+	--ion-color-tertiary-tint: #306b4b;
 
   --ion-color-tertiary-accent: #fdebc9;
 	--ion-color-tertiary-accent-rgb: 253,235,201;
@@ -125,12 +95,13 @@
   --ion-color-light-shade: #dcdcdc;
   --ion-color-light-tint: #fbfbfb;
 	
-  --ion-color-accent: #0d1e62;
-	--ion-color-accent-rgb: 13,30,98;
+  // Accent: iets lichter navy
+  --ion-color-accent: #162D5A;
+	--ion-color-accent-rgb: 22,45,90;
 	--ion-color-accent-contrast: #ffffff;
 	--ion-color-accent-contrast-rgb: 255,255,255;
-	--ion-color-accent-shade: #0b1a56;
-	--ion-color-accent-tint: #253572;
+	--ion-color-accent-shade: #13274f;
+	--ion-color-accent-tint: #2d426b;
 
   --ion-color-secondary-accent: #d6ecfc;
 	--ion-color-secondary-accent-rgb: 214,236,252;
@@ -139,13 +110,13 @@
 	--ion-color-secondary-accent-shade: #bcd0de;
 	--ion-color-secondary-accent-tint: #daeefc;
 
-  --ion-background-color: #e4e7ee;
+  --ion-background-color: #EEF1F6;
   --ion-tab-bar-background: var(--ion-color-light);
 
 
 
-  --ion-color-background: e4e7ee;
-	--ion-color-background-rgb: 228,231,238;
+  --ion-color-background: #EEF1F6;
+	--ion-color-background-rgb: 238,241,246;
 	--ion-color-background-contrast: #000000;
 	--ion-color-background-contrast-rgb: 0,0,0;
 	--ion-color-background-shade: #c9cbd1;

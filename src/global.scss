@@ -112,14 +112,14 @@ ion-segment {
 
 ion-segment-button.md {
   --color: var(--ion-color-light);
-  --color-checked: var(--ion-color-tertiary);
+  --color-checked: var(--ion-color-secondary);
 }
 
 /* iOS styles */
 ion-segment-button.ios {
 
   --color: var(--ion-color-light);
-  --color-checked: var(--ion-color-tertiary);
+  --color-checked: var(--ion-color-secondary);
 }
 
 // @media (prefers-color-scheme: dark) {

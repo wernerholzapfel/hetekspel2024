@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
-import {IPoulePrediction} from '../models/participant.model';
-import {Observable} from 'rxjs';
-import {environment} from '../../environments/environment';
+import { Injectable } from '@angular/core';
+import { IPoulePrediction } from '../models/participant.model';
+import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import {ISaveKnockoutPredictionOneBody, ISaveKnockoutPredictionsBody} from '../models/knockout-predictions.model';
+import { ISaveKnockoutPredictionOneBody, ISaveKnockoutPredictionsBody } from '../models/knockout-predictions.model';
 import { nummerDrieSchema } from './nummerdrieschema';
 
 @Injectable({
@@ -22,8 +22,13 @@ export class PoulepredictionService {
         return this.http.post<ISaveKnockoutPredictionsBody[]>(`${environment.apiBaseUrl}/knockout-prediction`, knockoutPredictions);
     }
 
+
     deleteKnockoutPredictions(): Observable<any> {
         return this.http.delete(`${environment.apiBaseUrl}/knockout-prediction`);
+    }
+
+    deletePoulePredictions(): Observable<any> {
+        return this.http.delete(`${environment.apiBaseUrl}/poule-prediction`);
     }
 
     saveKnockoutPrediction(knockoutPredictions: ISaveKnockoutPredictionOneBody): Observable<any> {
@@ -34,6 +39,10 @@ export class PoulepredictionService {
         return this.http.get<any>(`${environment.apiBaseUrl}/poule-prediction`);
     }
     
+    GetIsLatestPredictionBeforePoulePrediction(): Observable<any> {
+        return this.http.get<any>(`${environment.apiBaseUrl}/poule-prediction/check/latest-prediction`);
+    }
+
     getStandBasedOnPredictionsForLoggedInUser(pouleName: string): Observable<any> {
         return this.http.get<any>(`${environment.apiBaseUrl}/poule-prediction/poule/${pouleName}`);
     }
@@ -46,7 +55,7 @@ export class PoulepredictionService {
         return this.http.get<any>(`${environment.apiBaseUrl}/poule-prediction/admin/results`);
     }
 
-   
+
     getPositionForThirdPlacedTeams(nummerDrieIdentifier: string): { identifier: string, WA: string, WB: string, WD: string, WE: string, WG: string, WI: string, WK: string, WL: string } {
         if (nummerDrieIdentifier.length === 8) {
             return nummerDrieSchema.find(p => p.identifier === nummerDrieIdentifier);
@@ -63,7 +72,7 @@ export class PoulepredictionService {
                 WL: 'WL'
             }
         }
-   
+
     }
 }
 
