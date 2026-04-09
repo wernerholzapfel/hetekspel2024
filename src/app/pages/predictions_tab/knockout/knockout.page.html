@@ -1,15 +1,7 @@
 <ion-header>
-  <app-menu-toolbar
-    title="Eindstanden"
-    [rightCornerIcon]="'trash-outline'"
-    (emitIconClick)="deleteKnockoutPredictions()"
-  ></app-menu-toolbar>
-  <ion-segment
-    [(ngModel)]="activeKnockoutRound"
-    (ionChange)="selectKnockoutRound($event)"
-    scrollable
-    mode="md"
-  >
+  <app-menu-toolbar title="Eindstanden" [rightCornerIcon]="'trash-outline'"
+    (emitIconClick)="deleteKnockoutPredictions()"></app-menu-toolbar>
+  <ion-segment [(ngModel)]="activeKnockoutRound" (ionChange)="selectKnockoutRound($event)" scrollable mode="md">
     @for (round of rounds; track round; let i = $index) {
     <ion-segment-button [value]="round.round" (click)="scrollSegments(i+1)">
       {{round.text}}
@@ -28,46 +20,16 @@
             De volgende wedstrijd heeft geen correcte winnaar: @for (match of
             wrongSelectedTeam; track match) {
             <div>
-              {{match.roundText}}: {{match.homeTeam.name}} -
-              {{match.awayTeam.name}}
+              {{match?.roundText}}: {{match.prediction?.homeTeam.name}} -
+              {{match.prediction?.awayTeam.name}}
             </div>
             }
           </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>
-    } @if (eliminatedEarlier?.length > 0) {
-    <ion-row>
-      <ion-col size="12">
-        <ion-card color="danger">
-          <ion-card-content>
-            De volgende wedstrijd bevat één of meerdere landen die in een eerder
-            stadium zijn uitgeschakeld: @for (match of eliminatedEarlier; track
-            match) {
-            <div>
-              {{match.roundText}}: {{match.homeTeam.name}} -
-              {{match.awayTeam.name}}
-            </div>
-            }
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-    } @if (landDoubleInRound?.length > 0) {
-    <ion-row>
-      <ion-col size="12">
-        <ion-card color="danger">
-          <ion-card-content>
-            Je hebt een of meer landen dubbel in een ronde: @for (round of
-            landDoubleInRound; track round) { @for (team of
-            round.duplicateTeams; track team) {
-            <div>{{round.text}}: {{team}}</div>
-            } }
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-    } @if (activeKnockoutRound === 32) {
+    }
+    @if (activeKnockoutRound === 32 && poules.length > 0) {
     <ion-row>
       <ion-col size="12">
         <ion-card color="secondary">
@@ -104,38 +66,23 @@
         <ion-card>
           <app-city-card-header [match]="match"></app-city-card-header>
           @if (!match.isLoading) {
-          <ion-progress-bar
-            [color]="isLoadingColor"
-            value="1"
-          ></ion-progress-bar>
+          <ion-progress-bar [color]="isLoadingColor" value="1"></ion-progress-bar>
           } @if (match.isLoading) {
-          <ion-progress-bar
-            color="secondary"
-            type="indeterminate"
-          ></ion-progress-bar>
+          <ion-progress-bar color="secondary" type="indeterminate"></ion-progress-bar>
           }
-          <ion-radio-group
-            [value]="match.prediction?.selectedTeam?.id"
-            (ionChange)="setSelectedTeam(match, $event)"
-          >
+          <ion-radio-group [value]="match.prediction?.selectedTeam?.id" (ionChange)="setSelectedTeam(match, $event)">
             <ion-item lines="none">
-              <ion-radio
-                justify="space-between"
-                [value]="match?.homeTeam?.id"
-                [disabled]="!(uiService.isRegistrationOpen$ | async)"
-              >
-                <span class="fi fi-{{match.homeTeam?.logoUrl}} fis"></span>
-                {{match.homeTeam?.name}} {{match.home}} ({{match.homeId}})
+              <ion-radio justify="space-between" [value]="match?.prediction?.homeTeam?.id"
+                [disabled]="!(uiService.isRegistrationOpen$ | async)">
+                <span class="fi fi-{{match?.prediction?.homeTeam?.logoUrl}} fis"></span>
+                {{match?.prediction?.homeTeam?.name}} ({{match?.homeId}})
               </ion-radio>
             </ion-item>
             <ion-item lines="none">
-              <ion-radio
-                justify="space-between"
-                [value]="match?.awayTeam?.id"
-                [disabled]="!(uiService.isRegistrationOpen$ | async)"
-              >
-                <span class="fi fi-{{match.awayTeam?.logoUrl}} fis"></span>
-                {{match.awayTeam?.name}} {{match.away}} ({{match.awayId}})
+              <ion-radio justify="space-between" [value]="match?.prediction?.awayTeam?.id"
+                [disabled]="!(uiService.isRegistrationOpen$ | async)">
+                <span class="fi fi-{{match?.prediction?.awayTeam?.logoUrl}} fis"></span>
+                {{match?.prediction?.awayTeam?.name}} ({{match?.awayId}})
               </ion-radio>
             </ion-item>
           </ion-radio-group>
@@ -149,21 +96,11 @@
 <ion-footer>
   <ng-container class="ion-no-border ion-padding-horizontal">
     @if (activeKnockoutRound !== 2) {
-    <ion-button
-      color="tertiary"
-      expand="full"
-      fill="solid"
-      [disabled]="!canIGoToNextStep"
-      (click)="next()"
-      >Ga naar Volgende
+    <ion-button color="tertiary" expand="full" fill="solid" [disabled]="!canIGoToNextStep" (click)="next()">Ga naar
+      Volgende
     </ion-button>
     } @if (activeKnockoutRound === 2 && !predictionInComplete()) {
-    <ion-button
-      (click)="navigateToHome()"
-      color="tertiary"
-      expand="full"
-      fill="solid"
-      >Voorspellingen compleet
+    <ion-button (click)="navigateToHome()" color="tertiary" expand="full" fill="solid">Voorspellingen compleet
     </ion-button>
     }
   </ng-container>

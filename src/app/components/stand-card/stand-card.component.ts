@@ -4,7 +4,6 @@ import { UiService } from '../../services/ui.service';
 import { Observable, Subject } from 'rxjs';
 import { IMatchPrediction } from 'src/app/models/participant.model';
 import { PoulepredictionService } from 'src/app/services/pouleprediction.service';
-import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'app-stand-card',
@@ -15,7 +14,7 @@ import { takeUntil } from 'rxjs/operators';
 export class StandCardComponent implements OnInit, OnDestroy {
     @ViewChild(IonReorderGroup, { static: true }) reorderGroup: IonReorderGroup;
     unsubscribe = new Subject<void>();
-    constructor(public uiService: UiService) {
+    constructor(public uiService: UiService, private poulepredictionService: PoulepredictionService) {
     }
 
     private _poule: { poule: string, isSortDisabled: boolean, stand: any[] };
@@ -50,24 +49,8 @@ export class StandCardComponent implements OnInit, OnDestroy {
     }
 
     doReorder(ev: any) {
-        // Before complete is called with the items they will remain in the
-        // order before the drag
-
-        // Finish the reorder and position the item in the DOM based on
-        // where the gesture ended. Update the items variable to the
-        // new order of items
-        this.stand = ev.detail.complete(this.stand).map((line, index) => {
-            return {
-                ...line,
-                positie: index + 1
-            };
-
-        });
-
-        this.uiService.updatePouleStand$.next(this.stand)
-        this.uiService.isDirty$.next(true);
-        // After complete is called the items will be in the new order
-        // console.log('After complete', this.poule.stand);
+        this.stand = this.mapWithPositieAndSelected(ev.detail.complete(this.stand));
+        this.updateAndSaveStand(this.stand);
     }
 
     toggleReorderGroup() {
@@ -75,16 +58,30 @@ export class StandCardComponent implements OnInit, OnDestroy {
     }
 
     setSortBackToOriginal() {
-        this.stand = this.stand.sort((a, b) => b.sortering - a.sortering).map((line, index) => {
+        this.stand = this.mapWithPositieAndSelected(this.stand.sort((a, b) => b.sortering - a.sortering));
+        this.updateAndSaveStand(this.stand);
+    }
+
+    private mapWithPositieAndSelected(stand: any[]): any[] {
+        const previousThirdSelected = this.stand.find(line => line.positie === 3)?.selected;
+        return stand.map((line, index) => {
+            const positie = index + 1;
             return {
                 ...line,
-                positie: index + 1,
-                // positieVoorspelling: index + 1
-            }
-        })
-        this.uiService.updatePouleStand$.next(this.stand)
-        this.uiService.isDirty$.next(true);
+                positie,
+                selected: positie === 1 || positie === 2 ? true
+                    : positie === 3 ? previousThirdSelected ? true : false
+                        : false
+            };
+        });
+    }
 
+    private updateAndSaveStand(stand: any[]) {
+        this.poulepredictionService.savePoulePredictions(stand)
+            .subscribe({
+                next: response_stand => this.stand = response_stand,
+                error: () => this.uiService.presentToast('Opslaan mislukt', 'warning')
+            });
     }
 
     closeOrOpenTable() {

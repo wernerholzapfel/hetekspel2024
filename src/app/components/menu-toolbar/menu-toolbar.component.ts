@@ -12,6 +12,7 @@ export class MenuToolbarComponent implements OnInit {
 
     @Input() rightCornerIcon: string;
     @Input() iconColor = '';
+    @Input() showMenuButton = true;
     @Output() emitIconClick = new EventEmitter<any>();
 
     constructor(public uiService: UiService, private router: Router) {

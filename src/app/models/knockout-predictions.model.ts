@@ -12,8 +12,11 @@ export interface ISaveKnockoutPredictionsBody {
     awayTeam?: ITeam;
 }
 
-export interface ISaveKnockoutPredictionOneBody extends ISaveKnockoutPredictionsBody {
-    // speelschema_position: string;
+export interface ISaveKnockoutPredictionOneBody {
+    id?: string;
+    team: ITeam;
+    round: string;
+    knockoutMatchPosition: string;
 }
 
 export interface IKnockoutPrediction {

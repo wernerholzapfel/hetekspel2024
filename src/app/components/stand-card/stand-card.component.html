@@ -9,7 +9,7 @@
           <ion-card-subtitle class="ion-no-margin">
             Stand poule {{ poule?.poule }}
           </ion-card-subtitle>
-          @if (!isSortedCorrectly && showSortedCorrectly) {
+          @if (!isSortedCorrectly && showSortedCorrectly && isTableOpen) {
           <ion-card-subtitle>
             <ion-note color="danger"
               >Deze poulestand is anders dan je zou verwachten op basis van je

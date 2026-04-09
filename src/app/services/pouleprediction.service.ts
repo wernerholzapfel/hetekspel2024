@@ -39,10 +39,6 @@ export class PoulepredictionService {
         return this.http.get<any>(`${environment.apiBaseUrl}/poule-prediction`);
     }
     
-    GetIsLatestPredictionBeforePoulePrediction(): Observable<any> {
-        return this.http.get<any>(`${environment.apiBaseUrl}/poule-prediction/check/latest-prediction`);
-    }
-
     getStandBasedOnPredictionsForLoggedInUser(pouleName: string): Observable<any> {
         return this.http.get<any>(`${environment.apiBaseUrl}/poule-prediction/poule/${pouleName}`);
     }

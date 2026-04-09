@@ -25,6 +25,9 @@ export class MatchesPage {
     pouleNavigatie: PouleNav[];
     activePoule: PouleNav;
     standCardPoule: { poule: string, stand: any[], isSortDisabled: boolean }
+    showPouleNavigation = false;
+    isStandModalOpen = false;
+    private pendingNextPoule: string;
 
     constructor(
         private matchService: MatchService,
@@ -60,6 +63,7 @@ export class MatchesPage {
     getPredictedMatches() {
         this.matchService.getMatchPredictions().subscribe(
             matchPredictions => {
+                this.showPouleNavigation = matchPredictions.filter(mp => mp.awayScore != null && mp.homeScore != null).length === 72
                 this.uiService.matchPredictions$.next(matchPredictions);
             });
     }
@@ -78,7 +82,16 @@ export class MatchesPage {
         this.activePoule = this.pouleNavigatie.find(pn => pn.current === nextPoule)
         this.uiService.fetchTable$.next(nextPoule);
         this.scrollSegments(this.pouleNavigatie.findIndex(poule => poule.next === nextPoule));
+    }
 
+    openStandModal(nextPoule: string) {
+        this.pendingNextPoule = nextPoule;
+        this.isStandModalOpen = true;
+    }
+
+    confirmNextPoule() {
+        this.isStandModalOpen = false;
+        this.next(this.pendingNextPoule);
     }
 
     navigateToPoulePredictions() {
