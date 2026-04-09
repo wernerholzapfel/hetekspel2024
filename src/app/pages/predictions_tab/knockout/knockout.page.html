@@ -99,7 +99,7 @@
     <ion-button color="tertiary" expand="full" fill="solid" [disabled]="!canIGoToNextStep" (click)="next()">Ga naar
       Volgende
     </ion-button>
-    } @if (activeKnockoutRound === 2 && !predictionInComplete()) {
+    } @if (activeKnockoutRound === 2 && knockoutCompleted && wrongSelectedTeam?.length === 0) {
     <ion-button (click)="navigateToHome()" color="tertiary" expand="full" fill="solid">Voorspellingen compleet
     </ion-button>
     }

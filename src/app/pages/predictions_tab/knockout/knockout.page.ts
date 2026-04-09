@@ -38,6 +38,7 @@ export class KnockoutPage {
     public poules: any[] = []
     public segmentIndex = 1;
     public canIGoToNextStep: boolean;
+    public knockoutCompleted: boolean;
     public wrongSelectedTeam: IKnockout[]
     public rounds = this.knockoutHelper.rounds;
     private refresh$ = new BehaviorSubject<void>(undefined);
@@ -57,6 +58,7 @@ export class KnockoutPage {
         .subscribe(([speelschema]) => {
             this.speelschema = speelschema;
             this.setWrongSelectedTeams();
+            this.calculatedKnockoutCompleted();
             this.calculateCanIGoToNextStep();
         });
     }
@@ -145,20 +147,8 @@ export class KnockoutPage {
             matchesInActiveRound.length === matchesInActiveRoundWithSelectedTeam.length);
     }
 
-    predictionInComplete(): boolean {
-        const missing = this.speelschema.filter(sp => !sp.prediction?.selectedTeam);
-        console.log('Matches ZONDER prediction:', missing.map(m => ({
-            matchId: m.matchId,
-            round: m.round,
-            home: m.homeTeam?.name,
-            away: m.awayTeam?.name,
-            prediction: m.prediction
-        })));
-        return this.speelschema &&
-            (this.speelschema.filter(sp => sp.prediction?.selectedTeam).length !== this.speelschema.length ||
-                this.speelschema.filter(match => match.prediction?.selectedTeam &&
-                    (match.prediction?.selectedTeam.id !== match.homeTeam?.id &&
-                        match.prediction?.selectedTeam.id !== match.awayTeam?.id)).length > 0);
+    calculatedKnockoutCompleted() {
+        this.knockoutCompleted = this.speelschema.filter(sp => !sp.prediction?.selectedTeam).length === 0;
     }
 
     navigateToHome() {
