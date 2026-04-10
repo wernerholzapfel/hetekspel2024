@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EnvironmentInjector, runInInjectionContext } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
@@ -16,17 +16,20 @@ export class KnockoutPage {
 
 
     constructor(private db: AngularFireDatabase,
-        private router: Router) {
+        private router: Router,
+        private injector: EnvironmentInjector) {
     }
 
     ionViewWillEnter() {
         this.unsubscribe = new Subject<void>();
-        this.db.list<any>(`ek2024/stats/knockout`)
-            .valueChanges()
-            .pipe(takeUntil(this.unsubscribe))
-            .subscribe(knockoutStats => {
-                this.knockoutStats = knockoutStats;
-            });
+        runInInjectionContext(this.injector, () => {
+            this.db.list<any>(`stats/knockout`)
+                .valueChanges()
+                .pipe(takeUntil(this.unsubscribe))
+                .subscribe(knockoutStats => {
+                    this.knockoutStats = knockoutStats;
+                });
+        });
     }
 
     openKoTeam(team, round) {

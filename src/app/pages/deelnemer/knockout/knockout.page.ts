@@ -17,12 +17,12 @@ import { IKnockout } from 'src/app/models/knockout.model';
 })
 export class KnockoutPage {
 
-    predictions: IKnockout[];
-    speelschema: any[]; // todo model
+    knockoutSpeelschema: { round: string; matches: IKnockout[] }[];
+    // speelschema: any[]; // todo model
     standLine: IStandLine;
-    showWinnaarTroostFinale = false;
+    showWinnaarTroostFinale = true;
     winnaarTroostFinale: any;
-    europeesKampioen: any;
+    kampioen: any;
     unsubscribe = new Subject<void>();
     gestureOpts: Gesture[] = [
         { name: 'swipe' }
@@ -71,22 +71,27 @@ export class KnockoutPage {
         }))
             .pipe(takeUntil(this.unsubscribe))
             .subscribe((results) => {
-                this.predictions = results.knockouts;
-                this.europeesKampioen = results.europeeskampioen
-                this.winnaarTroostFinale = results.winnaarTroostFinale
+                this.kampioen = results.find(r => r.round === '2');
+                console.log('kampioen', this.kampioen);
+                this.winnaarTroostFinale = results.find(r => r.round === '3');
+                console.log('winnaarTroostFinale', this.winnaarTroostFinale);
+                const grouped = results
+                    .filter(r => r.round !== '1' && r.round !== '1.5' && r.round !== '3')
+                    .reduce((acc, match) => {
+                        const existing = acc.find(g => g.round === match.round);
+                        if (existing) {
+                            existing.matches.push(match);
+                        } else {
+                            acc.push({ round: match.round, matches: [match] });
+                        }
+                        return acc;
+                    }, [] as { round: string; matches: IKnockout[] }[]);
+                this.knockoutSpeelschema = grouped.sort((a, b) => +b.round - +a.round);
+                console.log('knockoutSpeelschema', this.knockoutSpeelschema);
             });
         if (event) {
             event.target.complete();
         }
-    }
-
-    setWinnaarTroostFinale(finaleWedstrijd: any) {
-        this.winnaarTroostFinale = {
-            team: finaleWedstrijd.selectedTeam,
-            winnerSpelpunten: finaleWedstrijd.winnerSpelpunten
-        };
-        console.log(this.winnaarTroostFinale)
-
     }
 
     openKoTeam(team, round) {

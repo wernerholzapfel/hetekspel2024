@@ -46,47 +46,12 @@ export class PoulePage {
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(
         poulePrediction => {
-          this.poules = [{
-            poule: 'A', stand: poulePrediction.filter(p => p.poule === 'A')
-                .sort((a, b) => a.positie - b.positie),
+            const pouleNames = [...new Set(poulePrediction.map(p => p.poule))].sort();
+          this.poules = pouleNames.map(poule => ({
+            poule,
+            stand: poulePrediction.filter(p => p.poule === poule).sort((a, b) => a.positie - b.positie),
             isSortDisabled: true
-          },
-            {
-              poule: 'B', stand: poulePrediction.filter(p => p.poule === 'B')
-                  .sort((a, b) => a.positie - b.positie),
-              isSortDisabled: true
-            },
-            {
-              poule: 'C', stand: poulePrediction.filter(p => p.poule === 'C')
-                  .sort((a, b) => a.positie - b.positie),
-              isSortDisabled: true
-            },
-            {
-              poule: 'D', stand: poulePrediction.filter(p => p.poule === 'D')
-                  .sort((a, b) => a.positie - b.positie),
-              isSortDisabled: true
-            },
-            {
-              poule: 'E', stand: poulePrediction.filter(p => p.poule === 'E')
-                  .sort((a, b) => a.positie - b.positie),
-              isSortDisabled: true
-            },
-            {
-              poule: 'F', stand: poulePrediction.filter(p => p.poule === 'F')
-                  .sort((a, b) => a.positie - b.positie),
-              isSortDisabled: true
-            },
-            // {
-            //   poule: 'G', stand: poulePrediction.filter(p => p.poule === 'G')
-            //       .sort((a, b) => a.positie - b.positie),
-            //   isSortDisabled: true
-            // },
-            // {
-            //   poule: 'H', stand: poulePrediction.filter(p => p.poule === 'H')
-            //       .sort((a, b) => a.positie - b.positie),
-            //   isSortDisabled: true
-            // }
-          ];
+          }));
         });
         if (event) {
           event.target.complete();

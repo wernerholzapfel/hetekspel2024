@@ -30,7 +30,7 @@ export interface ITeam {
     name?: string;
     logoUrl?: string;
     isEliminated?: boolean;
-    eliminationRound?: string;
+    eliminationRound?: number;
     latestActiveRound?: string;
     eliminationState?: string; 
     spelpunten?: number;

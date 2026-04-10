@@ -13,13 +13,13 @@ export class KnockoutPredictionsService {
     constructor(private http: HttpClient) {
     }
 
-    getKnockoutForParticipant(participantId: string): Observable<IDeelnemerSpeelschema> {
-        return this.http.get<IDeelnemerSpeelschema>(`${environment.apiBaseUrl}/knockout-prediction/${participantId}`);
+    getKnockoutForParticipant(participantId: string): Observable<IKnockout[]> {
+        return this.http.get<IKnockout[]>(`${environment.apiBaseUrl}/knockout/${participantId}`);
     }
     
-    getKnockoutForLoggedInUser(): Observable<IKnockout[]> {
-        return this.http.get<IKnockout[]>(`${environment.apiBaseUrl}/knockout-prediction/mine`);
-    }
+    // getKnockoutForLoggedInUser(): Observable<IKnockout[]> {
+        // return this.http.get<IKnockout[]>(`${environment.apiBaseUrl}/knockout-prediction/mine`);
+    // }
 
     getParticipantForKnockoutTeamInRound(roundId: string, teamId: string): Observable<any> {
         return this.http.get<any>(`${environment.apiBaseUrl}/knockout-prediction/round/${roundId}/team/${teamId}`);

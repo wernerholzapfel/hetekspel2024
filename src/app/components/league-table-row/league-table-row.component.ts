@@ -47,7 +47,7 @@ export class LeagueTableRowComponent implements OnInit {
             id: line.team.id,
             poulePosition: line.positie,
             isEliminated: line.team.isEliminated,
-            eliminationRound: 32,
+            eliminationRound: 64,
             isPositionFinal: line.isPositionFinal
         }).subscribe(() => {
             this.toastService.presentToast('opslaan gelukt');
@@ -55,7 +55,7 @@ export class LeagueTableRowComponent implements OnInit {
                 ...line,
                 team: {
                     ...line.team,
-                    eliminationRound: '32'
+                    eliminationRound: 64
                 }
             };
         }, () => this.toastService.presentToast('opslaan mislukt', 'danger'));

@@ -10,7 +10,7 @@
 >
   <ion-col>
     <span class="fi fi-{{ line.team.logoUrl }} fis"></span>
-    <ion-text>
+    <ion-text [style.font-weight]="line.selected ? 'bold' : 'normal'">
       {{ line.positie }}
       {{ line.team.name }}
     </ion-text>
@@ -42,7 +42,7 @@
   </ion-col>
   } @if (admin) {
   <ion-col size="1">
-    @if (line.team.isEliminated && line.team.eliminationRound === '32') {
+    @if (line.team.isEliminated && line.team.eliminationRound === 64) {
     <ion-icon
       (click)="openSelect()"
       name="close-outline"
@@ -55,7 +55,7 @@
       color="medium"
     ></ion-icon>
     } @if (line.team.isEliminated === false || line.team.isEliminated &&
-    line.team.eliminationRound !== '32') {
+    line.team.eliminationRound !== 64) {
     <ion-icon
       (click)="openSelect()"
       name="checkmark-outline"

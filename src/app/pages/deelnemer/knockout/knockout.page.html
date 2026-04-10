@@ -15,43 +15,41 @@
     }
   </ion-card>
   <ion-grid>
-    @if (predictions) {
+    @if (knockoutSpeelschema) {
     <ion-grid>
       <ion-row>
-        <ion-col>Europees kampioen </ion-col>
+        <ion-col>Wereldkampioen </ion-col>
       </ion-row>
     </ion-grid>
-    <ion-grid (click)="openKoTeam(europeesKampioen?.team.id, 1)">
+    <ion-grid (click)="openKoTeam(kampioen?.team.id, 1)">
       <app-knockout-team-header
-        [team]="europeesKampioen?.selectedTeam"
-        [round]="europeesKampioen.round"
-        [punten]="europeesKampioen?.spelpunten"
+        [team]="kampioen?.prediction?.selectedTeam"
+        [round]="kampioen?.round"
+        [punten]="kampioen?.spelpunten"
       >
       </app-knockout-team-header>
     </ion-grid>
-    } @for (prediction of predictions; track prediction; let i = $index) { @if
-    (prediction.round !== '3') { @if (i === 0 || predictions[i-1].round !==
-    prediction.round) {
+    } @for (roundGroup of knockoutSpeelschema; track roundGroup.round) {
     <ion-row>
-      <ion-col>{{prediction.round | roundText}} </ion-col>
+      <ion-col>{{roundGroup.round | roundText}} </ion-col>
     </ion-row>
-    }
+    @for (match of roundGroup.matches; track match) {
     <ion-row class="ion-no-padding hes-border-bottom">
       <ion-col class="hes-background">
         <ion-row>
           <ion-col
-            (click)="openKoTeam(prediction.homeTeam?.id, prediction.round)"
+            (click)="openKoTeam(match.prediction?.homeTeam?.id, match.round)"
           >
-            <span class="fi fi-{{prediction.homeTeam?.logoUrl}} fis"></span>
-            {{prediction.homeTeam?.name}}
+            <span class="fi fi-{{match.prediction?.homeTeam?.logoUrl}} fis"></span>
+            {{match.prediction?.homeTeam?.name}}
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col
-            (click)="openKoTeam(prediction.awayTeam?.id, prediction.round)"
+            (click)="openKoTeam(match.prediction?.awayTeam?.id, match.round)"
           >
-            <span class="fi fi-{{prediction.awayTeam?.logoUrl}} fis"></span>
-            {{prediction.awayTeam?.name}}
+            <span class="fi fi-{{match.prediction?.awayTeam?.logoUrl}} fis"></span>
+            {{match.prediction?.awayTeam?.name}}
           </ion-col>
         </ion-row>
       </ion-col>
@@ -59,10 +57,10 @@
         <ion-row>
           <ion-col size="4" class="ion-no-padding ion-text-start">
             <app-knockout-icon-row
-              [eliminationState]="prediction?.homeTeam?.eliminationState"
+              [eliminationState]="match?.prediction?.homeTeam?.eliminationState"
             ></app-knockout-icon-row>
             <app-knockout-icon-row
-              [eliminationState]="prediction?.awayTeam?.eliminationState"
+              [eliminationState]="match?.prediction?.awayTeam?.eliminationState"
             >
             </app-knockout-icon-row>
           </ion-col>
@@ -70,11 +68,10 @@
             size="8"
             class="ion-no-padding ion-align-self-center ion-text-center"
           >
-            @if (prediction.homeTeam?.eliminationState !== 'unknown' ||
-            prediction.awayTeam?.eliminationState !== 'unknown') {
+            @if (match.prediction?.homeTeam?.eliminationState !== 'unknown') {
             <ion-chip color="secondary">
-              {{prediction.homeTeam.spelpunten +
-              prediction.awayTeam?.spelpunten}}
+              {{match.prediction?.homeTeam?.spelPunten +
+              match.prediction?.awayTeam?.spelPunten}}
             </ion-chip>
             }
           </ion-col>
@@ -83,7 +80,7 @@
     </ion-row>
     } }
   </ion-grid>
-  @if (predictions && winnaarTroostFinale && showWinnaarTroostFinale) {
+  @if (knockoutSpeelschema && winnaarTroostFinale && showWinnaarTroostFinale) {
   <ion-grid>
     <ion-row>
       <ion-col>Winnaar troostfinale </ion-col>
@@ -91,7 +88,7 @@
   </ion-grid>
   <ion-grid (click)="openKoTeam(winnaarTroostFinale?.team.id, '3')">
     <app-knockout-team-header
-      [team]="winnaarTroostFinale?.selectedTeam"
+      [team]="winnaarTroostFinale?.prediction?.selectedTeam"
       [round]="winnaarTroostFinale?.round"
       [punten]="winnaarTroostFinale?.spelpunten"
     ></app-knockout-team-header>
