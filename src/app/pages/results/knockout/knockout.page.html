@@ -1,11 +1,8 @@
 <ion-header>
   <app-menu-toolbar title="Eindstanden"></app-menu-toolbar>
-  <ion-segment
-    [(ngModel)]="activeKnockoutRound"
-    (ionChange)="selectKnockoutRound($event)"
-    scrollable
-    mode="md"
-  >
+ <ion-segment [(ngModel)]="activeKnockoutRound" 
+  (ionChange)="selectKnockoutRound($event)" 
+  scrollable mode="md">
     @for (round of rounds; track round; let i = $index) {
     <ion-segment-button [value]="round.round" (click)="scrollSegments(i+1)">
       {{round.text}}
@@ -25,28 +22,26 @@
             [match]="match"
           ></app-city-card-header>
           <ion-radio-group
-            [value]="match.selectedTeam?.id"
+            [value]="match.prediction?.selectedTeam?.id"
             (ionChange)="setSelectedTeam(match, $event)"
           >
             <ion-item lines="none">
-              <ion-radio justify="space-between" [value]="match.homeTeam?.id">
-                <span class="fi fi-{{match.homeTeam?.logoUrl}} fis"></span>
-                {{match.homeTeam?.name}} {{match.home}}
+              <ion-radio justify="space-between" [value]="match.prediction?.homeTeam?.id">
+                <span class="fi fi-{{match.prediction?.homeTeam?.logoUrl}} fis"></span>
+                {{match.prediction?.homeTeam?.name}} {{match.prediction?.home}}
                 ({{match.homeId}})</ion-radio
               >
             </ion-item>
             <ion-item lines="none">
-              <ion-radio justify="space-between" [value]="match.awayTeam?.id">
-                <span class="fi fi-{{match.awayTeam?.logoUrl}} fis"></span>
-                {{match.awayTeam?.name}} {{match.away}} ({{match.awayId}})
+              <ion-radio justify="space-between" [value]="match.prediction?.awayTeam?.id">
+                <span class="fi fi-{{match.prediction?.awayTeam?.logoUrl}} fis"></span>
+                {{match.prediction?.awayTeam?.name}} {{match.away}} ({{match.awayId}})
               </ion-radio>
             </ion-item>
           </ion-radio-group>
           <ion-item>
-            <ion-label>Thuis</ion-label>
-            <ion-input type="number" [(ngModel)]="match.homeScore"></ion-input>
-            <ion-label>Uit</ion-label>
-            <ion-input type="number" [(ngModel)]="match.awayScore"></ion-input>
+            <ion-input label="Thuis" labelPlacement="stacked" type="number" [(ngModel)]="match.homeScore"></ion-input>
+            <ion-input label="Uit" labelPlacement="stacked" type="number" [(ngModel)]="match.awayScore"></ion-input>
           </ion-item>
           <ion-item>
             <ion-button color="secondary" (click)="save(match)" expand="block"

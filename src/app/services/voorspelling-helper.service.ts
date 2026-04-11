@@ -118,7 +118,8 @@ export class VoorspellingHelperService {
             punten: 0,
             goalsFor: 0,
             goalsAgainst: 0,
-            sortering: 0
+            sortering: 0,
+            poule: team.poule
         };
     }
 
