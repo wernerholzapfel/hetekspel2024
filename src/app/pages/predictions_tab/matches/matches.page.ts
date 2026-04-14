@@ -91,7 +91,14 @@ export class MatchesPage {
 
     confirmNextPoule() {
         this.isStandModalOpen = false;
-        this.next(this.pendingNextPoule);
+    }
+
+    onStandModalDismiss() {
+        this.isStandModalOpen = false;
+        if (this.pendingNextPoule) {
+            this.next(this.pendingNextPoule);
+            this.pendingNextPoule = null;
+        }
     }
 
     navigateToPoulePredictions() {

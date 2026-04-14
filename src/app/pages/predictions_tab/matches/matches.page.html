@@ -1,5 +1,5 @@
 <!--https://www.flaticon.com/packs/countrys-flags-->
-<ion-modal [isOpen]="isStandModalOpen" (didDismiss)="isStandModalOpen = false">
+<ion-modal [isOpen]="isStandModalOpen" (didDismiss)="onStandModalDismiss()">
   <ng-template>
     <ion-header>
       <app-menu-toolbar showMenuButton="false">Stand poule {{ standCardPoule?.poule }}</app-menu-toolbar>
