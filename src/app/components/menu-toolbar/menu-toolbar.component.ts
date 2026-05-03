@@ -25,7 +25,7 @@ export class MenuToolbarComponent implements OnInit {
         this.router.navigate([`home`], {replaceUrl: false});
     }
 
-    iconClick(event$) {
+    iconClick(event$: any) {
         this.emitIconClick.emit(event$);
     }
 }

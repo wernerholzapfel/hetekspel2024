@@ -1,7 +1,7 @@
 <ion-header>
   <app-menu-toolbar
     (emitIconClick)="showFilter = !showFilter"
-    [iconColor]="(selectedUitslagen$ | async).length > 0 || showFilter ? 'tertiary' : ''"
+    [iconColor]="(selectedUitslagen$ | async).length > 0 || showFilter ? 'secondary' : ''"
     rightCornerIcon="funnel"
   ></app-menu-toolbar>
 </ion-header>
@@ -37,19 +37,19 @@
     @for (uitslag of toto.uitslagen; track uitslag) {
     <ion-row (click)="filterUitslag(uitslag)">
       <ion-col class="ion-align-self-start">
-        <ion-badge [color]="uitslag.active ? 'tertiary' : 'primary'">
+        <ion-badge [color]="uitslag.active ? 'secondary' : 'primary'">
           {{uitslag.homeScore}} - {{uitslag.awayScore}}</ion-badge
         >
       </ion-col>
       <ion-col size="6" class="ion-align-self-center">
         <ion-progress-bar
-          [color]="uitslag.active ? 'tertiary' : 'primary'"
+          [color]="uitslag.active ? 'secondary' : 'primary'"
           style="height: 20px"
           [value]="uitslag.count"
         ></ion-progress-bar>
       </ion-col>
       <ion-col class="ion-align-self-end ion-text-end">
-        <ion-badge [color]="uitslag.active ? 'tertiary' : 'primary'"
+        <ion-badge [color]="uitslag.active ? 'secondary' : 'primary'"
           >{{uitslag.aantal}}</ion-badge
         >
       </ion-col>
@@ -66,19 +66,19 @@
     @for (uitslag of (selectedUitslagen$ | async); track uitslag) {
     <ion-row class="hes-background" (click)="showFilter = !showFilter">
       <ion-col class="ion-align-self-start">
-        <ion-badge [color]="'tertiary'">
+        <ion-badge [color]="'secondary'">
           {{uitslag.homeScore}} - {{uitslag.awayScore}}</ion-badge
         >
       </ion-col>
       <ion-col size="6" class="ion-align-self-center">
         <ion-progress-bar
-          color="tertiary"
+          color="secondary"
           style="height: 20px"
           [value]="uitslag.count"
         ></ion-progress-bar>
       </ion-col>
       <ion-col class="ion-align-self-end ion-text-end">
-        <ion-badge color="tertiary">{{uitslag.aantal}}</ion-badge>
+        <ion-badge color="secondary">{{uitslag.aantal}}</ion-badge>
       </ion-col>
     </ion-row>
     }
