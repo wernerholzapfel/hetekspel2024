@@ -6,7 +6,7 @@
   <ion-card-header>
     <ion-card-title>Poulewedstrijden</ion-card-title>
   </ion-card-header>
-  @for (match of matches; track match) {
+  @for (match of matches; track match.id) {
   <app-speelschema-match-item
     [match]="match"
     [url]="'poule'"
@@ -15,7 +15,7 @@
   <ion-card-header>
     <ion-card-title>Finaleronde</ion-card-title>
   </ion-card-header>
-  @for (match of knockout; track match) {
+  @for (match of knockout; track match.id) {
   <app-speelschema-match-item
     [match]="match"
     [url]="'finaleronde'"

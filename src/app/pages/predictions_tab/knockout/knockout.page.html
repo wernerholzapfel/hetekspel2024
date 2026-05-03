@@ -18,7 +18,7 @@
         <ion-card color="danger">
           <ion-card-content>
             De volgende wedstrijd heeft geen correcte winnaar: @for (match of
-            wrongSelectedTeam; track match) {
+            wrongSelectedTeam; track match.id) {
             <div>
               {{match?.roundText}}: {{match.prediction?.homeTeam.name}} -
               {{match.prediction?.awayTeam.name}}
@@ -61,7 +61,7 @@
     }
     <ion-row>
       @for (match of speelschema | filterKnockoutRounds:activeKnockoutRound;
-      track match) {
+      track match.id) {
       <ion-col size="12" size-md="6" size-lg="6" size-xl="4">
         <ion-card>
           <app-city-card-header [match]="match"></app-city-card-header>
@@ -73,14 +73,14 @@
           <ion-radio-group [value]="match.prediction?.selectedTeam?.id" (ionChange)="setSelectedTeam(match, $event)">
             <ion-item lines="none">
               <ion-radio justify="space-between" [value]="match?.prediction?.homeTeam?.id"
-                [disabled]="!(uiService.isRegistrationOpen$ | async)">
+                [disabled]="!(uiService.isRegistrationOpen$ | async) || (!match?.prediction?.homeTeam?.id)">
                 <span class="fi fi-{{match?.prediction?.homeTeam?.logoUrl}} fis"></span>
                 {{match?.prediction?.homeTeam?.name}} ({{match?.homeId}})
               </ion-radio>
             </ion-item>
             <ion-item lines="none">
               <ion-radio justify="space-between" [value]="match?.prediction?.awayTeam?.id"
-                [disabled]="!(uiService.isRegistrationOpen$ | async)">
+                [disabled]="!(uiService.isRegistrationOpen$ | async) || (!match?.prediction?.awayTeam?.id)">
                 <span class="fi fi-{{match?.prediction?.awayTeam?.logoUrl}} fis"></span>
                 {{match?.prediction?.awayTeam?.name}} ({{match?.awayId}})
               </ion-radio>

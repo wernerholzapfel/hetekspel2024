@@ -38,13 +38,7 @@
           <ion-col class="ion-padding-vertical">
             {{ match?.homeScore }}
             <span class="fi fi-{{ match?.homeTeam?.logoUrl }} fis"></span>
-            {{
-              match?.homeTeam?.id
-                ? match?.homeTeam?.name
-                : match?.round != "16"
-                ? "Winnaar " + match.homeId
-                : match.homeId
-            }}
+            {{ getHomeLabel(match) }}
           </ion-col>
         </ion-row>
         <ion-row
@@ -57,13 +51,7 @@
           <ion-col class="ion-padding-vertical">
             {{ match?.awayScore }}
             <span class="fi fi-{{ match?.awayTeam?.logoUrl }} fis"></span>
-            {{
-              match?.awayTeam?.id
-                ? match?.awayTeam?.name
-                : match?.round != "16"
-                ? "Winnaar " + match.awayId
-                : match.awayId
-            }}
+            {{ getAwayLabel(match) }}
           </ion-col>
           <!-- <ion-col class="ion-padding-end ion-text-end"> -->
           <!-- <ion-text color="medium" *ngIf="match?.awayId">({{match.awayId}})</ion-text> -->

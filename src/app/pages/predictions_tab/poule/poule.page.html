@@ -46,13 +46,13 @@
       }
     </ion-row>
   </ion-grid>
-  <ion-modal [breakpoints]="[.9]" trigger="open-modal" (willDismiss)="onWillDismiss($event)" [canDismiss]="canDismiss()"
+  <ion-modal [breakpoints]="[.9]" trigger="open-modal" (willDismiss)="onWillDismiss($event)" [canDismiss]="canDismiss()" [backdropDismiss]="false"
     [presentingElement]="page">
     <ng-template>
       <ion-toolbar color="primary" mode="ios">
         <ion-title>
           <img
-            [src]="(uiService.prefersDark$ | async) ? '/assets/wit.png' : '/assets/hetwkspel_header_zwart.png'"
+            [src]="(uiService.prefersDark$ | async) ? '/assets/hetwkspel_header_wit.png' : '/assets/hetwkspel_header_wit.png'"
             height="36px;" />
         </ion-title>
         <ion-buttons slot="start">

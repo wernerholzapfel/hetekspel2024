@@ -22,14 +22,15 @@ export class RoundTextPipe implements PipeTransform {
                 return 'Kwartfinale';
             case '4':
             case 4:
-                return 'Halve Finale';
+                return 'Halve finale';
             case '3':
             case 3:
                 return 'Troostfinale';
             case '2':
             case 2:
                 return 'Finale';
-            case '1,5':
+            case '1.5':
+                return 'Winnaar troostfinale';
             case 1.5:
                 return 'Winnaar troostfinale';
             default:

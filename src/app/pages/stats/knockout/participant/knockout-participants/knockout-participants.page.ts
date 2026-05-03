@@ -20,9 +20,10 @@ export class KnockoutParticipantsPage implements OnInit, OnDestroy {
         private knockoutPredictionService: KnockoutPredictionsService,
         private uiService: UiService
     ) {
+        this.roundId = this.route.snapshot.params.roundid;
     }
     searchTerm$: BehaviorSubject<string> = new BehaviorSubject('');
-
+    roundId: string;
     koTeamStats: { team: ITeamKnockout, participants: { participant: IParticipant, tableLine: any }[], round: string };
     unsubscribe = new Subject<void>();
 

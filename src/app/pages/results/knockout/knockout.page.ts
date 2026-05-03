@@ -46,7 +46,7 @@ export class KnockoutPage {
         this.destroy$.next();
     }
 
-    selectKnockoutRound($event) {
+    selectKnockoutRound($event: any) {
         this.activeKnockoutRound = $event.detail.value;
         this.cdr.detectChanges();
     }
@@ -55,13 +55,13 @@ export class KnockoutPage {
         console.log('Scrolling to segment:', index);
         this.segmentIndex = index - 1;
         const segment = document.querySelector('ion-segment');
-        const active = segment.querySelectorAll('ion-segment-button')[index];
+        const active = segment?.querySelectorAll('ion-segment-button')[index];
         if (active) {
             active.scrollIntoView({ behavior: 'smooth', inline: 'center' });
         }
     }
 
-    setSelectedTeam(match: IKnockout, $event) {
+    setSelectedTeam(match: IKnockout, $event: any) {
         this.speelschema = this.speelschema.map(m => {
             if (m.id === match.id) {
                 return { ...m, prediction: { ...m.prediction, selectedTeam: { id: $event.detail.value } } };

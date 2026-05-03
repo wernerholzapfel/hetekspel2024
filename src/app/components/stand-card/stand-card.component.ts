@@ -79,7 +79,15 @@ export class StandCardComponent implements OnInit, OnDestroy {
     private updateAndSaveStand(stand: any[]) {
         this.poulepredictionService.savePoulePredictions(stand)
             .subscribe({
-                next: response_stand => this.stand = response_stand,
+                next: response_stand => {
+                    this.stand = response_stand;
+                    // Notify other parts of the app that this poule stand was updated
+                    try {
+                        this.uiService.updatePouleStand$?.next(response_stand);
+                    } catch (e) {
+                        // swallow if uiService is not available for some reason
+                    }
+                },
                 error: () => this.uiService.presentToast('Opslaan mislukt', 'warning')
             });
     }

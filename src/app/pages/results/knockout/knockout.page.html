@@ -14,7 +14,7 @@
   <ion-grid class="ion-no-padding">
     <ion-row>
       @for (match of speelschema | filterKnockoutRounds:activeKnockoutRound;
-      track match) {
+        track match.id) {
       <ion-col size="12" size-md="6" size-lg="6" size-xl="4">
         <ion-card>
           <app-city-card-header
@@ -22,20 +22,20 @@
             [match]="match"
           ></app-city-card-header>
           <ion-radio-group
-            [value]="match.prediction?.selectedTeam?.id"
+            [value]="match?.selectedTeam?.id"
             (ionChange)="setSelectedTeam(match, $event)"
           >
             <ion-item lines="none">
-              <ion-radio justify="space-between" [value]="match.prediction?.homeTeam?.id">
-                <span class="fi fi-{{match.prediction?.homeTeam?.logoUrl}} fis"></span>
-                {{match.prediction?.homeTeam?.name}} {{match.prediction?.home}}
+              <ion-radio justify="space-between" [disabled]="!match?.homeTeam?.id" [value]="match?.homeTeam?.id">
+                <span class="fi fi-{{match?.homeTeam?.logoUrl}} fis"></span>
+                {{match?.homeTeam?.name}} {{match?.home}}
                 ({{match.homeId}})</ion-radio
               >
             </ion-item>
             <ion-item lines="none">
-              <ion-radio justify="space-between" [value]="match.prediction?.awayTeam?.id">
-                <span class="fi fi-{{match.prediction?.awayTeam?.logoUrl}} fis"></span>
-                {{match.prediction?.awayTeam?.name}} {{match.away}} ({{match.awayId}})
+              <ion-radio justify="space-between"  [disabled]="!match?.awayTeam?.id"[value]="match?.awayTeam?.id">
+                <span class="fi fi-{{match?.awayTeam?.logoUrl}} fis"></span>
+                {{match?.awayTeam?.name}} {{match.away}} ({{match.awayId}})
               </ion-radio>
             </ion-item>
           </ion-radio-group>
@@ -44,7 +44,9 @@
             <ion-input label="Uit" labelPlacement="stacked" type="number" [(ngModel)]="match.awayScore"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-button color="secondary" (click)="save(match)" expand="block"
+            <ion-button color="secondary" 
+            [disabled]="!match?.awayTeam?.id || !match?.homeTeam?.id"
+            (click)="save(match)" expand="block"
               >Opslaan</ion-button
             >
           </ion-item>

@@ -4,7 +4,12 @@
 <ion-toolbar color="background" mode="ios">
   <ion-searchbar
     mode="ios"
-    (ionChange)="search($event)"
+    (ionInput)="search($event)"
+    autocomplete="off"
+    autocorrect="off"
+    autocapitalize="off"
+    spellcheck="false"
+    inputmode="search"
     placeholder="Zoek deelnemer"
     color="light"
     debounce="500"
@@ -14,7 +19,7 @@
 <ion-content>
   <ion-grid>
     <ion-row>
-      <ion-col>{{koTeamStats?.round | roundText}} </ion-col>
+      <ion-col>{{roundId | roundText}} </ion-col>
     </ion-row>
     <app-knockout-team-header
       [team]="koTeamStats?.team"
@@ -30,7 +35,7 @@
       (click)="openParticipant(participant.participant.id)"
     >
       <ion-col
-        [ngClass]="participant.isMine ? 'hes-background-tertiary' : 'hes-background'"
+        [ngClass]="participant.isMine ? 'hes-background-secondary' : 'hes-background'"
       >
         <ion-row>
           <ion-col>

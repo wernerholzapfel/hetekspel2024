@@ -16,7 +16,7 @@
 </ion-segment>
 <!-- </ion-toolbar> -->
 @if (mijnStand) {
-<ion-item lines="full" class="ion-no-padding" color="tertiary-accent">
+<ion-item lines="full" class="ion-no-padding" color="secondary">
   <ion-grid>
     <ion-row (click)="navigateToParticipant(mijnStand?.id)">
       <ion-col>
@@ -96,7 +96,7 @@
 <ion-toolbar color="background" mode="ios">
   <ion-searchbar
     mode="ios"
-    (ionChange)="search($event)"
+    (ionInput)="search($event)"
     placeholder="Zoek deelnemer"
     color="light"
     debounce="500"
@@ -107,7 +107,7 @@
 <ion-content>
   @for (line of stand; track line; let i = $index) {
   <ion-item
-    [color]="line?.isMine ? 'tertiary-accent' : i % 2 != 0 ? 'secondary-accent' : ''"
+    [color]="line?.isMine ? 'secondary' : i % 2 != 0 ? 'secondary-accent' : ''"
     lines="full"
     class="ion-no-padding"
   >

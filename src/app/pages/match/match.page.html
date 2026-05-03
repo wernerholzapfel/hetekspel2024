@@ -86,7 +86,7 @@
   }
   <ion-searchbar
     mode="ios"
-    (ionChange)="search($event)"
+    (ionInput)="search($event)"
     placeholder="Zoek deelnemer"
     color="light"
     debounce="500"
@@ -159,7 +159,7 @@
       (click)="navigateToParticipant(prediction.participant.id)"
     >
       <ion-col
-        [ngClass]="prediction.isMine ? 'hes-background-tertiary' : 'hes-background'"
+        [ngClass]="prediction.isMine ? 'hes-background-secondary' : 'hes-background'"
         size="9"
       >
         <ion-row>

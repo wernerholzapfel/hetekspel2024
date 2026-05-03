@@ -54,7 +54,7 @@
       @if (poule?.isSortDisabled) {
       @for (line of stand; track line; let i = $index) {
       <app-league-table-row [admin]="admin" [isRegistrationOpen$]="isRegistrationOpen"
-        [isSortDisabled]="false" [line]="line" [index]="i"></app-league-table-row>
+        [isSortDisabled]="true" [line]="line" [index]="i"></app-league-table-row>
       }
       }
       @else {
@@ -62,7 +62,7 @@
         @for (line of stand; track line; let i = $index) {
         <ion-reorder>
           <app-league-table-row [admin]="admin" [isRegistrationOpen$]="isRegistrationOpen"
-            [isSortDisabled]="true" [line]="line" [index]="i"></app-league-table-row>
+            [isSortDisabled]="false" [line]="line" [index]="i"></app-league-table-row>
         </ion-reorder>
         }
       </ion-reorder-group>

@@ -1,8 +1,19 @@
 <!--https://www.flaticon.com/packs/countrys-flags-->
-<ion-modal [isOpen]="isStandModalOpen" (didDismiss)="onStandModalDismiss()">
+<ion-modal [isOpen]="isStandModalOpen" (didDismiss)="onStandModalDismiss($event)">
   <ng-template>
     <ion-header>
-      <app-menu-toolbar showMenuButton="false">Stand poule {{ standCardPoule?.poule }}</app-menu-toolbar>
+       <ion-toolbar color="primary" mode="ios">
+        <ion-title>
+          <!-- <img
+            [src]="(uiService.prefersDark$ | async) ? '/assets/hetwkspel_header_wit.png' : '/assets/hetwkspel_header_wit.png'"
+            height="36px;" /> -->
+            Stand poule {{ standCardPoule?.poule }}
+        </ion-title>
+        <ion-buttons slot="start">
+          <ion-button (click)="modal.dismiss(undefined, 'cancel')">Terug</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+      <!-- <app-menu-toolbar showMenuButton="false"></app-menu-toolbar> -->
     </ion-header>
     <ion-content class="ion-padding">
       <ion-row>
@@ -26,9 +37,17 @@
         [stand]="standCardPoule?.stand" [isTableOpen]="true" [editMode]="true" [isToolbar]="false"></app-stand-card>
     </ion-content>
     <ion-footer>
-      <ion-button color="tertiary" expand="full" fill="solid" (click)="confirmNextPoule()">
-        Naar volgende poule
-      </ion-button>
+        @if ((isRegistrationOpen$ | async) && activePoule?.next !== null) {
+    <ion-button [disabled]="!activePoule?.isFinal" color="tertiary" expand="full" fill="solid"
+      (click)="confirmNextPoule()">
+      Naar volgende poule
+    </ion-button>
+    } @if ((isRegistrationOpen$ | async) && activePoule?.next === null) {
+    <ion-button [disabled]="!activePoule?.isFinal" color="tertiary" expand="full" fill="solid"
+      (click)="navigateToPoulePredictions()">
+      Voorspel de poulestanden
+    </ion-button>
+    }
     </ion-footer>
   </ng-template>
 </ion-modal>
@@ -77,16 +96,11 @@
 </ion-content>
 <ion-footer>
   <ng-container class="ion-no-border ion-padding-horizontal">
-    @if ((isRegistrationOpen$ | async) && activePoule?.next !== null) {
+    @if ((isRegistrationOpen$ | async)) {
     <ion-button [disabled]="!activePoule?.isFinal" color="tertiary" expand="full" fill="solid"
       (click)="openStandModal(activePoule.next)">
       Naar stand poule {{ activePoule.current }}
     </ion-button>
-    } @if ((isRegistrationOpen$ | async) && activePoule?.next === null) {
-    <ion-button [disabled]="!activePoule?.isFinal" color="tertiary" expand="full" fill="solid"
-      (click)="navigateToPoulePredictions()">
-      Voorspel de poulestanden
-    </ion-button>
-    }
+    } 
   </ng-container>
 </ion-footer>

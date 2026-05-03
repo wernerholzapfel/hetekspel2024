@@ -22,7 +22,7 @@ export class KnockoutPredictionsService {
     // }
 
     getParticipantForKnockoutTeamInRound(roundId: string, teamId: string): Observable<any> {
-        return this.http.get<any>(`${environment.apiBaseUrl}/knockout-prediction/round/${roundId}/team/${teamId}`);
+        return this.http.get<any>(`${environment.apiBaseUrl}/stats/round/${roundId}/team/${teamId}`);
     }
 
 

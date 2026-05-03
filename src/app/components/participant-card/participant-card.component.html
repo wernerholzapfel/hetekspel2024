@@ -17,7 +17,7 @@
           (click)="openStand()"
           [iconName]="'podium-outline'"
           [color]="
-            color === 'primary' || (uiService.prefersDark$ | async)
+            color === 'tertiary' || (uiService.prefersDark$ | async)
               ? 'light'
               : 'dark'
           "
@@ -29,7 +29,7 @@
           [iconName]="'football'"
           [deltaPoints]="standLine.deltaMatchPoints"
           [color]="
-            color === 'primary' || (uiService.prefersDark$ | async)
+            color === 'tertiary' || (uiService.prefersDark$ | async)
               ? 'light'
               : 'dark'
           "
@@ -40,7 +40,7 @@
           [iconName]="'list'"
           [deltaPoints]="standLine.deltaPoulePoints"
           [color]="
-            color === 'primary' || (uiService.prefersDark$ | async)
+            color === 'tertiary' || (uiService.prefersDark$ | async)
               ? 'light'
               : 'dark'
           "
@@ -51,7 +51,7 @@
           [iconName]="'trophy'"
           [deltaPoints]="standLine.deltaKnockoutPoints"
           [color]="
-            color === 'primary' || (uiService.prefersDark$ | async)
+            color === 'tertiary' || (uiService.prefersDark$ | async)
               ? 'light'
               : 'dark'
           "
