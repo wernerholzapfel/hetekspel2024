@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
+import { BehaviorSubject, combineLatest, forkJoin, Subject } from 'rxjs';
 import { IKnockout } from '../../../models/knockout.model';
 import { ToastService } from '../../../services/toast.service';
 import { KnockoutResultService } from '../../../services/knockout-result.service';
@@ -72,9 +72,9 @@ export class KnockoutPage {
     }
 
 
-    
+
     save(match: IKnockout) {
-        this.knockoutResultService.saveKnockoutResult({
+        const knockoutResult = {
             knockoutId: match.id,
             winnerTeam: match.selectedTeam!,
             loserTeam: match?.selectedTeam?.id === match.homeTeam?.id ? match.awayTeam! : match.homeTeam!,
@@ -82,13 +82,28 @@ export class KnockoutPage {
             knockoutMatchPosition: match.matchId,
             homeScore: match.homeScore,
             awayScore: match.awayScore
-        }).subscribe({
+        }
+
+        const saves$ = match.round === '4' ?
+
+            forkJoin([
+                this.knockoutResultService.saveKnockoutResult(knockoutResult),
+                this.knockoutResultService.saveKnockoutLoserResult({
+                    team: { id: (match.selectedTeam?.id === match.homeTeam?.id ? match.awayTeam! : match.homeTeam!).id },
+                    knockoutMatchPosition: 'V' + match.matchId,
+                    round: '3'
+                })
+            ])
+            : this.knockoutResultService.saveKnockoutResult(knockoutResult);
+
+        saves$.subscribe({
             next: () => {
                 this.toastService.presentToast('Opslaan is gelukt');
                 this.refresh$.next();
+
             },
             error: (error) => {
-                this.toastService.presentToast(error?.error?.message ?? 'Er is iets misgegaan', 'warning');
+                this.toastService.presentToast(error && error.error && error.error.message ? error.error.message : 'Er is iets misgegaan', 'warning');
             }
         });
     }

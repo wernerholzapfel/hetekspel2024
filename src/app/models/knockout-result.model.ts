@@ -9,3 +9,9 @@ export interface ISaveKnockoutResultBody {
     homeScore?: number;
     awayScore?: number;
 }
+
+export interface ISaveKnockoutResultLoserBody {
+    team: ITeam;
+    round: string;
+    knockoutMatchPosition: string;
+}
