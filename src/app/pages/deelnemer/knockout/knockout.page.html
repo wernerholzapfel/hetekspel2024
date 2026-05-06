@@ -5,7 +5,8 @@
   <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <ion-card class="message" color="tertiary">
+    <div class="alert-banner alert-secondary">
+
     @if (standLine) {
     <ion-card-content>
       {{standLine?.displayName}} staat {{standLine?.position}}e met
@@ -13,7 +14,7 @@
       punten voor de finaleronde.
     </ion-card-content>
     }
-  </ion-card>
+  </div>
   <ion-grid>
     @if (knockoutSpeelschema) {
     
@@ -76,9 +77,9 @@
   </ion-grid>
   <ion-grid (click)="openKoTeam(winnaarTroostFinale?.team.id, '3')">
     <app-knockout-team-header
-      [team]="winnaarTroostFinale?.prediction?.selectedTeam"
-      [round]="winnaarTroostFinale?.round"
-      [punten]="winnaarTroostFinale?.spelpunten"
+      [team]="winnaarTroostFinale?.team"
+      [round]="1.5"
+      [punten]="winnaarTroostFinale?.spelPunten"
     ></app-knockout-team-header>
   </ion-grid>
   }
@@ -89,10 +90,10 @@
     </ion-grid>
     <ion-grid (click)="openKoTeam(kampioen?.team.id, 1)">
       <app-knockout-team-header
-        [team]="kampioen?.prediction?.selectedTeam"
-        [round]="kampioen?.round"
-        [punten]="kampioen?.spelpunten"
+        [team]="kampioen?.team"
+        [round]="1"
+        [punten]="kampioen?.spelPunten"
       >
       </app-knockout-team-header>
     </ion-grid>
-</ion-content>
+</ion-content>  

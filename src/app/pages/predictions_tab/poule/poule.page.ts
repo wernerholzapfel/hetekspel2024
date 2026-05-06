@@ -8,6 +8,7 @@ import { ToastService } from '../../../services/toast.service';
 import { UiService } from '../../../services/ui.service';
 import { take, takeUntil } from 'rxjs/operators';
 import { AlertController, IonModal } from '@ionic/angular';
+import { LoaderService } from 'src/app/services/loader.service';
 
 @Component({
     selector: 'app-poule',
@@ -17,6 +18,8 @@ import { AlertController, IonModal } from '@ionic/angular';
 })
 export class PoulePage {
     @ViewChild(IonModal) modal: IonModal;
+    
+    isLoading: Subject<boolean> = this.loaderService.isLoading;
 
     unsubscribe = new Subject<void>();
     poules = [];
@@ -29,6 +32,7 @@ export class PoulePage {
         private toastService: ToastService,
         public uiService: UiService,
         private alertController: AlertController,
+        private loaderService: LoaderService,
         private router: Router) {
     }
 

@@ -38,6 +38,7 @@ ion-card.message {
 
 ion-card {
   margin: 8px;
+  border-radius: 0 32px 32px 32px;
 }
 
 .hes-border-bottom {
@@ -71,13 +72,17 @@ ion-searchbar {
 .hes-background-secondary {
   background-color: var(--ion-color-secondary);
 }
+.hes-background-secondary-tint {
+  background-color: var(--ion-color-secondary-tint);
+}
+
 
 .hes-padding-start-small {
   padding-left: 10px;
 }
 
 .hes-background-secondary-accent {
-  background-color: var(--ion-color-secondary-accent);
+  background-color: var(--ion-color-tertiary-tint);
 }
 
 .hes-background-tertiary {
@@ -90,6 +95,38 @@ ion-item {
 
 .hes-alert-danger {
   color: var(--ion-color-danger) !important;
+}
+
+.alert-banner {
+  border-radius: 0;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  // &:not(.alert-warning):not(.alert-secondary) {
+  margin: 16px 8px;
+    border-radius: 32px 32px 32px 0;
+
+  // }
+
+  &.alert-danger {
+    background: var(--ion-color-danger-tint);
+    border: 3px solid var(--ion-color-danger);
+    color: var(--ion-color-danger-shade);
+
+  }
+
+  &.alert-secondary {
+    background: var(--ion-color-secondary);
+    border: 3px solid var(--ion-color-secondary);
+    color: var(--ion-color-light);
+  }
+
+  &.alert-warning {
+    background: var(--ion-color-warning-tint);
+    border: 3px solid var(--ion-color-warning);
+    color: var(--ion-color-warning-shade);
+  }
 }
 
 ion-tab-bar {
@@ -112,14 +149,18 @@ ion-segment {
 
 ion-segment-button.md {
   --color: var(--ion-color-light);
-  --color-checked: var(--ion-color-secondary);
+  --color-checked: var(--ion-color-tertiary);
 }
 
 /* iOS styles */
 ion-segment-button.ios {
 
   --color: var(--ion-color-light);
-  --color-checked: var(--ion-color-secondary);
+  --color-checked: var(--ion-color-tertiary);
+}
+ion-item.no-border {
+  --border-width: 0;
+  --inner-border-width: 0;
 }
 
 // @media (prefers-color-scheme: dark) {

@@ -5,12 +5,12 @@
   <ion-grid>
     <ion-row class="ion-no-padding">
       <ion-col size="12" class="ion-no-padding">
-        <ion-card color="tertiary">
+        <div class="alert-banner alert-secondary">
           <ion-card-content>
             De Toto statistieken laten zien hoevaak er is voorspeld wie er wint
             of dat er gelijk gespeeld wordt.
           </ion-card-content>
-        </ion-card>
+        </div>
       </ion-col>
     </ion-row>
     @for (toto of totoStats; track toto) {
@@ -27,22 +27,12 @@
         </ion-col>
       </ion-row>
       <ion-row class="hes-border-bottom hes-background">
-        <ion-col
-          class="ion-text-center hes-toto-col hes-background-secondary-accent"
-          (click)="openMatchWithTotoFilter(toto.id, 1)"
-          >{{toto.toto1}}</ion-col
-        >
-        <ion-col
-          class="ion-text-center hes-toto-col hes-background-secondary-accent"
-          (click)="openMatchWithTotoFilter(toto.id, 3)"
-          size="1"
-          >{{toto.toto3}}</ion-col
-        >
-        <ion-col
-          class="ion-text-center hes-toto-col hes-background-secondary-accent"
-          (click)="openMatchWithTotoFilter(toto.id, 2)"
-          >{{toto.toto2}}</ion-col
-        >
+        <ion-col class="ion-text-center hes-toto-col hes-background-secondary-accent"
+          (click)="openMatchWithTotoFilter(toto.id, 1)">{{toto.toto1}}</ion-col>
+        <ion-col class="ion-text-center hes-toto-col hes-background-secondary-accent"
+          (click)="openMatchWithTotoFilter(toto.id, 3)" size="1">{{toto.toto3}}</ion-col>
+        <ion-col class="ion-text-center hes-toto-col hes-background-secondary-accent"
+          (click)="openMatchWithTotoFilter(toto.id, 2)">{{toto.toto2}}</ion-col>
       </ion-row>
     </div>
     }

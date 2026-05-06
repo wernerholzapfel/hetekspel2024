@@ -8,7 +8,8 @@
   <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <ion-card class="message" color="tertiary">
+    <div class="alert-banner alert-secondary">
+
     @if (standLine) {
     <ion-card-content>
       {{standLine?.displayName}} staat {{standLine?.position}}e met
@@ -16,7 +17,7 @@
       punten voor de wedstrijden.
     </ion-card-content>
     }
-  </ion-card>
+  </div>
   @if (predictions) { @for (prediction of predictions; track prediction; let i =
   $index) {
   <ion-item
@@ -27,7 +28,6 @@
     <ion-grid class="ion-no-padding ion-padding-start">
       <ion-row style="font-size: x-small">
         <ion-col
-          
           class="ion-padding-vertical ion-text-start hes-background"
         >
           <ion-text color="medium">

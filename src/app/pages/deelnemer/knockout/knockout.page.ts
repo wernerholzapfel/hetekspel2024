@@ -71,10 +71,12 @@ export class KnockoutPage {
         }))
             .pipe(takeUntil(this.unsubscribe))
             .subscribe((results) => {
-                this.kampioen = results.find(r => r.round === '2');
-                console.log('kampioen', this.kampioen);
-                this.winnaarTroostFinale = results.find(r => r.round === '3');
-                console.log('winnaarTroostFinale', this.winnaarTroostFinale);
+                const finale = results.find(r => r.round === '2');
+                // todo this kampioen is fout!!! krijgt hier uitslag van finale voorspelling en niet winnaar voorspelling.
+                // this.kampioen = finale?.prediction?.selectedTeam?.id === finale?.prediction?.homeTeam?.id ? finale?.prediction?.homeTeam : finale?.prediction?.selectedTeam?.id === finale?.prediction?.awayTeam?.id ? finale?.prediction?.awayTeam : null;
+                // console.log('kampioen', this.kampioen);
+                // this.winnaarTroostFinale = results.find(r => r.round === '3');
+                // console.log('winnaarTroostFinale', this.winnaarTroostFinale);
                 const grouped = results
                     .filter(r => r.round !== '1' && r.round !== '1.5' && r.round !== '3')
                     .reduce((acc, match) => {
@@ -88,6 +90,17 @@ export class KnockoutPage {
                     }, [] as { round: string; matches: IKnockout[] }[]);
                 this.knockoutSpeelschema = grouped.sort((a, b) => +b.round - +a.round);
                 console.log('knockoutSpeelschema', this.knockoutSpeelschema);
+            });
+            
+            this.route.params.pipe(switchMap((params) => {
+            return this.knockoutPredictionService.getWinnersForParticipant(params.id)
+        }))
+            .pipe(takeUntil(this.unsubscribe))
+            .subscribe((results) => {
+                this.kampioen = results.find(r => r.round === '1');
+                this.winnaarTroostFinale = results.find(r => r.round === '1.5');
+                console.log(this.kampioen)
+                console.log(this.winnaarTroostFinale)
             });
         if (event) {
             event.target.complete();

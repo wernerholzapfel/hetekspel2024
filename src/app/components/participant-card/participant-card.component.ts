@@ -15,6 +15,7 @@ export class ParticipantCardComponent implements OnInit {
     @Input() standLine: IStandLine;
     @Input() lastUpdated: number;
     @Input() color = 'primary';
+    @Input() backgroundcolor = 'light';
 
     constructor(private router: Router,
         public uiService: UiService) {

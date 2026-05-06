@@ -16,7 +16,7 @@
 </ion-segment>
 <!-- </ion-toolbar> -->
 @if (mijnStand) {
-<ion-item lines="full" class="ion-no-padding" color="secondary">
+<ion-item lines="full" class="alert-banner alert-secondary ion-no-padding no-border font-size-16" color="secondary">
   <ion-grid>
     <ion-row (click)="navigateToParticipant(mijnStand?.id)">
       <ion-col>
@@ -50,10 +50,10 @@
         class="match-col ion-align-items-center"
         (click)="openMatches(mijnStand?.id)"
       >
-        <ion-text color="dark">
+        <ion-text>
           <ion-icon name="football"></ion-icon>
           {{mijnStand?.matchPoints}} @if (mijnStand?.deltaMatchPoints > 0) {
-          <ion-text color="dark" class="hes-delta-text">
+          <ion-text class="hes-delta-text">
             (+{{mijnStand?.deltaMatchPoints}})
           </ion-text>
           }
@@ -64,7 +64,7 @@
         class="poule-col ion-align-items-center ion-text-center"
         (click)="openPoules(mijnStand?.id)"
       >
-        <ion-text color="dark">
+        <ion-text>
           <ion-icon name="list"></ion-icon>
           {{mijnStand?.poulePoints}} @if (mijnStand?.deltaPoulePoints > 0) {
           <ion-text class="hes-delta-text">
@@ -78,7 +78,7 @@
         class="knockout-col ion-align-items-center ion-text-end"
         (click)="openKnockout(mijnStand?.id)"
       >
-        <ion-text color="dark">
+        <ion-text>
           <ion-icon name="trophy"></ion-icon>
           {{mijnStand?.knockoutPoints}} @if (mijnStand?.deltaKnockoutPoints > 0)
           {
@@ -107,7 +107,7 @@
 <ion-content>
   @for (line of stand; track line; let i = $index) {
   <ion-item
-    [color]="line?.isMine ? 'secondary' : i % 2 != 0 ? 'secondary-accent' : ''"
+    [color]="line?.isMine ? 'secondary-tint' : i % 2 != 0 ? 'tertiary-tint' : ''"
     lines="full"
     class="ion-no-padding"
   >
@@ -144,11 +144,10 @@
           class="match-col ion-align-items-center"
           (click)="openMatches(line.id)"
         >
-          <ion-text [color]="line?.isMine ? 'dark' : 'medium'">
+          <ion-text>
             <ion-icon name="football"></ion-icon>
             {{line.matchPoints}} @if (line.deltaMatchPoints > 0) {
             <ion-text
-              [color]="line?.isMine ? 'dark' : 'medium'"
               class="hes-delta-text"
             >
               (+{{line.deltaMatchPoints}})
@@ -161,7 +160,7 @@
           class="poule-col ion-align-items-center ion-text-center"
           (click)="openPoules(line.id)"
         >
-          <ion-text [color]="line?.isMine ? 'dark' : 'medium'">
+          <ion-text>
             <ion-icon name="list"></ion-icon>
             {{line.poulePoints}} @if (line.deltaPoulePoints > 0) {
             <ion-text class="hes-delta-text">
@@ -175,7 +174,7 @@
           class="knockout-col ion-align-items-center ion-text-end"
           (click)="openKnockout(line.id)"
         >
-          <ion-text [color]="line?.isMine ? 'dark' : 'medium'">
+          <ion-text>
             <ion-icon name="trophy"></ion-icon>
             {{line.knockoutPoints}} @if (line.deltaKnockoutPoints > 0) {
             <ion-text class="hes-delta-text">

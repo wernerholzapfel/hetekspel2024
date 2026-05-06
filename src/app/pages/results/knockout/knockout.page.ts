@@ -64,18 +64,20 @@ export class KnockoutPage {
     setSelectedTeam(match: IKnockout, $event: any) {
         this.speelschema = this.speelschema.map(m => {
             if (m.id === match.id) {
-                return { ...m, prediction: { ...m.prediction, selectedTeam: { id: $event.detail.value } } };
+                return { ...m, selectedTeam: { id: $event.detail.value } };
             }
             return m;
         });
         console.log(this.speelschema)
     }
 
+
+    
     save(match: IKnockout) {
         this.knockoutResultService.saveKnockoutResult({
             knockoutId: match.id,
-            winnerTeam: match.prediction?.selectedTeam,
-            loserTeam: match.prediction?.selectedTeam?.id === match.prediction?.homeTeam?.id ? match.prediction?.awayTeam : match.prediction?.homeTeam,
+            winnerTeam: match.selectedTeam!,
+            loserTeam: match?.selectedTeam?.id === match.homeTeam?.id ? match.awayTeam! : match.homeTeam!,
             round: match.round,
             knockoutMatchPosition: match.matchId,
             homeScore: match.homeScore,

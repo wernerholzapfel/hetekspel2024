@@ -16,6 +16,9 @@ export class KnockoutPredictionsService {
     getKnockoutForParticipant(participantId: string): Observable<IKnockout[]> {
         return this.http.get<IKnockout[]>(`${environment.apiBaseUrl}/knockout/${participantId}`);
     }
+    getWinnersForParticipant(participantId: string): Observable<IKnockout[]> {
+        return this.http.get<IKnockout[]>(`${environment.apiBaseUrl}/knockout/winners/${participantId}`);
+    }
     
     // getKnockoutForLoggedInUser(): Observable<IKnockout[]> {
         // return this.http.get<IKnockout[]>(`${environment.apiBaseUrl}/knockout-prediction/mine`);

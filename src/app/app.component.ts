@@ -190,8 +190,8 @@ export class AppComponent implements OnInit, OnDestroy {
                     const deadline = moment(hetwkspel.deadline);
                     const now = moment(new Date());
                     const diffDays = deadline.diff(now, 'milliseconds');
-                    // this.uiService.isRegistrationOpen$.next(diffDays > 0);
-                    this.uiService.isRegistrationOpen$.next(true);
+                    this.uiService.isRegistrationOpen$.next(diffDays > 0);
+                    // this.uiService.isRegistrationOpen$.next(true);
 
                     return timer(diffDays);
                 }

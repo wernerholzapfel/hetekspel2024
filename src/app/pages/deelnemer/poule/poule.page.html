@@ -8,7 +8,7 @@
   <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <ion-card class="message" color="tertiary">
+   <div class="alert-banner alert-secondary">
     @if (standLine) {
     <ion-card-content>
       {{standLine?.displayName}} staat {{standLine?.position}}e met
@@ -16,7 +16,7 @@
       punten voor de poulestanden.
     </ion-card-content>
     }
-  </ion-card>
+  </div>
   <ion-grid class="ion-no-padding">
     <ion-row>
       @for (poule of poules; track poule) {

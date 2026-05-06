@@ -10,28 +10,28 @@
 >
   <ion-col>
     <span class="fi fi-{{ line.team.logoUrl }} fis"></span>
-    <ion-text [style.font-weight]="line.selected ? 'bold' : 'normal'">
+    <ion-text>
       {{ line.positie }}
       {{ line.team.name }}
     </ion-text>
   </ion-col>
-  <ion-col size="2">
+  <ion-col size="2" class="ion-text-center">
     <ion-text>
       {{ line.gespeeld }}
     </ion-text>
   </ion-col>
-  <ion-col size="2">
+  <ion-col size="2" class="ion-text-center">
     <ion-text>
       {{ line.punten }}
     </ion-text>
   </ion-col>
-  <ion-col [size]="isSortDisabled ? 2 : 1">
+  <ion-col class="ion-text-center" [size]="isSortDisabled ? 2 : 1">
     <ion-text>
       {{ line.goalsFor - line.goalsAgainst }}
     </ion-text>
   </ion-col>
   @if (!(isRegistrationOpen$ | async) && !admin) {
-  <ion-col size="1">
+  <ion-col size="1" class="ion-text-center">
     @if (line.spelpunten === 0) {
     <ion-icon name="close-outline" color="danger"></ion-icon>
     } @if (line.spelpunten === null) {
@@ -64,7 +64,7 @@
     }
   </ion-col>
   } @if (!isSortDisabled) {
-  <ion-col size="1">
+  <ion-col size="1" class="ion-text-center">
     <ion-icon name="shuffle-outline"></ion-icon>
   </ion-col>
   }

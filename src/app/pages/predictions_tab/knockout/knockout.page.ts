@@ -35,7 +35,6 @@ export class KnockoutPage {
 
     public isLoadingColor = 'primary';
     public speelschema: IKnockout[];
-    public poules: any[] = []
     public segmentIndex = 1;
     public canIGoToNextStep: boolean;
     public knockoutCompleted: boolean;
