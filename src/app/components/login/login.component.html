@@ -1,6 +1,6 @@
 @if (!wachtwoordvergeten) {
 <ion-card>
-  <ion-card-header>
+  <ion-card-header color="primary">
     @if (!(authService.user$ | async)) {
     <ion-segment
       mode="md"

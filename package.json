@@ -1,8 +1,8 @@
 {
   "name": "hetekspelapp",
-  "version": "3.7.3",
+  "version": "4.0.0",
   "author": "Werner Holzapfel",
-  "homepage": "https://hetekspel-2024.web.app",
+  "homepage": "https://hetwkspel-2026.web.app",
   "scripts": {
     "ng": "ng",
     "start": "ionic serve",

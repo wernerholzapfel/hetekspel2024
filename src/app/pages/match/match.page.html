@@ -1,104 +1,82 @@
 <ion-header>
-  <app-menu-toolbar
-    (emitIconClick)="showFilter = !showFilter"
+  <app-menu-toolbar (emitIconClick)="showFilter = !showFilter"
     [iconColor]="(selectedUitslagen$ | async).length > 0 || showFilter ? 'secondary' : ''"
-    rightCornerIcon="funnel"
-  ></app-menu-toolbar>
+    rightCornerIcon="funnel"></app-menu-toolbar>
   @if (match) {
-  <ion-toolbar color="background" class="ion-no-padding" mode="ios">
-    @if (showFilter) {
-    <ion-grid class="hes-background">
-      @for (toto of totoUitslagen; track toto) {
-      <ion-row
-        class="hes-background"
-        (click)="setTotoUitslagenAsFilter(toto.uitslagen)"
-      >
-        @if (toto.toto === 1) {
-        <ion-col class="ion-text-center">
-          <ion-text color="dark">
-            Winst {{match.homeTeam.name}}
-            <span class="fi fi-{{match?.homeTeam?.logoUrl}} fis"></span>
-          </ion-text>
-        </ion-col>
-        } @if (toto.toto === 2) {
-        <ion-col class="ion-text-center">
-          <ion-text color="dark">
-            Winst {{match.awayTeam.name}}
-            <span class="fi fi-{{match?.awayTeam?.logoUrl}} fis"></span>
-          </ion-text>
-        </ion-col>
-        } @if (toto.toto === 3) {
-        <ion-col class="ion-text-center">
-          <ion-text color="dark"> Gelijkspel</ion-text>
-        </ion-col>
+  <div class="ion-no-padding">
+    <ion-toolbar color="background" class="ion-no-padding" mode="ios">
+      @if (showFilter) {
+      <ion-grid class="hes-background">
+        @for (toto of totoUitslagen; track toto) {
+        <ion-row class="hes-background" (click)="setTotoUitslagenAsFilter(toto.uitslagen)">
+          @if (toto.toto === 1) {
+          <ion-col class="ion-text-center">
+            <ion-text color="dark">
+              Winst {{match.homeTeam.name}}
+              <span class="fi fi-{{match?.homeTeam?.logoUrl}} fis"></span>
+            </ion-text>
+          </ion-col>
+          } @if (toto.toto === 2) {
+          <ion-col class="ion-text-center">
+            <ion-text color="dark">
+              Winst {{match.awayTeam.name}}
+              <span class="fi fi-{{match?.awayTeam?.logoUrl}} fis"></span>
+            </ion-text>
+          </ion-col>
+          } @if (toto.toto === 3) {
+          <ion-col class="ion-text-center">
+            <ion-text color="dark"> Gelijkspel</ion-text>
+          </ion-col>
+          }
+        </ion-row>
+        @for (uitslag of toto.uitslagen; track uitslag) {
+        <ion-row (click)="filterUitslag(uitslag)">
+          <ion-col class="ion-align-self-start">
+            <ion-badge [color]="uitslag.active ? 'secondary' : 'primary'">
+              {{uitslag.homeScore}} - {{uitslag.awayScore}}</ion-badge>
+          </ion-col>
+          <ion-col size="6" class="ion-align-self-center">
+            <ion-progress-bar [color]="uitslag.active ? 'secondary' : 'primary'" style="height: 20px"
+              [value]="uitslag.count"></ion-progress-bar>
+          </ion-col>
+          <ion-col class="ion-align-self-end ion-text-end">
+            <ion-badge [color]="uitslag.active ? 'secondary' : 'primary'">{{uitslag.aantal}}</ion-badge>
+          </ion-col>
+        </ion-row>
+        } }
+        <ion-row class="hes-background" (click)="resetFilter()">
+          <ion-col size="12" class="ion-align-self-center ion-text-center">
+            <ion-chip color="dark">Reset filter</ion-chip>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      } @if (!showFilter && (selectedUitslagen$ | async).length > 0) {
+      <ion-grid class="hes-background">
+        @for (uitslag of (selectedUitslagen$ | async); track uitslag) {
+        <ion-row class="hes-background" (click)="showFilter = !showFilter">
+          <ion-col class="ion-align-self-start">
+            <ion-badge [color]="'secondary'">
+              {{uitslag.homeScore}} - {{uitslag.awayScore}}</ion-badge>
+          </ion-col>
+          <ion-col size="6" class="ion-align-self-center">
+            <ion-progress-bar color="secondary" style="height: 20px" [value]="uitslag.count"></ion-progress-bar>
+          </ion-col>
+          <ion-col class="ion-align-self-end ion-text-end">
+            <ion-badge color="secondary">{{uitslag.aantal}}</ion-badge>
+          </ion-col>
+        </ion-row>
         }
-      </ion-row>
-      @for (uitslag of toto.uitslagen; track uitslag) {
-      <ion-row (click)="filterUitslag(uitslag)">
-        <ion-col class="ion-align-self-start">
-          <ion-badge [color]="uitslag.active ? 'secondary' : 'primary'">
-            {{uitslag.homeScore}} - {{uitslag.awayScore}}</ion-badge
-          >
-        </ion-col>
-        <ion-col size="6" class="ion-align-self-center">
-          <ion-progress-bar
-            [color]="uitslag.active ? 'secondary' : 'primary'"
-            style="height: 20px"
-            [value]="uitslag.count"
-          ></ion-progress-bar>
-        </ion-col>
-        <ion-col class="ion-align-self-end ion-text-end">
-          <ion-badge [color]="uitslag.active ? 'secondary' : 'primary'"
-            >{{uitslag.aantal}}</ion-badge
-          >
-        </ion-col>
-      </ion-row>
-      } }
-      <ion-row class="hes-background" (click)="resetFilter()">
-        <ion-col size="12" class="ion-align-self-center ion-text-center">
-          <ion-chip color="dark">Reset filter</ion-chip>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-    } @if (!showFilter && (selectedUitslagen$ | async).length > 0) {
-    <ion-grid class="hes-background">
-      @for (uitslag of (selectedUitslagen$ | async); track uitslag) {
-      <ion-row class="hes-background" (click)="showFilter = !showFilter">
-        <ion-col class="ion-align-self-start">
-          <ion-badge [color]="'secondary'">
-            {{uitslag.homeScore}} - {{uitslag.awayScore}}</ion-badge
-          >
-        </ion-col>
-        <ion-col size="6" class="ion-align-self-center">
-          <ion-progress-bar
-            color="secondary"
-            style="height: 20px"
-            [value]="uitslag.count"
-          ></ion-progress-bar>
-        </ion-col>
-        <ion-col class="ion-align-self-end ion-text-end">
-          <ion-badge color="secondary">{{uitslag.aantal}}</ion-badge>
-        </ion-col>
-      </ion-row>
+      </ion-grid>
       }
-    </ion-grid>
-    }
-    <ion-searchbar
-      mode="ios"
-      (ionInput)="search($event)"
-      placeholder="Zoek deelnemer"
-      color="light"
-      debounce="500"
-    ></ion-searchbar>
-  </ion-toolbar>
+      <ion-searchbar mode="ios" (ionInput)="search($event)" placeholder="Zoek deelnemer" color="light"
+        debounce="500"></ion-searchbar>
+    </ion-toolbar>
+  </div>
   }
 </ion-header>
 <ion-content>
   <ion-card class="match-card">
-    <app-city-card-header
-      [match]="match"
-      [showImage]="false"
-    ></app-city-card-header>
+    <app-city-card-header [match]="match" [showImage]="false"></app-city-card-header>
     <ion-card-content>
       <ion-card-subtitle>
         <ion-row>
@@ -154,14 +132,8 @@
   }
   <ion-grid>
     @for (prediction of match?.matchPredictions; track prediction) {
-    <ion-row
-      class="hes-border-bottom"
-      (click)="navigateToParticipant(prediction.participant.id)"
-    >
-      <ion-col
-        [ngClass]="prediction.isMine ? 'hes-background-secondary-tint' : 'hes-background'"
-        size="9"
-      >
+    <ion-row class="hes-border-bottom" (click)="navigateToParticipant(prediction.participant.id)">
+      <ion-col [ngClass]="prediction.isMine ? 'hes-background-secondary-tint' : 'hes-background'" size="9">
         <ion-row>
           <ion-col size="9" class="hes-overflow">
             {{prediction.tableLine.position}})
@@ -169,8 +141,7 @@
           </ion-col>
           <ion-col size="3" class="ion-text-end">
             <ion-icon name="podium-outline"></ion-icon>
-            {{prediction.tableLine.totalPoints}}</ion-col
-          >
+            {{prediction.tableLine.totalPoints}}</ion-col>
         </ion-row>
         <ion-row>
           <ion-col class="match-col ion-align-items-center">
@@ -198,25 +169,18 @@
           <ion-col size="6" class="ion-no-padding ion-text-start">
             <ion-row class="ion-no-padding">
               <ion-col class="ion-text-start">
-                <span
-                  class="hes-show-flag fi fi-{{match?.homeTeam.logoUrl}} fis"
-                ></span>
+                <span class="hes-show-flag fi fi-{{match?.homeTeam.logoUrl}} fis"></span>
                 {{prediction.homeScore}}
               </ion-col>
             </ion-row>
             <ion-row class="ion-no-padding">
               <ion-col class="ion-text-start">
-                <span
-                  class="hes-show-flag fi fi-{{match?.awayTeam.logoUrl}} fis"
-                ></span>
+                <span class="hes-show-flag fi fi-{{match?.awayTeam.logoUrl}} fis"></span>
                 {{prediction.awayScore}}
               </ion-col>
             </ion-row>
           </ion-col>
-          <ion-col
-            size="6"
-            class="ion-no-padding ion-text-start ion-align-self-center"
-          >
+          <ion-col size="6" class="ion-no-padding ion-text-start ion-align-self-center">
             @if (prediction.spelpunten != null) {
             <ion-chip color="primary"> {{prediction.spelpunten}} </ion-chip>
             }

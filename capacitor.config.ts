@@ -2,7 +2,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'com.wernerholzapfel.hetekspel',
-  appName: 'Het EK Spel',
+  appName: 'Het WK Spel',
   webDir: 'www',
   bundledWebRuntime: false,
   plugins: {
