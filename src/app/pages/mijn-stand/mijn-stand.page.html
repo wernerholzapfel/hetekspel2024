@@ -1,0 +1,211 @@
+<ion-header>
+  <app-menu-toolbar
+    rightCornerIcon="person-add-outline"
+    (emitIconClick)="openSelectDeelnemers()"
+  ></app-menu-toolbar>
+</ion-header>
+
+<ion-segment
+  value="totaalstand"
+  mode="md"
+  (ionChange)="changeStand(isMatchStandActive)"
+>
+  <ion-segment-button value="totaalstand">
+    <ion-label>Totaal</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="wedstrijdenstand">
+    <ion-label>Wedstrijden</ion-label>
+  </ion-segment-button>
+</ion-segment>
+
+@if (mijnStand && selectedIds.length > 0) {
+<ion-item lines="full" class="alert-banner alert-secondary ion-no-padding no-border font-size-16" color="secondary">
+  <ion-grid>
+    <ion-row (click)="navigateToParticipant(mijnStand?.id)">
+      <ion-col>
+        <span class="hes-position">
+          {{isMatchStandActive ? mijnStand?.matchPosition :
+          mijnStand?.position}} @if (!isMatchStandActive) {
+          <ion-icon
+            [name]="mijnStand?.previousPosition > mijnStand?.position ? 'caret-up-outline' : mijnStand?.previousPosition < mijnStand?.position ? 'caret-down-outline' : 'caret-forward-outline'"
+            [color]="mijnStand?.previousPosition > mijnStand?.position ? 'success' :  mijnStand?.previousPosition < mijnStand?.position  ? 'danger' : 'medium'"
+          >
+          </ion-icon>
+          } @if (isMatchStandActive) {
+          <ion-icon
+            [name]="mijnStand?.previousMatchPosition > mijnStand?.matchPosition ? 'caret-up-outline' : mijnStand?.previousMatchPosition < mijnStand?.matchPosition ? 'caret-down-outline' : 'caret-forward-outline'"
+            [color]="mijnStand?.previousMatchPosition > mijnStand?.matchPosition ? 'success' :  mijnStand?.previousMatchPosition < mijnStand?.matchPosition ? 'danger' : 'medium'"
+          >
+          </ion-icon>
+          }
+        </span>
+        {{mijnStand?.displayName}}
+      </ion-col>
+      <ion-col size="3" class="ion-align-items-center ion-text-end">
+        <ion-icon name="podium-outline"></ion-icon>
+        {{isMatchStandActive ? mijnStand?.matchPoints : mijnStand?.totalPoints}}
+      </ion-col>
+    </ion-row>
+    <hr style="background-color: black" />
+    <ion-row>
+      <ion-col
+        offset="1"
+        class="match-col ion-align-items-center"
+        (click)="openMatches(mijnStand?.id)"
+      >
+        <ion-text>
+          <ion-icon name="football"></ion-icon>
+          {{mijnStand?.matchPoints}} @if (mijnStand?.deltaMatchPoints > 0) {
+          <ion-text class="hes-delta-text">
+            (+{{mijnStand?.deltaMatchPoints}})
+          </ion-text>
+          }
+        </ion-text>
+      </ion-col>
+      @if (!isMatchStandActive) {
+      <ion-col
+        class="poule-col ion-align-items-center ion-text-center"
+        (click)="openPoules(mijnStand?.id)"
+      >
+        <ion-text>
+          <ion-icon name="list"></ion-icon>
+          {{mijnStand?.poulePoints}} @if (mijnStand?.deltaPoulePoints > 0) {
+          <ion-text class="hes-delta-text">
+            (+{{mijnStand?.deltaPoulePoints}})
+          </ion-text>
+          }
+        </ion-text>
+      </ion-col>
+      } @if (!isMatchStandActive) {
+      <ion-col
+        class="knockout-col ion-align-items-center ion-text-end"
+        (click)="openKnockout(mijnStand?.id)"
+      >
+        <ion-text>
+          <ion-icon name="trophy"></ion-icon>
+          {{mijnStand?.knockoutPoints}} @if (mijnStand?.deltaKnockoutPoints > 0)
+          {
+          <ion-text class="hes-delta-text">
+            (+{{mijnStand?.deltaKnockoutPoints}})
+          </ion-text>
+          }
+        </ion-text>
+      </ion-col>
+      }
+    </ion-row>
+  </ion-grid>
+</ion-item>
+}
+
+@if (selectedIds.length > 0) {
+<ion-toolbar color="background" mode="ios">
+  <ion-searchbar
+    mode="ios"
+    (ionInput)="search($event)"
+    placeholder="Zoek deelnemer"
+    color="light"
+    debounce="500"
+  >
+  </ion-searchbar>
+</ion-toolbar>
+}
+
+<ion-content>
+  @if (selectedIds.length === 0) {
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Stel jouw persoonlijke stand samen</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Hier zie je een stand op maat — alleen met de deelnemers die jij wilt volgen.</p>
+      <p>Tik op het <ion-icon name="person-add-outline"></ion-icon> icoontje rechtsboven om deelnemers toe te voegen. Je keuze wordt bewaard zodat je hem niet elke keer opnieuw hoeft in te stellen.</p>
+      <p>Jijzelf staat altijd bovenaan en is ook altijd zichtbaar in jouw persoonlijke stand.</p>
+    </ion-card-content>
+  </ion-card>
+  }
+
+  @if (selectedIds.length > 0) {
+  @for (line of stand; track line; let i = $index) {
+  <ion-item
+    [color]="line?.isMine ? 'secondary-tint' : i % 2 != 0 ? 'tertiary-tint' : ''"
+    lines="full"
+    class="ion-no-padding"
+  >
+    <ion-grid>
+      <ion-row (click)="navigateToParticipant(line.id)">
+        <ion-col>
+          <span class="hes-position">
+            {{line.mijnStandPosition}}
+            <ion-text color="medium" class="hes-real-position">({{isMatchStandActive ? line?.matchPosition : line?.position}})</ion-text>
+            @if (!isMatchStandActive) {
+            <ion-icon
+              [name]="line?.previousPosition > line?.position ? 'caret-up-outline' : line?.previousPosition < line?.position ? 'caret-down-outline' : 'caret-forward-outline'"
+              [color]="line?.previousPosition > line?.position ? 'success' :  line?.previousPosition < line?.position  ? 'danger' : 'medium'"
+            >
+            </ion-icon>
+            } @if (isMatchStandActive) {
+            <ion-icon
+              [name]="line?.previousMatchPosition > line?.matchPosition ? 'caret-up-outline' : line?.previousMatchPosition < line?.matchPosition ? 'caret-down-outline' : 'caret-forward-outline'"
+              [color]="line?.previousMatchPosition > line?.matchPosition ? 'success' :  line?.previousMatchPosition < line?.matchPosition ? 'danger' : 'medium'"
+            >
+            </ion-icon>
+            }
+          </span>
+          {{line.displayName}}
+        </ion-col>
+        <ion-col size="3" class="ion-align-items-center ion-text-end">
+          <ion-icon name="podium-outline"></ion-icon>
+          {{isMatchStandActive ? line.matchPoints : line.totalPoints}}
+        </ion-col>
+      </ion-row>
+      <hr [style]="line.isMine ? 'background-color:black' : ''" />
+      <ion-row>
+        <ion-col
+          offset="1"
+          class="match-col ion-align-items-center"
+          (click)="openMatches(line.id)"
+        >
+          <ion-text>
+            <ion-icon name="football"></ion-icon>
+            {{line.matchPoints}} @if (line.deltaMatchPoints > 0) {
+            <ion-text class="hes-delta-text">
+              (+{{line.deltaMatchPoints}})
+            </ion-text>
+            }
+          </ion-text>
+        </ion-col>
+        @if (!isMatchStandActive) {
+        <ion-col
+          class="poule-col ion-align-items-center ion-text-center"
+          (click)="openPoules(line.id)"
+        >
+          <ion-text>
+            <ion-icon name="list"></ion-icon>
+            {{line.poulePoints}} @if (line.deltaPoulePoints > 0) {
+            <ion-text class="hes-delta-text">
+              (+{{line.deltaPoulePoints}})
+            </ion-text>
+            }
+          </ion-text>
+        </ion-col>
+        } @if (!isMatchStandActive) {
+        <ion-col
+          class="knockout-col ion-align-items-center ion-text-end"
+          (click)="openKnockout(line.id)"
+        >
+          <ion-text>
+            <ion-icon name="trophy"></ion-icon>
+            {{line.knockoutPoints}} @if (line.deltaKnockoutPoints > 0) {
+            <ion-text class="hes-delta-text">
+              (+{{line.deltaKnockoutPoints}})
+            </ion-text>
+            }
+          </ion-text>
+        </ion-col>
+        }
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+  }
+  }
+</ion-content>

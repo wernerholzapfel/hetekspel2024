@@ -22,6 +22,7 @@ import {
 } from '@capacitor/push-notifications';
 import { CapacitorUpdater } from '@capgo/capacitor-updater'
 import { KnockoutService } from './services/knockout.service';
+import { PoulepredictionService } from './services/pouleprediction.service';
 
 @Component({
     selector: 'app-root',
@@ -44,6 +45,7 @@ export class AppComponent implements OnInit, OnDestroy {
         private loaderService: LoaderService,
         private hetwkspelService: HetwkspelService,
         private participantService: ParticipantService,
+        private poulePredictionService: PoulepredictionService,
         private routeStateService: RouteStateService,
         private ngZone: NgZone,
         private injector: EnvironmentInjector
@@ -110,6 +112,9 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        // this.poulePredictionService.checkPrediction().subscribe(response => {
+        //    console.log('check predictions: '+ response)
+        // });
 
         this.menuService.appPages$.pipe(takeUntil(this.unsubscribe)).subscribe(menu => {
             if (menu) {

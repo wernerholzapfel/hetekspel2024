@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Mijn deelnemers</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="cancel()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="save()" strong="true">Opslaan</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar color="light">
+    <ion-searchbar
+      mode="ios"
+      [(ngModel)]="searchTerm"
+      placeholder="Zoek deelnemer"
+      debounce="200"
+    ></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    @for (deelnemer of displayDeelnemers; track deelnemer.id) {
+    <ion-item [button]="!isOwn(deelnemer.id)" (click)="toggle(deelnemer.id)">
+      <ion-label>
+        {{ deelnemer.displayName }}
+      </ion-label>
+      <ion-icon
+        slot="end"
+        [name]="isSelected(deelnemer.id) ? 'checkmark-circle' : 'ellipse-outline'"
+        [color]="isOwn(deelnemer.id) ? 'medium' : isSelected(deelnemer.id) ? 'primary' : 'medium'"
+      ></ion-icon>
+    </ion-item>
+    }
+  </ion-list>
+</ion-content>
