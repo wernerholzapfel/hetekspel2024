@@ -1,13 +1,10 @@
-<ion-row
-  class="ion-padding"
-  [ngClass]="
+<ion-row class="ion-padding" [ngClass]="
     line.positie === line.positieVoorspelling || !line.positieVoorspelling
       ? index % 2 == 0
         ? 'odd'
         : 'even'
       : 'changedposition'
-  "
->
+  ">
   <ion-col>
     <span class="fi fi-{{ line.team.logoUrl }} fis"></span>
     <ion-text>
@@ -31,36 +28,22 @@
     </ion-text>
   </ion-col>
   @if (!(isRegistrationOpen$ | async) && !admin) {
-  <ion-col size="1" class="ion-text-center">
-    @if (line.spelpunten === 0) {
-    <ion-icon name="close-outline" color="danger"></ion-icon>
-    } @if (line.spelpunten === null) {
+  <ion-col size="2" class="ion-text-center">
+    @if (line.spelpunten === 0 || line.spelpunten === 5) {
+    <ion-chip color="secondary">{{line.spelpunten}}</ion-chip>
+    } @else {
     <ion-icon name="help-outline" color="medium"></ion-icon>
-    } @if (line.spelpunten === 5) {
-    <ion-icon name="checkmark-outline" color="success"></ion-icon>
     }
   </ion-col>
   } @if (admin) {
   <ion-col size="1">
     @if (line.team.isEliminated && line.team.eliminationRound === 64) {
-    <ion-icon
-      (click)="openSelect()"
-      name="close-outline"
-      color="danger"
-    ></ion-icon>
+    <ion-icon (click)="openSelect()" name="close-outline" color="danger"></ion-icon>
     } @if (line.team.isEliminated === null) {
-    <ion-icon
-      (click)="openSelect()"
-      name="help-outline"
-      color="medium"
-    ></ion-icon>
+    <ion-icon (click)="openSelect()" name="help-outline" color="medium"></ion-icon>
     } @if (line.team.isEliminated === false || line.team.isEliminated &&
     line.team.eliminationRound !== 64) {
-    <ion-icon
-      (click)="openSelect()"
-      name="checkmark-outline"
-      color="success"
-    ></ion-icon>
+    <ion-icon (click)="openSelect()" name="checkmark-outline" color="success"></ion-icon>
     }
   </ion-col>
   } @if (!isSortDisabled) {

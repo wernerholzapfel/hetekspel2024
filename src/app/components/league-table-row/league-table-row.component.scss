@@ -1,4 +1,8 @@
 :host {
+  ion-row {
+    align-items: center;
+  }
+
   .odd {
     background-color: var(--ion-color-tertiary-tint);
     color: #000;
@@ -15,5 +19,9 @@
 
   .internal {
     display: none
+  }
+  ion-chip {
+    background: var(--ion-color-secondary);
+    color: #fff;
   }
 }

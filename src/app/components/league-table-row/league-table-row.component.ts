@@ -26,6 +26,7 @@ export class LeagueTableRowComponent implements OnInit {
     }
 
     ngOnInit() {
+        console.log('line', this.line);
     }
 
     async openSelect() {

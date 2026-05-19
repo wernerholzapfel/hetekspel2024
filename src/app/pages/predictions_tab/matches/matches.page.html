@@ -2,12 +2,12 @@
 <ion-modal [isOpen]="isStandModalOpen" (didDismiss)="onStandModalDismiss($event)">
   <ng-template>
     <ion-header>
-       <ion-toolbar color="primary" mode="ios">
+      <ion-toolbar color="primary" mode="ios">
         <ion-title>
           <!-- <img
             [src]="(uiService.prefersDark$ | async) ? '/assets/hetwkspel_header_wit.png' : '/assets/hetwkspel_header_wit.png'"
             height="36px;" /> -->
-            Stand poule {{ standCardPoule?.poule }}
+          Stand poule {{ standCardPoule?.poule }}
         </ion-title>
         <ion-buttons slot="start">
           <ion-button (click)="modal.dismiss(undefined, 'cancel')">Terug</ion-button>
@@ -37,17 +37,19 @@
         [stand]="standCardPoule?.stand" [isTableOpen]="true" [editMode]="true" [isToolbar]="false"></app-stand-card>
     </ion-content>
     <ion-footer>
+      <ion-toolbar>
         @if ((isRegistrationOpen$ | async) && activePoule?.next !== null) {
-    <ion-button [disabled]="!activePoule?.isFinal" color="tertiary" expand="full" fill="solid"
-      (click)="confirmNextPoule()">
-      Naar volgende poule
-    </ion-button>
-    } @if ((isRegistrationOpen$ | async) && activePoule?.next === null) {
-    <ion-button [disabled]="!activePoule?.isFinal" color="tertiary" expand="full" fill="solid"
-      (click)="navigateToPoulePredictions()">
-      Voorspel de poulestanden
-    </ion-button>
-    }
+        <ion-button [disabled]="!activePoule?.isFinal" color="tertiary" expand="full" fill="solid"
+          (click)="confirmNextPoule()">
+          Naar volgende poule
+        </ion-button>
+        } @if ((isRegistrationOpen$ | async) && activePoule?.next === null) {
+        <ion-button [disabled]="!activePoule?.isFinal" color="tertiary" expand="full" fill="solid"
+          (click)="navigateToPoulePredictions()">
+          Voorspel de poulestanden
+        </ion-button>
+        }
+      </ion-toolbar>
     </ion-footer>
   </ng-template>
 </ion-modal>
@@ -79,7 +81,7 @@
             je de doelpunten van een ploeg goed voorspelt. Voor een volledig
             goede wedstrijduitslag krijg je dus 30 punten.
           </ion-card-content>
-          </div>
+        </div>
       </ion-col>
     </ion-row>
     }
@@ -101,6 +103,6 @@
       (click)="openStandModal(activePoule.next)">
       Naar stand poule {{ activePoule.current }}
     </ion-button>
-    } 
+    }
   </ng-container>
 </ion-footer>

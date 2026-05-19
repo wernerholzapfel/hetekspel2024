@@ -39,6 +39,10 @@ export class PoulepredictionService {
         return this.http.get<any>(`${environment.apiBaseUrl}/poule-prediction`);
     }
     
+    checkPrediction(): Observable<any> {
+        return this.http.get<any>(`${environment.apiBaseUrl}/check-prediction`);
+    }
+    
     getStandBasedOnPredictionsForLoggedInUser(pouleName: string): Observable<any> {
         return this.http.get<any>(`${environment.apiBaseUrl}/poule-prediction/poule/${pouleName}`);
     }
