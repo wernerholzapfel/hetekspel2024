@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {IHeadline} from '../../models/headline.model';
 import {HeadlineService} from '../../services/headline.service';
 import {Subject} from 'rxjs';
@@ -24,7 +24,8 @@ export class HeadlineComponent implements OnInit, OnDestroy {
     constructor(private uiService: UiService,
                 private headlineService: HeadlineService,
                 private modalController: ModalController,
-                private routerOutlet: IonRouterOutlet) {
+                private routerOutlet: IonRouterOutlet,
+                private cdr: ChangeDetectorRef) {
     }
 
     @Input() set headlines(value) {
@@ -47,12 +48,13 @@ export class HeadlineComponent implements OnInit, OnDestroy {
     nextHeadline() {
         this.headlineIndex++;
         this.headline = this.headlines[this.headlineIndex];
-
+        this.cdr.detectChanges();
     }
 
     previousHeadline() {
         this.headlineIndex--;
         this.headline = this.headlines[this.headlineIndex];
+        this.cdr.detectChanges();
     }
 
     addHeadline() {

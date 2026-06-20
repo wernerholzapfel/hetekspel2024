@@ -16,54 +16,40 @@
   <ion-card-content> <p [innerHTML]="headline.text"></p></ion-card-content>
 
   }
-  <ion-footer>
-    <ion-toolbar mode="ios">
-      <ion-buttons slot="start">
-        <ion-button
-          fill="clear"
-          [disabled]="headlineIndex === 0"
-          (click)="previousHeadline()"
-        >
-          <ion-icon
-            slot="icon-only"
-            color="primary"
-            name="arrow-back"
-          ></ion-icon>
-        </ion-button>
-        <ion-label color="medium">
-          {{ headlineIndex + 1 }} van {{ headlines?.length }}
-        </ion-label>
-        <ion-button
-          fill="clear"
-          [disabled]="headlineIndex + 1 === headlines?.length"
-          (click)="nextHeadline()"
-        >
-          <ion-icon
-            slot="icon-only"
-            color="primary"
-            name="arrow-forward"
-          ></ion-icon>
-        </ion-button>
-      </ion-buttons>
-      @if (isAdmin) {
-      <ion-buttons slot="end">
-        <ion-button fill="clear" (click)="addHeadline()">
-          <ion-icon slot="icon-only" color="primary" name="add"></ion-icon>
-        </ion-button>
-        <ion-button
-          fill="clear"
-          [disabled]="headlines?.length === 0"
-          (click)="editHeadline(headline, false)"
-        >
-          <ion-icon
-            slot="icon-only"
-            color="primary"
-            name="create-outline"
-          ></ion-icon>
-        </ion-button>
-      </ion-buttons>
-      }
-    </ion-toolbar>
-  </ion-footer>
+  <div class="headline-nav">
+    <ion-buttons>
+      <ion-button
+        fill="clear"
+        [disabled]="headlineIndex === 0"
+        (click)="previousHeadline()"
+      >
+        <ion-icon slot="icon-only" color="primary" name="arrow-back"></ion-icon>
+      </ion-button>
+      <ion-label color="medium">
+        {{ headlineIndex + 1 }} van {{ headlines?.length }}
+      </ion-label>
+      <ion-button
+        fill="clear"
+        [disabled]="headlineIndex + 1 === headlines?.length"
+        (click)="nextHeadline()"
+      >
+        <ion-icon slot="icon-only" color="primary" name="arrow-forward"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    @if (isAdmin) {
+    <ion-buttons>
+      <ion-button fill="clear" (click)="addHeadline()">
+        <ion-icon slot="icon-only" color="primary" name="add"></ion-icon>
+      </ion-button>
+      <ion-button
+        fill="clear"
+        [disabled]="headlines?.length === 0"
+        (click)="editHeadline(headline, false)"
+      >
+        <ion-icon slot="icon-only" color="primary" name="create-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    }
+  </div>
 </ion-card>
 }

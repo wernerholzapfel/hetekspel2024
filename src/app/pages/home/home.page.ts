@@ -10,10 +10,12 @@ import { Router } from '@angular/router';
 import { TeamService } from 'src/app/services/team.service';
 import { ITeam } from 'src/app/models/poule.model';
 import { KnockoutPredictionsService } from 'src/app/services/knockout-predictions.service';
-import { IonItemSliding } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { IHeadline } from 'src/app/models/headline.model';
 import { HeadlineService } from 'src/app/services/headline.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { PoulepredictionService } from 'src/app/services/pouleprediction.service';
+import { PredictionMessagesModalComponent } from './prediction-messages-modal/prediction-messages-modal.component';
 
 @Component({
     selector: 'app-home',
@@ -27,13 +29,18 @@ export class HomePage implements OnInit, OnDestroy {
     participantStandLine: IStandLine;
     lastUpdated: number;
     participant$: Observable<IParticipant>;
-    // getRequest$ = new Subject<any>();
     fullscore$: Observable<any[]>;
     upcomingMatches: any[];
     knockoutScores: any = [];
     unsubscribe = new Subject<void>();
     headlines: IHeadline[]
     todaysMatches: { predictionType: string, matchPredictions: any[], knockout: any[] }
+    checkPredictionResult: {
+        matchPredictions: { count: number; messages: string[] };
+        poulePredictions: { count: number; messages: string[] };
+        knockoutPredictions: { count: number; messages: Array<{ round: number; messages: string[] }> };
+        knockoutPredictionsComplete: { count: number; messages: Array<{ round: number; message: string }> };
+    } | null = null;
 
     private predictionTextCache = new Map<string, SafeHtml>();
 
@@ -43,8 +50,10 @@ export class HomePage implements OnInit, OnDestroy {
         private teamService: TeamService,
         private headlineService: HeadlineService,
         private knockoutPredictionService: KnockoutPredictionsService,
+        private poulePredictionService: PoulepredictionService,
         private router: Router,
-        private sanitizer: DomSanitizer) {
+        private sanitizer: DomSanitizer,
+        private modalController: ModalController) {
     }
 
     getKnockoutPredictionHtml(knockout: any): SafeHtml {
@@ -169,6 +178,15 @@ export class HomePage implements OnInit, OnDestroy {
         if (event) {
             event.target.complete();
         }
+
+        this.uiService.participant$.pipe(take(1)).subscribe(participant => {
+            if (participant?.isAllowed) {
+                this.poulePredictionService.checkPrediction().subscribe({
+                    next: result => { this.checkPredictionResult = result; },
+                    error: () => { this.checkPredictionResult = null; }
+                });
+            }
+        });
     }
 
     ngOnInit() {
@@ -209,6 +227,46 @@ export class HomePage implements OnInit, OnDestroy {
     navigateToKnockoutStats(round: string, teamId: string) {
         const nextRound = (parseInt(round,0) / 2)
         this.router.navigate([`stats/knockout/round/${nextRound}/team/${teamId}`], { replaceUrl: false });
+    }
+
+    async openPredictionMessages(groups: Array<{ title?: string; messages: string[] }>, title: string) {
+        const modal = await this.modalController.create({
+            component: PredictionMessagesModalComponent,
+            componentProps: { groups, title },
+            breakpoints: [0, 0.5, 1],
+            initialBreakpoint: 0.8
+        });
+        await modal.present();
+    }
+
+    openKnockoutMessages() {
+        if (!this.checkPredictionResult) { return; }
+        const groups = this.checkPredictionResult.knockoutPredictions.messages.map(g => ({
+            title: this.roundToText(g.round),
+            messages: g.messages
+        }));
+        this.openPredictionMessages(groups, 'Inconsistenties in knockoutschema');
+    }
+
+    openKnockoutCompleteMessages() {
+        if (!this.checkPredictionResult) { return; }
+        const groups = this.checkPredictionResult.knockoutPredictionsComplete.messages.map(g => ({
+            title: this.roundToText(g.round),
+            messages: [g.message]
+        }));
+        this.openPredictionMessages(groups, 'Knockout volledigheid');
+    }
+
+    private roundToText(round: number): string {
+        const map: Record<number, string> = {
+            32: 'Zestiende finale', 16: 'Achtste finale', 8: 'Kwartfinale',
+            4: 'Halve finale', 3: 'Troostfinale', 1.5: 'Winnaar troostfinale', 2: 'Finale'
+        };
+        return map[round] ?? 'Wereldkampioen';
+    }
+
+    navigateToPredictions() {
+        this.router.navigate(['prediction']);
     }
 
     ngOnDestroy(): void {

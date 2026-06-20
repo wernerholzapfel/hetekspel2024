@@ -109,9 +109,9 @@
         expand="block"
         color="tertiary"
         (click)="signUpRegular()"
-        [disabled]="userForm.invalid"
+        [disabled]="userForm.invalid || isSubmitting"
       >
-        Inschrijven
+        @if (isSubmitting) { Bezig... } @else { Inschrijven }
       </ion-button>
     </form>
     }

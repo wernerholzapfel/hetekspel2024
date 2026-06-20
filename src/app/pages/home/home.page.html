@@ -41,6 +41,100 @@
         }
         <app-headline [headlines]="headlines"></app-headline>
       </ion-col>
+      @if ((uiService.isRegistrationOpen$ | async) === true && (participant$ | async)?.isAllowed && checkPredictionResult) {
+      <ion-col size="12" size-md="6" size-lg="6" size-xl="6" class="ion-no-padding">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title color="primary">Jouw voorspellingen</ion-card-title>
+            <ion-card-subtitle>Controleer of je alles hebt ingevuld</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content class="ion-no-padding">
+            @if (checkPredictionResult.matchPredictions.count === 72) {
+            <div class="ion-padding">
+              <p>Je moet je wedstrijdvoorspellingen nog invoeren.</p>
+              <ion-button expand="block" color="secondary" (click)="navigateToPredictions()">
+                Naar voorspellingen
+              </ion-button>
+            </div>
+            } @else {
+            <ion-item
+              [button]="checkPredictionResult.matchPredictions.count > 0"
+              (click)="checkPredictionResult.matchPredictions.count > 0 && openPredictionMessages([{messages: checkPredictionResult.matchPredictions.messages}], 'Wedstrijdvoorspellingen')"
+              lines="full">
+              <ion-icon slot="start"
+                [name]="checkPredictionResult.matchPredictions.count === 0 ? 'checkmark-circle' : 'warning-outline'"
+                [color]="checkPredictionResult.matchPredictions.count === 0 ? 'success' : 'warning'">
+              </ion-icon>
+              <ion-label>
+                @if (checkPredictionResult.matchPredictions.count === 0) {
+                Je hebt alle wedstrijden voorspeld!
+                } @else if (checkPredictionResult.matchPredictions.count === 1) {
+                Er ontbreekt nog 1 wedstrijdvoorspelling.
+                } @else {
+                Er ontbreken nog {{checkPredictionResult.matchPredictions.count}} wedstrijdvoorspellingen.
+                }
+              </ion-label>
+            </ion-item>
+            <ion-item
+              [button]="checkPredictionResult.poulePredictions.count > 0"
+              (click)="checkPredictionResult.poulePredictions.count > 0 && openPredictionMessages([{messages: checkPredictionResult.poulePredictions.messages}], 'Poulevoorspellingen')"
+              lines="full">
+              <ion-icon slot="start"
+                [name]="checkPredictionResult.poulePredictions.count === 0 ? 'checkmark-circle' : 'warning-outline'"
+                [color]="checkPredictionResult.poulePredictions.count === 0 ? 'success' : 'warning'">
+              </ion-icon>
+              <ion-label>
+                @if (checkPredictionResult.poulePredictions.count === 0) {
+                Je hebt alle poules voorspeld!
+                } @else if (checkPredictionResult.poulePredictions.count === 1) {
+                Je poule voorspellingen zijn nog niet volledig ingevuld. 
+                } @else {
+                Je poule voorspellingen zijn nog niet volledig ingevuld.
+                }
+              </ion-label>
+            </ion-item>
+            
+            <ion-item
+              [button]="checkPredictionResult.knockoutPredictionsComplete.count > 0"
+              (click)="checkPredictionResult.knockoutPredictionsComplete.count > 0 && openKnockoutCompleteMessages()"
+              lines="full">
+              <ion-icon slot="start"
+                [name]="checkPredictionResult.knockoutPredictionsComplete.count === 0 ? 'checkmark-circle' : 'warning-outline'"
+                [color]="checkPredictionResult.knockoutPredictionsComplete.count === 0 ? 'success' : 'warning'">
+              </ion-icon>
+              <ion-label>
+                @if (checkPredictionResult.knockoutPredictionsComplete.count === 0) {
+                Alle rondes zijn volledig voorspeld!
+                } @else if (checkPredictionResult.knockoutPredictionsComplete.count === 1) {
+                Er is nog 1 ronde niet volledig voorspeld.
+                } @else {
+                Er zijn nog {{checkPredictionResult.knockoutPredictionsComplete.count}} rondes niet volledig voorspeld.
+                }
+              </ion-label>
+            </ion-item>
+            <ion-item
+              [button]="checkPredictionResult.knockoutPredictions.count > 0"
+              (click)="checkPredictionResult.knockoutPredictions.count > 0 && openKnockoutMessages()"
+              lines="none">
+              <ion-icon slot="start"
+                [name]="checkPredictionResult.knockoutPredictions.count === 0 ? 'checkmark-circle' : 'warning-outline'"
+                [color]="checkPredictionResult.knockoutPredictions.count === 0 ? 'success' : 'warning'">
+              </ion-icon>
+              <ion-label>
+                @if (checkPredictionResult.knockoutPredictions.count === 0) {
+                Je knockoutschema is consistent!
+                } @else if (checkPredictionResult.knockoutPredictions.count === 1) {
+                Er zit 1 inconsistentie in je knockoutschema.
+                } @else {
+                Er zitten {{checkPredictionResult.knockoutPredictions.count}} inconsistenties in je knockoutschema.
+                }
+              </ion-label>
+            </ion-item>
+            }
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      }
       @if ((uiService.isRegistrationOpen$ | async) === false &&
       participantStandLine) {
       <ion-col

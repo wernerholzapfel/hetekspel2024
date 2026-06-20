@@ -6,8 +6,9 @@
   <ion-card-header>
     <ion-card-title>Poulewedstrijden</ion-card-title>
   </ion-card-header>
-  @for (match of matches; track match.id) {
+  @for (match of matches; track match.id; let i = $index) {
   <app-speelschema-match-item
+    [id]="'match-' + i"
     [match]="match"
     [url]="'poule'"
   ></app-speelschema-match-item>
@@ -15,8 +16,9 @@
   <ion-card-header>
     <ion-card-title>Finaleronde</ion-card-title>
   </ion-card-header>
-  @for (match of knockout; track match.id) {
+  @for (match of knockout; track match.id; let i = $index) {
   <app-speelschema-match-item
+    [id]="'knockout-' + i"
     [match]="match"
     [url]="'finaleronde'"
   ></app-speelschema-match-item>

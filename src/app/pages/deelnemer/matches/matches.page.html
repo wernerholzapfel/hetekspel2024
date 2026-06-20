@@ -21,6 +21,7 @@
   @if (predictions) { @for (prediction of predictions; track prediction; let i =
   $index) {
   <ion-item
+    [id]="'match-' + i"
     (click)="openMatch(prediction.match.id)"
     class="ion-no-padding"
     lines="none"

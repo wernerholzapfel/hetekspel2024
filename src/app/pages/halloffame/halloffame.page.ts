@@ -213,7 +213,7 @@ export class HalloffamePage implements OnInit {
                     positie: 3
                 }]
             }, {
-                jaar: 'WK 2004',
+                jaar: 'EK 2004',
                 aantal: 85,
                 halloffame: [{
                     naam: 'Maikel Staring',

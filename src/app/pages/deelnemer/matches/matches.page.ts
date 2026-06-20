@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { IonContent } from '@ionic/angular';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { UiService } from '../../../services/ui.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,6 +17,7 @@ import { Gesture } from '../../../directives/gestures.directive';
 })
 export class MatchesPage {
 
+    @ViewChild(IonContent) content!: IonContent;
     standLine: IStandLine;
     unsubscribe = new Subject<void>();
     predictions: IMatchPrediction[];
@@ -75,11 +77,25 @@ export class MatchesPage {
             .subscribe(
                 matchPredictions => {
                     this.predictions = matchPredictions;
+                    this.scrollToFirstUnplayed();
                 });
 
         if (event) {
             event.target.complete();
         }
+    }
+
+    private scrollToFirstUnplayed(): void {
+        const firstUnplayed = this.predictions?.findIndex(p => p.match?.homeScore == null);
+        const index = firstUnplayed > 0 ? firstUnplayed - 1
+            : firstUnplayed === -1 ? (this.predictions.length - 1) : -1;
+        if (index < 0) return;
+        setTimeout(() => {
+            const el = document.getElementById(`match-${index}`);
+            if (el && this.content) {
+                this.content.scrollToPoint(0, el.offsetTop, 300);
+            }
+        }, 100);
     }
 
     ionViewDidLeave(): void {
