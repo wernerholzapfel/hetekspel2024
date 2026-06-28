@@ -1,5 +1,5 @@
 @if (standLine) {
-<ion-card [color]="backgroundcolor">
+<ion-card [color]="backgroundcolor" (click)="openStand()">
   <ion-card-header>
     <ion-card-title>{{ ownCard ? "Jij" : standLine?.displayName }} staat
       {{ standLine.position }}e

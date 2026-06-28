@@ -1,26 +1,47 @@
 <ion-header>
-  <app-menu-toolbar></app-menu-toolbar>
+  <app-menu-toolbar
+    rightCornerIcon="swap-vertical-outline"
+    (emitIconClick)="openSortSheet()"
+  ></app-menu-toolbar>
+  <!-- <ion-toolbar> -->
+    <ion-segment [value]="selectedSegment" (ionChange)="onSegmentChange($any($event))">
+      <ion-segment-button value="matches">
+        <ion-label>Poule</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="knockout">
+        <ion-label>Knockout</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  <!-- </ion-toolbar> -->
 </ion-header>
 
 <ion-content>
-  <ion-card-header>
-    <ion-card-title>Poulewedstrijden</ion-card-title>
-  </ion-card-header>
-  @for (match of matches; track match.id; let i = $index) {
-  <app-speelschema-match-item
-    [id]="'match-' + i"
-    [match]="match"
-    [url]="'poule'"
-  ></app-speelschema-match-item>
+  @if (selectedSegment === 'matches') {
+    @for (match of sortedMatches; track match.id; let i = $index) {
+      @if (sortOrder === 'poule' && (i === 0 || sortedMatches[i - 1].poule !== match.poule)) {
+        <ion-item-divider sticky>
+          <ion-label>Poule {{ match.poule }}</ion-label>
+        </ion-item-divider>
+      }
+      <app-speelschema-match-item
+        [id]="'match-' + i"
+        [match]="match"
+        [url]="'poule'"
+      ></app-speelschema-match-item>
+    }
   }
-  <ion-card-header>
-    <ion-card-title>Finaleronde</ion-card-title>
-  </ion-card-header>
-  @for (match of knockout; track match.id; let i = $index) {
-  <app-speelschema-match-item
-    [id]="'knockout-' + i"
-    [match]="match"
-    [url]="'finaleronde'"
-  ></app-speelschema-match-item>
+  @if (selectedSegment === 'knockout') {
+    @for (match of knockout; track match.id; let i = $index) {
+      @if (i === 0 || knockout[i - 1].round !== match.round) {
+        <ion-item-divider sticky>
+          <ion-label>{{ match.round | roundText : true }}</ion-label>
+        </ion-item-divider>
+      }
+      <app-speelschema-match-item
+        [id]="'knockout-' + i"
+        [match]="match"
+        [url]="'finaleronde'"
+      ></app-speelschema-match-item>
+    }
   }
 </ion-content>

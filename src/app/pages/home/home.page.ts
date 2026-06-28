@@ -73,67 +73,88 @@ export class HomePage implements OnInit, OnDestroy {
 
         let options: string[];
 
-        if (!isPlayed) {
+    if (!isPlayed) {
             if (homePredicted && awayPredicted) {
                 options = [
-                    `Je speelt vanavond op twee paarden: ${hf} ${hn} én ${af} ${an}. Er is maar één winnaar!`,
-                    `Je hebt ${hf} ${hn} én ${af} ${an} door — eentje maakt je blij vanavond.`,
-                    `Dubbel ingezet op ${hf} ${hn} en ${af} ${an}, maar er kan er maar één door!`,
+                    `Je heb beide ploegen naar de volgende ronde: ${hf} ${hn} én ${af} ${an}. Er is maar één winnaar!`,
+                    `Je hebt ${hf} ${hn} én ${af} ${an} door — slechts eentje maakt je blij vanavond.`,
+                    `Een dilemma, ${hf} ${hn} of ${af} ${an}? — jij hebt ze beide door.`,
+                    `${hf} ${hn} én ${af} ${an} staan allebei in jouw volgende ronde, je pakt sowieso punten.`,
+                    `Je koos voor zowel ${hf} ${hn} als ${af} ${an}, maar er kan er maar één door!`,
                 ];
             } else if (homePredicted) {
                 options = [
                     `Juich vanavond voor ${hf} ${hn}!`,
-                    `Spannende wedstrijd vanavond — zal het ${hf} ${hn} lukken punten voor je te pakken?`,
-                    `Je rekent op ${hf} ${hn} voor een puntje vandaag. Succes!`,
+                    `Spannende wedstrijd vanavond — zal het ${hf} ${hn} lukken om door deze ronde te komen?`,
+                    `Jouw hoop op punten ligt vanavond bij ${hf} ${hn}`,
+                    `Gaat ${hf} ${hn} de punten voor jou pakken?`,
+                    `Je hebt gekozen voor ${hf} ${hn}, dat wordt spannend!`,
                 ];
             } else if (awayPredicted) {
                 options = [
-                    `Juich vanavond voor ${af} ${an}!`,
-                    `Spannende wedstrijd vanavond — zal het ${af} ${an} lukken punten voor je te pakken?`,
-                    `Je rekent op ${af} ${an} voor een puntje vandaag. Succes!`,
+                    `Jij hoopt vanavond op winst voor ${af} ${an}!`,
+                    `In deze ronde heb je gekozen voor ${af} ${an} als winnaar, we duimen met je mee!`,
+                    `Vol overtuiging noteerde jij ${af} ${an}, gaan ze jou aan punten helpen?`,
+                    `Oei oei oei wat spannend, ${af} ${an} als winnaar voorspeld, succes!`,
+                    `${af} ${an} is jouw land vanavond, zij moeten het gaan doen!`,
                 ];
             } else {
                 options = [
-                    `Geen van deze landen zit in jouw rijtje. Lekker onbezorgd genieten!`,
+                    `Geen van deze landen zit in jouw volgende ronde. Lekker onbezorgd genieten!`,
                     `Neutraal genieten vanavond — deze wedstrijd levert je sowieso geen punten op.`,
+                    `Doet deze wedstrijd er voor jou toe? Je hebt geen van deze landen door.`,
+                    `Wie gaat er door vanavond? Één ding weet je zeker, het kan jou geen punten opleveren helaas.`,
                     `Je hebt geen van deze landen door. Gewoon genieten van de wedstrijd!`,
                 ];
             }
         } else {
             if (homePredicted && awayPredicted) {
                 options = [
-                    `Je speelde op twee paarden: ${hf} ${hn} én ${af} ${an}. Er kon maar één door!`,
+                    `Je koos voor beide landen: ${hf} ${hn} én ${af} ${an}. Er kon maar één door!`,
                     `Je had ${hf} ${hn} én ${af} ${an} door — heeft het gewerkt?`,
-                    `Dubbel ingezet op ${hf} ${hn} en ${af} ${an}. Eén kans raak is ook mooi!`,
+                    `Een dubbele optie, ${hf} ${hn} én ${af} ${an} had je beide door, 1 keer punten!`,
+                    `${hf} ${hn} en ${af} ${an} had je genoteerd, het levert je 1x punten op.`,
+                    `Jij koos voor zowel ${hf} ${hn} als ${af} ${an}. Eén kans raak is ook mooi!`,
                 ];
             } else if (homePredicted) {
                 options = totalPunten > 0 ? [
                     `${hf} ${hn} is door — precies zoals jij voorspeld had! Punten binnen!`,
                     `Ja! Je had ${hf} ${hn} door en dat klopte. Mooi meegenomen!`,
+                    `De volle mep voor jou, ${hf} ${hn} geeft je punten!`,
+                    `Ja hoor! The story of ${hf} ${hn} continues. Points in the pocket!`,
                     `${hf} ${hn} door en jij had dat zien aankomen. Punten!`,
                 ] : [
                     `${hf} ${hn} was jouw keuze, maar het pakte helaas anders uit.`,
                     `Jammer, ${hf} ${hn} is er niet doorgekomen. Volgende ronde beter!`,
-                    `Pech — je had ${hf} ${hn} door, maar die gaat naar huis.`,
+                    `Huilen om ${hf} ${hn}, ze hebben je voorspelling niet waargemaakt.`,
+                    `${hf} ${hn} stelt je teleur. Volgende keer beter!`,
+                    `Pech — je had ${hf} ${hn} door, maar dat land gaat naar huis.`,
                 ];
             } else if (awayPredicted) {
                 options = totalPunten > 0 ? [
-                    `${af} ${an} is door — precies zoals jij voorspeld had! Punten binnen!`,
-                    `Ja! Je had ${af} ${an} door en dat klopte. Mooi meegenomen!`,
-                    `${af} ${an} door en jij had dat zien aankomen. Punten!`,
+                    `${af} ${an} heeft een ronde overleefd! Punten binnen!`,
+                    `Yes! ${af} ${an} to the next round. Punten voor jou!`,
+                    `${af} ${an} weer een stap verder op het WK. En jij zag dat aankomen!`,
+                    `Je pakt de punten met ${af} ${an}, goede voorspelling!`,
+                    `${af} ${an} stond in jouw glazen bol. Gefeliciteerd!`,
                 ] : [
-                    `${af} ${an} was jouw keuze, maar het pakte helaas anders uit.`,
-                    `Jammer, ${af} ${an} is er niet doorgekomen. Volgende ronde beter!`,
-                    `Pech — je had ${af} ${an} door, maar die gaat naar huis.`,
+                    `${af} ${an} zou jouw punten moeten pakken, maar dat feest ging niet door.`,
+                    `Jammer, ${af} ${an} moet naar huis. Volgende keer beter!`,
+                    `Oh nee, ${af} ${an} verlaat het toernooi. Geen punten voor jou`,
+                    `Traantje gelaten? ${af} ${an} is uitgeschakeld.`,
+                    `Oh jee — je dacht dat ${af} ${an} door zou gaan, maar het mocht niet zo zijn.`,
                 ];
             } else {
                 options = [
-                    `Geen van beide landen zat in jouw rijtje — deze wedstrijd leverde je geen punten op.`,
+                    `Geen van beide landen zat in jouw voorspelling — deze wedstrijd leverde je geen punten op.`,
                     `Je had geen van deze landen door. Deze wedstrijd ging aan je voorbij.`,
-                    `Geen punten uit deze wedstrijd, maar je wist het al!`,
+                    `Heb je wel gekeken? Je kon met beide landen in deze wedstrijd al geen punten meer pakken.`,
+                    `Een wedstrijd die jou geen punten opleverde.`,
+                    `Geen punten uit deze wedstrijd, maar dat wist je al!`,
                 ];
             }
         }
+
 
         const text = options[Math.floor(Math.random() * options.length)];
         const result = this.sanitizer.bypassSecurityTrustHtml(text);

@@ -9,7 +9,7 @@ export class RoundTextPipe implements PipeTransform {
     constructor() {
     }
 
-    transform(value: unknown, isSpeelschema?: boolean): unknown {
+    transform(value: unknown, isSpeelschema?: boolean): string {
         switch (value) {
             case '32':
             case 32:

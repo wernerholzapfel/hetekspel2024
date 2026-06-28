@@ -13,6 +13,20 @@ export class HalloffamePage implements OnInit {
     constructor() {
         this.tournaments = [
             {
+                jaar: 'Poulewedstrijden WK 2026',
+                aantal: 209,
+                halloffame: [{
+                    naam: 'Jasper van Maanen',
+                    positie: 1
+                }, {
+                    naam: 'Jesse Veen',
+                    positie: 2
+                }, {
+                    naam: 'Dimitri Fioole',
+                    positie: 3
+                }]
+            },
+            {
                 jaar: 'EK 2024',
                 aantal: 175,
                 halloffame: [{

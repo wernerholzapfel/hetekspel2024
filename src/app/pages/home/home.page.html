@@ -163,7 +163,7 @@
       >
         <ion-card>
           <ion-card-header>
-            <ion-card-title> Speelschema </ion-card-title>
+            <ion-card-title> Wedstrijden poules</ion-card-title>
           </ion-card-header>
           <ion-card-content class="ion-no-padding">
             @for (prediction of todaysMatches?.matchPredictions; track prediction) {
@@ -262,7 +262,7 @@
       >
         <ion-card>
           <ion-card-header>
-            <ion-card-title> Speelschema </ion-card-title>
+            <ion-card-title> Wedstrijden knock-outs</ion-card-title>
           </ion-card-header>
           <ion-card-content class="ion-no-padding">
             @for (knockout of todaysMatches?.knockout; track knockout) {
@@ -311,8 +311,8 @@
                       </ion-col>
                     </ion-row>
                   </ion-col>
-                  <ion-col size="3" class="hes-background-secondary-accent ion-padding-vertical ion-text-center ion-align-self-center">
-                    @if (knockout.homeTeam.spelPunten != null || knockout.awayTeam.spelPunten != null) {
+                  <ion-col size="3" class=" ion-padding-vertical ion-text-center ion-align-self-center">
+                    @if (knockout.homeTeam.spelPunten != null && knockout.awayTeam.spelPunten != null) {
                     <ion-chip
                       class="hes-pts-chip"
                       [color]="(knockout.homeTeam.spelPunten + knockout.awayTeam.spelPunten) > 0 ? 'success' : 'medium'">

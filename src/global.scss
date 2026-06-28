@@ -163,6 +163,22 @@ ion-item.no-border {
   --inner-border-width: 0;
 }
 
+.hes-prediction-alert {
+  .alert-message {
+    .hes-alert-list {
+      list-style: disc;
+      padding-left: 20px;
+      text-align: left;
+      margin: 0;
+
+      li {
+        margin-bottom: 6px;
+        font-size: 14px;
+      }
+    }
+  }
+}
+
 // @media (prefers-color-scheme: dark) {
 //   ion-tab-button {
 //     // Icon and text
