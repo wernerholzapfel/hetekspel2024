@@ -1,6 +1,6 @@
 <ion-header>
   <app-menu-toolbar
-    rightCornerIcon="swap-vertical-outline"
+    [rightCornerIcon]="selectedSegment === 'matches' ? 'swap-vertical-outline' : ''"
     (emitIconClick)="openSortSheet()"
   ></app-menu-toolbar>
   <!-- <ion-toolbar> -->

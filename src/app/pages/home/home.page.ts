@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 import { TeamService } from 'src/app/services/team.service';
 import { ITeam } from 'src/app/models/poule.model';
 import { KnockoutPredictionsService } from 'src/app/services/knockout-predictions.service';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { IHeadline } from 'src/app/models/headline.model';
 import { HeadlineService } from 'src/app/services/headline.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -53,7 +53,39 @@ export class HomePage implements OnInit, OnDestroy {
         private poulePredictionService: PoulepredictionService,
         private router: Router,
         private sanitizer: DomSanitizer,
-        private modalController: ModalController) {
+        private modalController: ModalController,
+        private alertController: AlertController) {
+    }
+
+    async openCardInfo(cardType: string) {
+        const infos: Record<string, { title: string; message: string }> = {
+            voorspellingen: {
+                title: 'Jouw voorspellingen',
+                message: 'Hier zie je of je alle voorspellingen hebt ingevuld. Controleer of je alle wedstrijden, poules en het knockoutschema hebt ingevoerd vóór de deadline.'
+            },
+            poules: {
+                title: 'Wedstrijden poules',
+                message: 'Dit zijn de pouleduels van vandaag met jouw voorspelling ernaast. Het gekleurde getal is je puntenscore voor deze wedstrijd.'
+            },
+            knockout: {
+                title: 'Wedstrijden knock-outs',
+                message: 'Dit zijn de knockoutwedstrijden van vandaag. Vet gedrukte landen heb jij doorgespeeld voorspeld én zijn ook echt doorgegaan. De chip toont je punten voor dit duel.'
+            },
+            stats: {
+                title: 'Komende wedstrijden stats',
+                message: 'Hoe hebben de deelnemers gestemd op de komende wedstrijden? De drie kolommen staan voor thuis, gelijk en uit. Klik op een getal om te zien wie dat voorspeld heeft.'
+            }
+        };
+
+        const info = infos[cardType];
+        if (!info) { return; }
+
+        const alert = await this.alertController.create({
+            header: info.title,
+            message: info.message,
+            buttons: ['Sluiten']
+        });
+        await alert.present();
     }
 
     getKnockoutPredictionHtml(knockout: any): SafeHtml {
@@ -73,7 +105,7 @@ export class HomePage implements OnInit, OnDestroy {
 
         let options: string[];
 
-    if (!isPlayed) {
+        if (!isPlayed) {
             if (homePredicted && awayPredicted) {
                 options = [
                     `Je heb beide ploegen naar de volgende ronde: ${hf} ${hn} én ${af} ${an}. Er is maar één winnaar!`,
@@ -165,17 +197,6 @@ export class HomePage implements OnInit, OnDestroy {
     ionViewWillEnter() {
         this.refresh(null)
 
-        this.uiService.participant$.pipe(switchMap(participant => {
-            if (participant) {
-                return this.matchService.getTodaysMatchPredictionsForParticipant()
-            } else return of([])
-        }))
-            .subscribe(
-                result => {
-                    this.todaysMatches = result;
-                }
-            );
-
     }
 
     refresh(event): void {
@@ -199,7 +220,16 @@ export class HomePage implements OnInit, OnDestroy {
         if (event) {
             event.target.complete();
         }
-
+        this.uiService.participant$.pipe(switchMap(participant => {
+            if (participant) {
+                return this.matchService.getTodaysMatchPredictionsForParticipant()
+            } else return of([])
+        }))
+            .subscribe(
+                result => {
+                    this.todaysMatches = result;
+                }
+            );
         this.uiService.participant$.pipe(take(1)).subscribe(participant => {
             if (participant?.isAllowed) {
                 this.poulePredictionService.checkPrediction().subscribe({
@@ -244,9 +274,9 @@ export class HomePage implements OnInit, OnDestroy {
     openParticipantKnockout(participantId: string) {
         this.router.navigate([`deelnemer/deelnemer/${participantId}/knockout`], { replaceUrl: false });
     }
-    
+
     navigateToKnockoutStats(round: string, teamId: string) {
-        const nextRound = (parseInt(round,0) / 2)
+        const nextRound = (parseInt(round, 0) / 2)
         this.router.navigate([`stats/knockout/round/${nextRound}/team/${teamId}`], { replaceUrl: false });
     }
 

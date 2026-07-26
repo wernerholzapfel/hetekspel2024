@@ -22,10 +22,8 @@
             <ion-card-title color="primary">
               Helaas {{(participant$ | async)?.displayName}}
             </ion-card-title>
-            <ion-card-subtitle
-              >Het WK spel is alleen voor bekenden van Werner en/of
-              Tom</ion-card-subtitle
-            >
+            <ion-card-subtitle>Het WK spel is alleen voor bekenden van Werner en/of
+              Tom</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>
             Helaas moeten we je mededelen dat je niet mee kan doen aan Het WK
@@ -41,11 +39,17 @@
         }
         <app-headline [headlines]="headlines"></app-headline>
       </ion-col>
-      @if ((uiService.isRegistrationOpen$ | async) === true && (participant$ | async)?.isAllowed && checkPredictionResult) {
+      @if ((uiService.isRegistrationOpen$ | async) === true && (participant$ | async)?.isAllowed &&
+      checkPredictionResult) {
       <ion-col size="12" size-md="6" size-lg="6" size-xl="6" class="ion-no-padding">
         <ion-card>
           <ion-card-header>
-            <ion-card-title color="primary">Jouw voorspellingen</ion-card-title>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <ion-card-title color="primary">Jouw voorspellingen</ion-card-title>
+              <ion-button fill="clear" size="small" (click)="openCardInfo('voorspellingen'); $event.stopPropagation()">
+                <ion-icon slot="icon-only" name="information-circle-outline"></ion-icon>
+              </ion-button>
+            </div>
             <ion-card-subtitle>Controleer of je alles hebt ingevuld</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content class="ion-no-padding">
@@ -57,8 +61,7 @@
               </ion-button>
             </div>
             } @else {
-            <ion-item
-              [button]="checkPredictionResult.matchPredictions.count > 0"
+            <ion-item [button]="checkPredictionResult.matchPredictions.count > 0"
               (click)="checkPredictionResult.matchPredictions.count > 0 && openPredictionMessages([{messages: checkPredictionResult.matchPredictions.messages}], 'Wedstrijdvoorspellingen')"
               lines="full">
               <ion-icon slot="start"
@@ -75,8 +78,7 @@
                 }
               </ion-label>
             </ion-item>
-            <ion-item
-              [button]="checkPredictionResult.poulePredictions.count > 0"
+            <ion-item [button]="checkPredictionResult.poulePredictions.count > 0"
               (click)="checkPredictionResult.poulePredictions.count > 0 && openPredictionMessages([{messages: checkPredictionResult.poulePredictions.messages}], 'Poulevoorspellingen')"
               lines="full">
               <ion-icon slot="start"
@@ -87,15 +89,14 @@
                 @if (checkPredictionResult.poulePredictions.count === 0) {
                 Je hebt alle poules voorspeld!
                 } @else if (checkPredictionResult.poulePredictions.count === 1) {
-                Je poule voorspellingen zijn nog niet volledig ingevuld. 
+                Je poule voorspellingen zijn nog niet volledig ingevuld.
                 } @else {
                 Je poule voorspellingen zijn nog niet volledig ingevuld.
                 }
               </ion-label>
             </ion-item>
-            
-            <ion-item
-              [button]="checkPredictionResult.knockoutPredictionsComplete.count > 0"
+
+            <ion-item [button]="checkPredictionResult.knockoutPredictionsComplete.count > 0"
               (click)="checkPredictionResult.knockoutPredictionsComplete.count > 0 && openKnockoutCompleteMessages()"
               lines="full">
               <ion-icon slot="start"
@@ -112,10 +113,8 @@
                 }
               </ion-label>
             </ion-item>
-            <ion-item
-              [button]="checkPredictionResult.knockoutPredictions.count > 0"
-              (click)="checkPredictionResult.knockoutPredictions.count > 0 && openKnockoutMessages()"
-              lines="none">
+            <ion-item [button]="checkPredictionResult.knockoutPredictions.count > 0"
+              (click)="checkPredictionResult.knockoutPredictions.count > 0 && openKnockoutMessages()" lines="none">
               <ion-icon slot="start"
                 [name]="checkPredictionResult.knockoutPredictions.count === 0 ? 'checkmark-circle' : 'warning-outline'"
                 [color]="checkPredictionResult.knockoutPredictions.count === 0 ? 'success' : 'warning'">
@@ -137,55 +136,33 @@
       }
       @if ((uiService.isRegistrationOpen$ | async) === false &&
       participantStandLine) {
-      <ion-col
-        class="ion-no-padding"
-        size="12"
-        size-md="6"
-        size-lg="6"
-        size-xl="6"
-      >
-        <app-participant-card
-          backgroundcolor="primary"
-          color="light"
-          [lastUpdated]="lastUpdated"
-          [ownCard]="true"
-          [standLine]="participantStandLine"
-        ></app-participant-card>
+      <ion-col class="ion-no-padding" size="12" size-md="6" size-lg="6" size-xl="6">
+        <app-participant-card backgroundcolor="primary" color="light" [lastUpdated]="lastUpdated" [ownCard]="true"
+          [standLine]="participantStandLine"></app-participant-card>
       </ion-col>
       } @if ((uiService.isRegistrationOpen$ | async) === false &&
       todaysMatches?.matchPredictions?.length > 0) {
-      <ion-col
-        class="ion-no-padding"
-        size="12"
-        size-md="6"
-        size-lg="6"
-        size-xl="6"
-      >
+      <ion-col class="ion-no-padding" size="12" size-md="6" size-lg="6" size-xl="6">
         <ion-card>
           <ion-card-header>
-            <ion-card-title> Wedstrijden poules</ion-card-title>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <ion-card-title>Wedstrijden poules</ion-card-title>
+              <ion-button fill="clear" size="small" (click)="openCardInfo('poules'); $event.stopPropagation()">
+                <ion-icon slot="icon-only" name="information-circle-outline"></ion-icon>
+              </ion-button>
+            </div>
           </ion-card-header>
           <ion-card-content class="ion-no-padding">
             @for (prediction of todaysMatches?.matchPredictions; track prediction) {
-            <ion-item
-              (click)="openMatch(prediction.match.id)"
-              class="ion-padding-end"
-              lines="none"
-            >
+            <ion-item (click)="openMatch(prediction.match.id)" class="ion-padding-end" lines="none">
               <ion-grid class="ion-no-padding ion-padding-start">
                 <ion-row style="font-size: x-small">
-                  <ion-col
-                    size="6"
-                    class="ion-padding-vertical ion-text-start hes-background"
-                  >
+                  <ion-col size="6" class="ion-padding-vertical ion-text-start hes-background">
                     <ion-text color="medium">
                       {{prediction.match.date | date : 'dd MMMM HH:mm'}}
                     </ion-text>
                   </ion-col>
-                  <ion-col
-                    size="6"
-                    class="ion-padding ion-text-end hes-background"
-                  >
+                  <ion-col size="6" class="ion-padding ion-text-end hes-background">
                     <ion-text color="medium">
                       Poule {{prediction.match.poule}}
                     </ion-text>
@@ -196,46 +173,31 @@
                     <ion-row>
                       <ion-col class="ion-padding-vertical">
                         {{prediction.match.homeScore}}
-                        <span
-                          class="fi fi-{{prediction.match.homeTeam.logoUrl}} fis"
-                        ></span>
+                        <span class="fi fi-{{prediction.match.homeTeam.logoUrl}} fis"></span>
                         {{prediction.match.homeTeam.name}}
                       </ion-col>
                     </ion-row>
                     <ion-row>
                       <ion-col class="ion-padding-vertical">
                         {{prediction.match.awayScore}}
-                        <span
-                          class="fi fi-{{prediction.match.awayTeam.logoUrl}} fis"
-                        ></span>
+                        <span class="fi fi-{{prediction.match.awayTeam.logoUrl}} fis"></span>
                         {{prediction.match.awayTeam.name}}
                       </ion-col>
                     </ion-row>
                   </ion-col>
                   <ion-col size="3" class="hes-background-secondary-accent">
                     <ion-row>
-                      <ion-col
-                        size="auto"
-                        class="ion-no-padding ion-text-start"
-                      >
+                      <ion-col size="auto" class="ion-no-padding ion-text-start">
                         <ion-row class="ion-no-padding">
-                          <ion-col
-                            class="ion-padding-vertical ion-padding-start ion-text-start"
-                          >
-                            {{prediction.homeScore}}</ion-col
-                          >
+                          <ion-col class="ion-padding-vertical ion-padding-start ion-text-start">
+                            {{prediction.homeScore}}</ion-col>
                         </ion-row>
                         <ion-row class="ion-no-padding">
-                          <ion-col
-                            class="ion-padding-vertical ion-padding-start ion-text-start"
-                          >
-                            {{prediction.awayScore}}</ion-col
-                          >
+                          <ion-col class="ion-padding-vertical ion-padding-start ion-text-start">
+                            {{prediction.awayScore}}</ion-col>
                         </ion-row>
                       </ion-col>
-                      <ion-col
-                        class="ion-padding-vertical ion-no-padding ion-text-center ion-align-self-center"
-                      >
+                      <ion-col class="ion-padding-vertical ion-no-padding ion-text-center ion-align-self-center">
                         @if (prediction.spelpunten != null) {
                         <ion-chip color="secondary">
                           {{prediction.spelpunten}}
@@ -253,38 +215,27 @@
       </ion-col>
       } @if ((uiService.isRegistrationOpen$ | async) === false &&
       todaysMatches?.knockout?.length > 0) {
-      <ion-col
-        class="ion-no-padding"
-        size="12"
-        size-md="6"
-        size-lg="6"
-        size-xl="6"
-      >
+      <ion-col class="ion-no-padding" size="12" size-md="6" size-lg="6" size-xl="6">
         <ion-card>
           <ion-card-header>
-            <ion-card-title> Wedstrijden knock-outs</ion-card-title>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <ion-card-title>Wedstrijden knock-outs</ion-card-title>
+              <ion-button fill="clear" size="small" (click)="openCardInfo('knockout'); $event.stopPropagation()">
+                <ion-icon slot="icon-only" name="information-circle-outline"></ion-icon>
+              </ion-button>
+            </div>
           </ion-card-header>
           <ion-card-content class="ion-no-padding">
             @for (knockout of todaysMatches?.knockout; track knockout) {
-            <ion-item
-              (click)="openMatch(knockout.match.id)"
-              class="ion-padding-end"
-              lines="none"
-            >
+            <ion-item (click)="openMatch(knockout.match.id)" class="ion-padding-end" lines="none">
               <ion-grid class="ion-no-padding ion-padding-start">
                 <ion-row style="font-size: x-small">
-                  <ion-col
-                    size="6"
-                    class="ion-padding-vertical ion-text-start hes-background"
-                  >
+                  <ion-col size="6" class="ion-padding-vertical ion-text-start hes-background">
                     <ion-text color="medium">
                       {{knockout.date | date : 'dd MMMM HH:mm'}}
                     </ion-text>
                   </ion-col>
-                  <ion-col
-                    size="6"
-                    class="ion-padding ion-text-end hes-background"
-                  >
+                  <ion-col size="6" class="ion-padding ion-text-end hes-background">
                     <ion-text color="medium">
                       {{knockout.round | roundText}}
                     </ion-text>
@@ -292,26 +243,24 @@
                 </ion-row>
                 <ion-row>
                   <ion-col class="hes-background">
-                    <ion-row
-                      (click)="navigateToKnockoutStats(knockout.round, knockout.homeTeam.id)"
-                    >
-                      <ion-col class="ion-padding-vertical" [style.font-weight]="knockout.homeTeamResultsDoor && knockout.homeTeam.spelPunten > 0 ? 'bold' : 'normal'">
+                    <ion-row (click)="navigateToKnockoutStats(knockout.round, knockout.homeTeam.id)">
+                      <ion-col class="ion-padding-vertical"
+                        [style.font-weight]="knockout.homeTeamResultsDoor && knockout.homeTeam.spelPunten > 0 ? 'bold' : 'normal'">
                         {{knockout.homeScore}}
                         <span class="fi fi-{{knockout.homeTeam.logoUrl}} fis"></span>
-                        {{knockout.homeTeam.name}}
+                        <span [class]="knockout.homeTeamResultsDoor === false ? 'hes_strikethrough' : ''">{{knockout.homeTeam.name}}</span>
                       </ion-col>
                     </ion-row>
-                    <ion-row
-                      (click)="navigateToKnockoutStats(knockout.round, knockout.awayTeam.id)"
-                    >
-                      <ion-col class="ion-padding-vertical" [style.font-weight]="knockout.awayTeamResultsDoor && knockout.awayTeam.spelPunten > 0 ? 'bold' : 'normal'">
+                    <ion-row (click)="navigateToKnockoutStats(knockout.round, knockout.awayTeam.id)">
+                      <ion-col class="ion-padding-vertical"
+                        [style.font-weight]="knockout.awayTeamResultsDoor && knockout.awayTeam.spelPunten > 0 ? 'bold' : 'normal'">
                         {{knockout.awayScore}}
                         <span class="fi fi-{{knockout.awayTeam.logoUrl}} fis"></span>
-                        {{knockout.awayTeam.name}}
+                        <span [class]="knockout.awayTeamResultsDoor === false ? 'hes_strikethrough' : ''">{{knockout.awayTeam.name}}</span>
                       </ion-col>
                     </ion-row>
                   </ion-col>
-                  <ion-col size="3" class=" ion-padding-vertical ion-text-center ion-align-self-center">
+                  <ion-col size="3" class=" ion-padding-vertical ion-text-end ion-align-self-center">
                     @if (knockout.homeTeam.spelPunten != null && knockout.awayTeam.spelPunten != null) {
                     <ion-chip
                       class="hes-pts-chip"
@@ -334,16 +283,15 @@
       </ion-col>
       } @if ((uiService.isRegistrationOpen$ | async) === false &&
       upcomingMatches?.length > 0) {
-      <ion-col
-        class="ion-no-padding"
-        size="12"
-        size-md="6"
-        size-lg="6"
-        size-xl="6"
-      >
+      <ion-col class="ion-no-padding" size="12" size-md="6" size-lg="6" size-xl="6">
         <ion-card>
           <ion-card-header>
-            <ion-card-title> Komende wedstrijden stats </ion-card-title>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <ion-card-title>Komende wedstrijden stats</ion-card-title>
+              <ion-button fill="clear" size="small" (click)="openCardInfo('stats'); $event.stopPropagation()">
+                <ion-icon slot="icon-only" name="information-circle-outline"></ion-icon>
+              </ion-button>
+            </div>
           </ion-card-header>
           <ion-card-content>
             @for (toto of upcomingMatches; track toto) {
@@ -363,22 +311,12 @@
                 </ion-col>
               </ion-row>
               <ion-row class="hes-border-bottom hes-background">
-                <ion-col
-                  class="ion-text-center hes-toto-col hes-background-secondary-accent"
-                  (click)="openMatchWithTotoFilter(toto.id, 1)"
-                  >{{toto.toto1}}</ion-col
-                >
-                <ion-col
-                  class="ion-text-center hes-toto-col hes-background-secondary-accent"
-                  (click)="openMatchWithTotoFilter(toto.id, 3)"
-                  size="1"
-                  >{{toto.toto3}}</ion-col
-                >
-                <ion-col
-                  class="ion-text-center hes-toto-col hes-background-secondary-accent"
-                  (click)="openMatchWithTotoFilter(toto.id, 2)"
-                  >{{toto.toto2}}</ion-col
-                >
+                <ion-col class="ion-text-center hes-toto-col hes-background-secondary-accent"
+                  (click)="openMatchWithTotoFilter(toto.id, 1)">{{toto.toto1}}</ion-col>
+                <ion-col class="ion-text-center hes-toto-col hes-background-secondary-accent"
+                  (click)="openMatchWithTotoFilter(toto.id, 3)" size="1">{{toto.toto3}}</ion-col>
+                <ion-col class="ion-text-center hes-toto-col hes-background-secondary-accent"
+                  (click)="openMatchWithTotoFilter(toto.id, 2)">{{toto.toto2}}</ion-col>
               </ion-row>
             </div>
             }
@@ -386,40 +324,22 @@
         </ion-card>
       </ion-col>
       } @if ((uiService.isRegistrationOpen$ | async) === false) {
-      <ion-col
-        class="ion-no-padding"
-        size="12"
-        size-md="6"
-        size-lg="6"
-        size-xl="6"
-      >
-        <app-participant-card
-        backgroundcolor="tertiary"
-          color="dark"
-          [lastUpdated]="lastUpdated"
-          [standLine]="standLine"
-        >
+      <ion-col class="ion-no-padding" size="12" size-md="6" size-lg="6" size-xl="6">
+        <app-participant-card backgroundcolor="tertiary" color="dark" [lastUpdated]="lastUpdated"
+          [standLine]="standLine">
         </app-participant-card>
       </ion-col>
       }
       <ng-container>
         @for (fullscore of fullscore$ | async; track fullscore) {
-        <ion-col
-          class="ion-no-padding"
-          size="12"
-          size-md="6"
-          size-lg="6"
-          size-xl="6"
-        >
+        <ion-col class="ion-no-padding" size="12" size-md="6" size-lg="6" size-xl="6">
           <ion-card>
             <app-city-card-header [match]="fullscore"></app-city-card-header>
             <ion-card-content>
               <ion-card-title (click)="openMatch(fullscore.id)">
                 <ion-row>
                   <ion-col class="ion-no-padding">
-                    <span
-                      class="fi fi-{{fullscore?.homeTeam?.logoUrl}} fis"
-                    ></span>
+                    <span class="fi fi-{{fullscore?.homeTeam?.logoUrl}} fis"></span>
                     {{fullscore?.homeTeam?.name}}
                   </ion-col>
                   <ion-col class="ion-no-padding ion-text-right" size="1">
@@ -430,9 +350,7 @@
               <ion-card-title>
                 <ion-row>
                   <ion-col class="ion-no-padding">
-                    <span
-                      class="fi fi-{{fullscore?.awayTeam?.logoUrl}} fis"
-                    ></span>
+                    <span class="fi fi-{{fullscore?.awayTeam?.logoUrl}} fis"></span>
                     {{fullscore?.awayTeam?.name}}
                   </ion-col>
                   <ion-col class="ion-no-padding ion-text-right" size="1">
@@ -446,10 +364,7 @@
                 'deelnemers'}}:
               </ion-card-subtitle>
               @for (participant of fullscore.participants; track participant) {
-              <ion-chip
-                (click)="openParticipant(participant.id)"
-                color="secondary"
-                >{{participant.displayName}}
+              <ion-chip (click)="openParticipant(participant.id)" color="secondary">{{participant.displayName}}
               </ion-chip>
               }
             </ion-card-content>
@@ -458,13 +373,7 @@
         }
       </ng-container>
       @for (knockoutScore of knockoutScores; track knockoutScore) {
-      <ion-col
-        class="ion-no-padding"
-        size="12"
-        size-md="6"
-        size-lg="6"
-        size-xl="6"
-      >
+      <ion-col class="ion-no-padding" size="12" size-md="6" size-lg="6" size-xl="6">
         <ion-card>
           <ion-card-header color="tertiary">
             <ion-card-title>
@@ -485,12 +394,8 @@
             </ion-card-subtitle>
             @for (participant of knockoutScore.participants; track participant)
             {
-            <ion-chip
-              (click)="openParticipantKnockout(participant.participant.id)"
-              color="secondary"
-            >
-              {{participant.participant.displayName}}</ion-chip
-            >
+            <ion-chip (click)="openParticipantKnockout(participant.participant.id)" color="secondary">
+              {{participant.participant.displayName}}</ion-chip>
             }
           </ion-card-content>
         </ion-card>

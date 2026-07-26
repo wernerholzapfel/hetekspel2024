@@ -23,6 +23,7 @@ export class UiService {
     prefersDark$: BehaviorSubject<boolean> = new BehaviorSubject(null);
     matchPredictions$: BehaviorSubject<IMatchPrediction[]> = new BehaviorSubject([]);
     fetchTable$: BehaviorSubject<string> = new BehaviorSubject("A");
+    tabToolbarAction$: BehaviorSubject<{ icon: string; handler: () => void } | null> = new BehaviorSubject(null);
     pouleNav: PouleNav[] = [
     { current: 'A', previous: null, next: 'B', disabled: false, text: 'Poule A' },
     { current: 'B', previous: 'A', next: 'C', disabled: true, text: 'Poule B' },

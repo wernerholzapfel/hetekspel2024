@@ -1,7 +1,10 @@
 <ion-header mode="ios">
-  <app-menu-toolbar></app-menu-toolbar>
+  <app-menu-toolbar
+    [rightCornerIcon]="toolbarAction?.icon || ''"
+    (emitIconClick)="toolbarAction?.handler()"
+  ></app-menu-toolbar>
 </ion-header>
-<ion-tabs>
+<ion-tabs (ionTabsDidChange)="onTabChange($event)">
   <ion-tab-bar slot="bottom">
     <ion-tab-button tab="matches">
       <ion-icon name="football"></ion-icon>

@@ -36,7 +36,7 @@
 
   @if (selectedView === 'heeft') {
      <ion-item-divider sticky>
-          <ion-label>De volgende deelnemers voorspelden {{koTeamStats?.team.name}} in de {{roundId | roundText | lowercase}} </ion-label>
+          <ion-label>De volgende deelnemers voorspelden {{koTeamStats?.team.name}} {{roundId === '1' || roundId === '1.5' ? 'als' : 'in de'}} {{roundId | roundText | lowercase}} </ion-label>
         </ion-item-divider>
     <ion-grid>
       @for (participant of koTeamStats?.participants; track participant) {

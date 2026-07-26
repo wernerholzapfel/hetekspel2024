@@ -1,12 +1,13 @@
 <ion-header>
-  <app-menu-toolbar title="Finaleronde"></app-menu-toolbar>
+  <app-menu-toolbar></app-menu-toolbar>
 </ion-header>
+
 <ion-content appGestures [gestureOpts]="gestureOpts" (swipe)="onSwipe($event)">
   <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-    <div class="alert-banner alert-secondary">
 
+   <div class="alert-banner alert-secondary">
     @if (standLine) {
     <ion-card-content>
       {{standLine?.displayName}} staat {{standLine?.position}}e met
@@ -15,30 +16,30 @@
     </ion-card-content>
     }
   </div>
+  @if (selectedSegment === 'voorspellingen' || !isViewingOthers) {
+ 
+  @for (roundGroup of knockoutSpeelschema; track roundGroup.round) {
+  <ion-item-divider sticky>
+    <ion-label>{{roundGroup.round | roundText}}</ion-label>
+  </ion-item-divider>
   <ion-grid>
-    @if (knockoutSpeelschema) {
-    
-    } @for (roundGroup of knockoutSpeelschema; track roundGroup.round) {
-    <ion-row>
-      <ion-col>{{roundGroup.round | roundText}} </ion-col>
-    </ion-row>
-      @for (match of roundGroup.matches; track match.id) {
+    @for (match of roundGroup.matches; track match.id) {
     <ion-row class="ion-no-padding hes-border-bottom">
       <ion-col class="hes-background">
         <ion-row>
-          <ion-col
-            (click)="openKoTeam(match.prediction?.homeTeam?.id, match.round)"
-          >
-            <span class="fi fi-{{match.prediction?.homeTeam?.logoUrl}} fis"></span>
-            {{match.prediction?.homeTeam?.name}}
+          <ion-col (click)="openKoTeam(match.prediction?.homeTeam?.id, match.round)">
+            <span>
+              <span class="fi fi-{{match.prediction?.homeTeam?.logoUrl}} fis"></span>
+              {{match.prediction?.homeTeam?.name}}
+            </span>
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col
-            (click)="openKoTeam(match.prediction?.awayTeam?.id, match.round)"
-          >
-            <span class="fi fi-{{match.prediction?.awayTeam?.logoUrl}} fis"></span>
-            {{match.prediction?.awayTeam?.name}}
+          <ion-col (click)="openKoTeam(match.prediction?.awayTeam?.id, match.round)">
+            <span>
+              <span class="fi fi-{{match.prediction?.awayTeam?.logoUrl}} fis"></span>
+              {{match.prediction?.awayTeam?.name}}
+            </span>
           </ion-col>
         </ion-row>
       </ion-col>
@@ -46,18 +47,13 @@
         <ion-row>
           <ion-col size="4" class="ion-no-padding ion-text-start">
             <app-knockout-icon-row
-              [eliminationState]="match?.prediction?.homeTeam?.eliminationState"
-            ></app-knockout-icon-row>
-            <app-knockout-icon-row
-              [eliminationState]="match?.prediction?.awayTeam?.eliminationState"
-            >
+              [eliminationState]="match?.prediction?.homeTeam?.eliminationState"></app-knockout-icon-row>
+            <app-knockout-icon-row [eliminationState]="match?.prediction?.awayTeam?.eliminationState">
             </app-knockout-icon-row>
           </ion-col>
-          <ion-col
-            size="8"
-            class="ion-no-padding ion-align-self-center ion-text-center"
-          >
-            @if (match.prediction?.homeTeam?.eliminationState !== 'unknown' || match.prediction?.awayTeam?.eliminationState !== 'unknown') {
+          <ion-col size="8" class="ion-no-padding ion-align-self-center ion-text-center">
+            @if (match.prediction?.homeTeam?.eliminationState !== 'unknown' ||
+            match.prediction?.awayTeam?.eliminationState !== 'unknown') {
             <ion-chip color="secondary">
               {{match.prediction?.homeTeam?.spelPunten +
               match.prediction?.awayTeam?.spelPunten}}
@@ -67,33 +63,112 @@
         </ion-row>
       </ion-col>
     </ion-row>
-    } }
-  </ion-grid>
-  @if (knockoutSpeelschema && winnaarTroostFinale && showWinnaarTroostFinale) {
-  <ion-grid>
-    <ion-row>
-      <ion-col>Winnaar troostfinale </ion-col>
-    </ion-row>
-  </ion-grid>
-  <ion-grid (click)="openKoTeam(winnaarTroostFinale?.team.id, '3')">
-    <app-knockout-team-header
-      [team]="winnaarTroostFinale?.team"
-      [round]="1.5"
-      [punten]="winnaarTroostFinale?.spelPunten"
-    ></app-knockout-team-header>
+    }
   </ion-grid>
   }
-  <ion-grid>
-      <ion-row>
-        <ion-col>Wereldkampioen </ion-col>
-      </ion-row>
-    </ion-grid>
-    <ion-grid (click)="openKoTeam(kampioen?.team.id, 1)">
-      <app-knockout-team-header
-        [team]="kampioen?.team"
-        [round]="1"
-        [punten]="kampioen?.spelPunten"
-      >
-      </app-knockout-team-header>
-    </ion-grid>
-</ion-content>  
+  @if (knockoutSpeelschema && winnaarTroostFinale && showWinnaarTroostFinale) {
+  <ion-item-divider sticky>
+    <ion-label>Winnaar troostfinale</ion-label>
+  </ion-item-divider>
+  <ion-grid (click)="openKoTeam(winnaarTroostFinale?.team.id, '3')">
+    <app-knockout-team-header [team]="winnaarTroostFinale?.team" round="1.5" [punten]="winnaarTroostFinale?.spelPunten">
+    </app-knockout-team-header>
+  </ion-grid>
+  }
+  @if (kampioen) {
+  <ion-item-divider sticky>
+    <ion-label>Wereldkampioen</ion-label>
+  </ion-item-divider>
+  <ion-grid (click)="openKoTeam(kampioen?.team.id, 1)">
+    <app-knockout-team-header [team]="kampioen?.team" round="1" [punten]="kampioen?.spelPunten">
+    </app-knockout-team-header>
+  </ion-grid>
+  }
+  }
+
+  @if (selectedSegment === 'vergelijk' && isViewingOthers) {
+  @for (roundGroup of compareByRound; track roundGroup.round) {
+  <ion-item-divider sticky>
+    <ion-label>{{roundGroup.round | roundText}}</ion-label>
+  </ion-item-divider>
+
+  @if (roundGroup.both.length > 0) {
+  <ion-item-divider sticky class="compare-sub-divider hes-background-danger-tint ">
+    <ion-label>Door beide voorspeld</ion-label>
+  </ion-item-divider>
+  <app-knockout-compare-team-list [teams]="roundGroup.both"
+    (teamClick)="openKoTeam($event, roundGroup.round)"></app-knockout-compare-team-list>
+  }
+
+  @if (roundGroup.onlyThey.length > 0) {
+  <ion-item-divider sticky class="compare-sub-divider hes-background-danger-tint">
+    <ion-label>Alleen door {{standLine?.displayName}} voorspeld</ion-label>
+  </ion-item-divider>
+  <app-knockout-compare-team-list [teams]="roundGroup.onlyThey"
+    (teamClick)="openKoTeam($event, roundGroup.round)"></app-knockout-compare-team-list>
+  }
+
+  @if (roundGroup.onlyMe.length > 0) {
+  <ion-item-divider sticky class="compare-sub-divider hes-background-danger-tint">
+    <ion-label>Alleen door jou voorspeld</ion-label>
+  </ion-item-divider>
+  <app-knockout-compare-team-list [teams]="roundGroup.onlyMe"
+    (teamClick)="openKoTeam($event, roundGroup.round)"></app-knockout-compare-team-list>
+  }
+  }
+
+  @if (winnaarTroostFinale || myWinnaarTroostFinale) {
+  <ion-item-divider sticky>
+    <ion-label>Winnaar troostfinale</ion-label>
+  </ion-item-divider>
+  @if (compareTroostfinale.both.length > 0) {
+  <ion-item-divider sticky class="compare-sub-divider hes-background-danger-tint">
+    <ion-label>Door beide voorspeld</ion-label>
+  </ion-item-divider>
+  <app-knockout-compare-team-list [teams]="compareTroostfinale.both"
+    (teamClick)="openKoTeam($event, '3')"></app-knockout-compare-team-list>
+  }
+  @if (compareTroostfinale.onlyThey.length > 0) {
+  <ion-item-divider sticky class="compare-sub-divider hes-background-danger-tint">
+    <ion-label>Alleen door {{standLine?.displayName}} voorspeld</ion-label>
+  </ion-item-divider>
+  <app-knockout-compare-team-list [teams]="compareTroostfinale.onlyThey"
+    (teamClick)="openKoTeam($event, '3')"></app-knockout-compare-team-list>
+  }
+  @if (compareTroostfinale.onlyMe.length > 0) {
+  <ion-item-divider sticky class="compare-sub-divider hes-background-danger-tint">
+    <ion-label>Alleen door jou voorspeld</ion-label>
+  </ion-item-divider>
+  <app-knockout-compare-team-list [teams]="compareTroostfinale.onlyMe"
+    (teamClick)="openKoTeam($event, '3')"></app-knockout-compare-team-list>
+  }
+  }
+
+  @if (kampioen || myKampioen) {
+  <ion-item-divider sticky>
+    <ion-label>Wereldkampioen</ion-label>
+  </ion-item-divider>
+  @if (compareKampioen.both.length > 0) {
+  <ion-item-divider sticky class="compare-sub-divider hes-background-danger-tint">
+    <ion-label>Door beide voorspeld</ion-label>
+  </ion-item-divider>
+  <app-knockout-compare-team-list [teams]="compareKampioen.both"
+    (teamClick)="openKoTeam($event, '1')"></app-knockout-compare-team-list>
+  }
+  @if (compareKampioen.onlyThey.length > 0) {
+  <ion-item-divider sticky class="compare-sub-divider hes-background-danger-tint">
+    <ion-label>Alleen door {{standLine?.displayName}} voorspeld</ion-label>
+  </ion-item-divider>
+  <app-knockout-compare-team-list [teams]="compareKampioen.onlyThey"
+    (teamClick)="openKoTeam($event, '1')"></app-knockout-compare-team-list>
+  }
+  @if (compareKampioen.onlyMe.length > 0) {
+  <ion-item-divider sticky class="compare-sub-divider hes-background-danger-tint">
+    <ion-label>Alleen door jou voorspeld</ion-label>
+  </ion-item-divider>
+  <app-knockout-compare-team-list [teams]="compareKampioen.onlyMe"
+    (teamClick)="openKoTeam($event, '1')"></app-knockout-compare-team-list>
+  }
+  }
+  }
+</ion-content>

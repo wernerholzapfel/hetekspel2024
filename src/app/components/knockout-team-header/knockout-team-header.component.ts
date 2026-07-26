@@ -55,6 +55,7 @@ export class KnockoutTeamHeaderComponent {
     return this._round;
   }
 
+
   public icon: string;
   public iconColor: string;
 

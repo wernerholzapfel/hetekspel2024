@@ -13,11 +13,11 @@
       <ion-row class="ion-align-items-stretch">
         <app-punten-chip (click)="openStand()" [iconName]="'podium-outline'" [color]="color"
           [deltaPoints]="standLine.deltaTotalPoints" [points]="standLine.totalPoints"></app-punten-chip>
-        <app-punten-chip (click)="openMatches()" [iconName]="'football'" [deltaPoints]="standLine.deltaMatchPoints"
+        <app-punten-chip (click)="openMatches(); $event.stopPropagation()" [iconName]="'football'" [deltaPoints]="standLine.deltaMatchPoints"
           [color]="color" [points]="standLine.matchPoints"></app-punten-chip>
-        <app-punten-chip (click)="openPoules()" [iconName]="'list'" [deltaPoints]="standLine.deltaPoulePoints"
+        <app-punten-chip (click)="openPoules(); $event.stopPropagation()" [iconName]="'list'" [deltaPoints]="standLine.deltaPoulePoints"
           [color]="color" [points]="standLine.poulePoints"></app-punten-chip>
-        <app-punten-chip (click)="openKnockout()" [iconName]="'trophy'" [deltaPoints]="standLine.deltaKnockoutPoints"
+        <app-punten-chip (click)="openKnockout(); $event.stopPropagation()" [iconName]="'trophy'" [deltaPoints]="standLine.deltaKnockoutPoints"
           [color]="color" [points]="standLine.knockoutPoints"></app-punten-chip>
       </ion-row>
     </ion-grid>

@@ -23,6 +23,7 @@ import { MenuToolbarComponent } from '../menu-toolbar/menu-toolbar.component';
 import { SpeelschemaMatchItemComponent } from '../speelschema-match-item/speelschema-match-item.component';
 import { KnockoutCardTextPipe } from 'src/app/pipes/knockoutCardText.pipe';
 import { FilterPoulePositionPipe } from 'src/app/pipes/filter-pouleposition.pipe';
+import { KnockoutCompareTeamListComponent } from '../knockout-compare-team-list/knockout-compare-team-list.component';
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import { FilterPoulePositionPipe } from 'src/app/pipes/filter-pouleposition.pipe
         KnockoutIconRowComponent,
         ToggleStandListComponent,
         SpeelschemaMatchItemComponent,
+        KnockoutCompareTeamListComponent,
     ],
     imports: [
         CommonModule,
@@ -71,7 +73,8 @@ import { FilterPoulePositionPipe } from 'src/app/pipes/filter-pouleposition.pipe
         KnockoutTeamHeaderComponent,
         KnockoutIconRowComponent,
         ToggleStandListComponent,
-        SpeelschemaMatchItemComponent
+        SpeelschemaMatchItemComponent,
+        KnockoutCompareTeamListComponent
     ]
 })
 export class CustomComponentsModule {
