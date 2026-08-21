@@ -23,44 +23,21 @@ export class UiService {
     prefersDark$: BehaviorSubject<boolean> = new BehaviorSubject(null);
     matchPredictions$: BehaviorSubject<IMatchPrediction[]> = new BehaviorSubject([]);
     fetchTable$: BehaviorSubject<string> = new BehaviorSubject("A");
+    tabToolbarAction$: BehaviorSubject<{ icon: string; handler: () => void } | null> = new BehaviorSubject(null);
     pouleNav: PouleNav[] = [
-        {
-            current: 'A',
-            previous: null,
-            next: 'B',
-            disabled: false,
-            text: 'Poule A'
-        }, {
-            current: 'B',
-            previous: 'A',
-            next: 'C',
-            disabled: true,
-            text: 'Poule B'
-        }, {
-            current: 'C',
-            previous: 'B',
-            next: 'D',
-            disabled: true,
-            text: 'Poule C'
-        }, {
-            current: 'D',
-            previous: 'C',
-            next: 'E',
-            disabled: true,
-            text: 'Poule D'
-        }, {
-            current: 'E',
-            previous: 'D',
-            next: 'F',
-            disabled: true,
-            text: 'Poule E'
-        }, {
-            current: 'F',
-            previous: 'E',
-            next: null,
-            disabled: true,
-            text: 'Poule F'
-        },];
+    { current: 'A', previous: null, next: 'B', disabled: false, text: 'Poule A' },
+    { current: 'B', previous: 'A', next: 'C', disabled: true, text: 'Poule B' },
+    { current: 'C', previous: 'B', next: 'D', disabled: true, text: 'Poule C' },
+    { current: 'D', previous: 'C', next: 'E', disabled: true, text: 'Poule D' },
+    { current: 'E', previous: 'D', next: 'F', disabled: true, text: 'Poule E' },
+    { current: 'F', previous: 'E', next: 'G', disabled: true, text: 'Poule F' },
+    { current: 'G', previous: 'F', next: 'H', disabled: true, text: 'Poule G' },
+    { current: 'H', previous: 'G', next: 'I', disabled: true, text: 'Poule H' },
+    { current: 'I', previous: 'H', next: 'J', disabled: true, text: 'Poule I' },
+    { current: 'J', previous: 'I', next: 'K', disabled: true, text: 'Poule J' },
+    { current: 'K', previous: 'J', next: 'L', disabled: true, text: 'Poule K' },
+    { current: 'L', previous: 'K', next: null, disabled: true, text: 'Poule L' }
+];
 
     constructor(private toastController: ToastController) {
     }

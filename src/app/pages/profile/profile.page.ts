@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EnvironmentInjector, runInInjectionContext } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { IParticipant } from 'src/app/models/participant.model';
@@ -8,15 +8,17 @@ import { CapacitorUpdater } from '@capgo/capacitor-updater'
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.page.html',
-  styleUrls: ['./profile.page.scss'],
+    selector: 'app-profile',
+    templateUrl: './profile.page.html',
+    styleUrls: ['./profile.page.scss'],
+    standalone: false
 })
 export class ProfilePage {
 
   constructor(public uiService: UiService,
     private participantService: ParticipantService,
-    private db: AngularFireDatabase) {
+    private db: AngularFireDatabase,
+    private injector: EnvironmentInjector) {
   }
 
   unsubscribe = new Subject<void>();
@@ -34,7 +36,7 @@ export class ProfilePage {
 
   ionViewWillEnter() {
 
-    this.offlineMode$ = this.db.object<boolean>('offlineMode').valueChanges()
+    this.offlineMode$ = runInInjectionContext(this.injector, () => this.db.object<boolean>('offlineMode').valueChanges())
 
     this.uiService.participant$
       .pipe(takeUntil(this.unsubscribe))

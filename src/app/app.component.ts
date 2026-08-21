@@ -1,4 +1,4 @@
-import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { Component, EnvironmentInjector, NgZone, OnDestroy, OnInit, runInInjectionContext } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@capacitor/splash-screen';
@@ -22,11 +22,13 @@ import {
 } from '@capacitor/push-notifications';
 import { CapacitorUpdater } from '@capgo/capacitor-updater'
 import { KnockoutService } from './services/knockout.service';
+import { PoulepredictionService } from './services/pouleprediction.service';
 
 @Component({
     selector: 'app-root',
     templateUrl: 'app.component.html',
-    styleUrls: ['app.component.scss']
+    styleUrls: ['app.component.scss'],
+    standalone: false
 })
 export class AppComponent implements OnInit, OnDestroy {
 
@@ -43,8 +45,10 @@ export class AppComponent implements OnInit, OnDestroy {
         private loaderService: LoaderService,
         private hetwkspelService: HetwkspelService,
         private participantService: ParticipantService,
+        private poulePredictionService: PoulepredictionService,
         private routeStateService: RouteStateService,
-        private ngZone: NgZone
+        private ngZone: NgZone,
+        private injector: EnvironmentInjector
     ) {
         this.initializeApp();
     }
@@ -108,6 +112,9 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        // this.poulePredictionService.checkPrediction().subscribe(response => {
+        //    console.log('check predictions: '+ response)
+        // });
 
         this.menuService.appPages$.pipe(takeUntil(this.unsubscribe)).subscribe(menu => {
             if (menu) {
@@ -115,19 +122,21 @@ export class AppComponent implements OnInit, OnDestroy {
             }
         });
 
-        this.db.list<any>(`totaal`)
-            .valueChanges()
-            .pipe(takeUntil(this.unsubscribe))
-            .subscribe(totaalstand => {
-                this.uiService.totaalstand$.next(totaalstand);
-            });
+        runInInjectionContext(this.injector, () => {
+            this.db.list<any>(`totaal`)
+                .valueChanges()
+                .pipe(takeUntil(this.unsubscribe))
+                .subscribe(totaalstand => {
+                    this.uiService.totaalstand$.next(totaalstand);
+                });
 
-        this.db.object<{ lastUpdated: number }>(`lastUpdated`)
-            .valueChanges()
-            .pipe(takeUntil(this.unsubscribe))
-            .subscribe(item => {
-                this.uiService.lastUpdated$.next(item);
-            });
+            this.db.object<{ lastUpdated: number }>(`lastUpdated`)
+                .valueChanges()
+                .pipe(takeUntil(this.unsubscribe))
+                .subscribe(item => {
+                    this.uiService.lastUpdated$.next(item);
+                });
+        });
 
 
         // set linkactive.
@@ -187,6 +196,7 @@ export class AppComponent implements OnInit, OnDestroy {
                     const now = moment(new Date());
                     const diffDays = deadline.diff(now, 'milliseconds');
                     this.uiService.isRegistrationOpen$.next(diffDays > 0);
+                    // this.uiService.isRegistrationOpen$.next(true);
 
                     return timer(diffDays);
                 }

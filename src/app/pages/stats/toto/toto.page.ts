@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, EnvironmentInjector, runInInjectionContext} from '@angular/core';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {AngularFireDatabase} from '@angular/fire/compat/database';
@@ -8,6 +8,7 @@ import {Router} from '@angular/router';
     selector: 'app-knockout',
     templateUrl: './toto.page.html',
     styleUrls: ['./toto.page.scss'],
+    standalone: false
 })
 export class TotoPage {
 
@@ -15,17 +16,20 @@ export class TotoPage {
     unsubscribe: Subject<void>
 
     constructor(private db: AngularFireDatabase,
-                private router: Router) {
+                private router: Router,
+                private injector: EnvironmentInjector) {
     }
 
     ionViewWillEnter() {
         this.unsubscribe = new Subject<void>();
-        this.db.list<any>(`ek2024/stats/toto`)
-            .valueChanges()
-            .pipe(takeUntil(this.unsubscribe))
-            .subscribe(totoStats => {
-                this.totoStats = totoStats;
-            });
+        runInInjectionContext(this.injector, () => {
+            this.db.list<any>(`stats/toto`)
+                .valueChanges()
+                .pipe(takeUntil(this.unsubscribe))
+                .subscribe(totoStats => {
+                    this.totoStats = totoStats;
+                });
+        });
     }
 
     openMatch(matchId: string) {

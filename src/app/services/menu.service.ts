@@ -26,7 +26,7 @@ export class MenuService {
     constructor(private db: AngularFireDatabase) {
     }
 
-    public appPages$: BehaviorSubject<MenuItem[]> = new BehaviorSubject([
+    public appPages$: BehaviorSubject<MenuItem[]> = new BehaviorSubject<MenuItem[]>([
         {
             title: 'Home',
             url: '/home',
@@ -88,6 +88,17 @@ export class MenuService {
             showAfterRegistration: true,
             hideInOfflineMode: false
 
+
+        }, {
+            title: 'Mijn Stand',
+            url: '/mijn-stand',
+            urls: ['/mijn-stand'],
+            icon: 'podium',
+            active: false,
+            onlyForAdmin: false,
+            onlyForUser: true,
+            showAfterRegistration: true,
+            hideInOfflineMode: false
 
         }, {
             title: 'Statistieken',

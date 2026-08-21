@@ -39,6 +39,9 @@ const routes: Routes = [
         path: 'stand',
         loadChildren: () => import('./pages/stand/stand.module').then(m => m.StandPageModule)
     },{
+        path: 'mijn-stand',
+        loadChildren: () => import('./pages/mijn-stand/mijn-stand.module').then(m => m.MijnStandPageModule)
+    },{
         path: 'speelschema',
         loadChildren: () => import('./pages/speelschema/speelschema.module').then(m => m.SpeelschemaPageModule),
         canActivate: [OfflineGuard],

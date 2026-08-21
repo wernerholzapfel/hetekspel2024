@@ -5,6 +5,7 @@ import {IonicModule} from '@ionic/angular';
 import {RouterModule} from '@angular/router';
 
 import {HomePage} from './home.page';
+import {PredictionMessagesModalComponent} from './prediction-messages-modal/prediction-messages-modal.component';
 import {LoginModule} from '../../components/login/login.module';
 import {MenuToolbarModule} from '../../components/menu-toolbar/menu-toolbar.module';
 import {CustomComponentsModule} from '../../components/custom-components/custom-components.module';
@@ -24,6 +25,6 @@ import {CustomComponentsModule} from '../../components/custom-components/custom-
         MenuToolbarModule,
         CustomComponentsModule
     ],
-  declarations: [HomePage]
+  declarations: [HomePage, PredictionMessagesModalComponent]
 })
 export class HomePageModule {}

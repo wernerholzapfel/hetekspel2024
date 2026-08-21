@@ -1,4 +1,4 @@
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import {from as fromPromise, Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {switchMap, take} from 'rxjs/operators';

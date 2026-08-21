@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
     selector: 'app-halloffame',
     templateUrl: './halloffame.page.html',
     styleUrls: ['./halloffame.page.scss'],
+    standalone: false
 })
 export class HalloffamePage implements OnInit {
 
@@ -11,6 +12,33 @@ export class HalloffamePage implements OnInit {
 
     constructor() {
         this.tournaments = [
+            {
+                jaar: 'WK 2026',
+                aantal: 209,
+                halloffame: [{
+                    naam: 'Jip Schwering',
+                    positie: 1
+                }, {
+                    naam: 'Jorne Dijkerman',
+                    positie: 2
+                }, {
+                    naam: 'Tom Dijkerman',
+                    positie: 3
+                }]
+            }, {
+                jaar: 'Poulewedstrijden WK 2026',
+                aantal: 209,
+                halloffame: [{
+                    naam: 'Jasper van Maanen',
+                    positie: 1
+                }, {
+                    naam: 'Jesse Veen',
+                    positie: 2
+                }, {
+                    naam: 'Dimitri Fioole',
+                    positie: 3
+                }]
+            },
             {
                 jaar: 'EK 2024',
                 aantal: 175,
@@ -212,7 +240,7 @@ export class HalloffamePage implements OnInit {
                     positie: 3
                 }]
             }, {
-                jaar: 'WK 2004',
+                jaar: 'EK 2004',
                 aantal: 85,
                 halloffame: [{
                     naam: 'Maikel Staring',

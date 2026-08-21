@@ -1,5 +1,8 @@
 :host {
-  .hes-overflow {
+  ion-toolbar {
+    padding-top: 0 !important;
+  }
+    .hes-overflow {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -10,4 +13,5 @@
       display: none;
     }
   }
+
 }

@@ -6,11 +6,13 @@ import {Router} from '@angular/router';
     selector: 'app-menu-toolbar',
     templateUrl: './menu-toolbar.component.html',
     styleUrls: ['./menu-toolbar.component.scss'],
+    standalone: false
 })
 export class MenuToolbarComponent implements OnInit {
 
     @Input() rightCornerIcon: string;
     @Input() iconColor = '';
+    @Input() showMenuButton = true;
     @Output() emitIconClick = new EventEmitter<any>();
 
     constructor(public uiService: UiService, private router: Router) {
@@ -23,7 +25,7 @@ export class MenuToolbarComponent implements OnInit {
         this.router.navigate([`home`], {replaceUrl: false});
     }
 
-    iconClick(event$) {
+    iconClick(event$: any) {
         this.emitIconClick.emit(event$);
     }
 }

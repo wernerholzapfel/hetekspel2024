@@ -1,7 +1,8 @@
 import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({
-    name: 'knockoutCardText'
+    name: 'knockoutCardText',
+    standalone: false
 })
 export class KnockoutCardTextPipe implements PipeTransform {
 

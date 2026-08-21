@@ -7,6 +7,7 @@ import { UiService } from 'src/app/services/ui.service';
     selector: 'app-participant-card',
     templateUrl: './participant-card.component.html',
     styleUrls: ['./participant-card.component.scss'],
+    standalone: false
 })
 export class ParticipantCardComponent implements OnInit {
 
@@ -14,6 +15,7 @@ export class ParticipantCardComponent implements OnInit {
     @Input() standLine: IStandLine;
     @Input() lastUpdated: number;
     @Input() color = 'primary';
+    @Input() backgroundcolor = 'light';
 
     constructor(private router: Router,
         public uiService: UiService) {

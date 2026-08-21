@@ -12,6 +12,7 @@ import { ToggleStandListComponent } from '../../components/toggle-stand-list/tog
     selector: 'app-stand',
     templateUrl: './stand.page.html',
     styleUrls: ['./stand.page.scss'],
+    standalone: false
 })
 export class StandPage {
 
@@ -35,7 +36,6 @@ export class StandPage {
             this.searchTerm$,
             this.uiService.participant$])
             .subscribe(([stand, searchTerm, participant]) => {
-                console.log(stand)
                 this.stand = this.uiService.filterDeelnemers(searchTerm, stand.map(line => {
                     return {
                         ...line,
@@ -44,7 +44,6 @@ export class StandPage {
                 }));
 
                 this.mijnStand = stand.find(item => participant && item.id === participant.id)
-                console.log(this.mijnStand)
             });
     }
 

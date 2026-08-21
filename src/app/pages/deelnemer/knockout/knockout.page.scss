@@ -2,5 +2,16 @@
     ion-chip {
         background: var(--ion-color-secondary);
         color: #fff;
-      }
+    }
+
+    ion-item-divider:not(.compare-sub-divider) {
+        z-index: 11;
+    }
+
+    ion-item-divider.compare-sub-divider {
+        font-size: 0.8rem;
+        min-height: 28px;
+        top: 36px;
+        z-index: 10;
+    }
 }

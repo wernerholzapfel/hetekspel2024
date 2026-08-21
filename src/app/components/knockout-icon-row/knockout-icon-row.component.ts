@@ -1,33 +1,33 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {ITeam} from '../../models/poule.model';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 
 @Component({
-  selector: 'app-knockout-icon-row',
-  templateUrl: './knockout-icon-row.component.html',
-  styleUrls: ['./knockout-icon-row.component.scss'],
+    selector: 'app-knockout-icon-row',
+    templateUrl: './knockout-icon-row.component.html',
+    styleUrls: ['./knockout-icon-row.component.scss'],
+    standalone: false
 })
-export class KnockoutIconRowComponent implements OnInit {
+export class KnockoutIconRowComponent implements OnChanges {
 
-  @Input() punten: number;
-  @Input() round: string;
-  @Input() isEliminated: boolean;
-  @Input() eliminationRound: string;
-  public icon: string;
-  public iconColor: string;
+  @Input() eliminationState: string = '';
+
+  public icon: string = 'help-outline';
+  public iconColor: string = 'medium';
 
   constructor() {
   }
 
-  ngOnInit() {
-    if (this.punten > 0) {
-      this.icon = 'checkmark-outline'
-      this.iconColor = 'success'
-    } else if (this.isEliminated && this.eliminationRound && parseInt(this.eliminationRound) > parseInt(this.round)) {
-      this.icon = 'close-outline';
-      this.iconColor = 'danger'
-    } else {
-      this.icon = 'help-outline'
-      this.iconColor = 'medium';
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['eliminationState']) {
+      if (this.eliminationState === 'qualified') {
+        this.icon = 'checkmark-outline';
+        this.iconColor = 'success';
+      } else if (this.eliminationState === 'eliminated') {
+        this.icon = 'close-outline';
+        this.iconColor = 'danger';
+      } else {
+        this.icon = 'help-outline';
+        this.iconColor = 'medium';
+      }
     }
   }
 

@@ -5,10 +5,11 @@ import { ITeam } from '../../models/poule.model';
   selector: 'app-knockout-team-header',
   templateUrl: './knockout-team-header.component.html',
   styleUrls: ['./knockout-team-header.component.scss'],
+  standalone: false
 })
 export class KnockoutTeamHeaderComponent {
 
-  private _team: ITeam;
+  private _team: any; //todo
   private _punten: number;
   private _round: string;
   private _count: string;
@@ -34,9 +35,9 @@ export class KnockoutTeamHeaderComponent {
   }
 
   @Input() set punten(value) {
-    this._punten = value
-    if (value) {
-      this.determineIcon()
+    if (value != null) {
+      this._punten = value;
+      this.determineIcon();
     }
   }
   get punten() {
@@ -54,6 +55,7 @@ export class KnockoutTeamHeaderComponent {
     return this._round;
   }
 
+
   public icon: string;
   public iconColor: string;
 
@@ -61,23 +63,25 @@ export class KnockoutTeamHeaderComponent {
   }
 
   determineIcon() {
-    if (this.punten > 0) {
+    console.log(this.team)
+    if (this.team.eliminationState === 'qualified') {
       this.icon = 'checkmark-outline'
       this.iconColor = 'success'
     }
-    // kan niet meer voor komen in deze ronde
-    // this.round.Id === 3 => 
-    // eliminated || halve finalist met active round 2 en !eliminated
-
-    // this.round.Id === 2 =>
-    // eliminiated || halve finalist met active round 3 en !eliminated
-
-    else if ((this.team && this.team.isEliminated && parseFloat(this.team.latestActiveRound) > parseFloat(this.round)) ||
-      (this.round === '3' && this.team && !this.team.isEliminated && (this.team.latestActiveRound === '2' || this.team.latestActiveRound === '1')) ||
-      ((this.round === '1' || this.round === '2') && this.team && !this.team.isEliminated && (this.team.latestActiveRound === '3' || this.team.latestActiveRound === '2,5'))) {
+    else if (this.team.eliminationState === 'eliminated' || this.team.isEliminated) {
       this.icon = 'close-outline';
       this.iconColor = 'danger'
-      this.punten = 0
+      this._punten = 0
+    }
+    else if (!this.team.isEliminated && this.team.eliminationRound === 1) {
+      this.icon = 'close-outline';
+      this.icon = 'checkmark-outline'
+      this.iconColor = 'success'
+    } 
+      else if (!this.team.isEliminated && this.team.eliminationRound === 1.5) {
+      this.icon = 'close-outline';
+      this.icon = 'checkmark-outline'
+      this.iconColor = 'success'
     } else {
       this.icon = 'help-outline'
       this.iconColor = 'medium';

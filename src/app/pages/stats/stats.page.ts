@@ -7,6 +7,7 @@ import {Subject} from 'rxjs';
     selector: 'app-stats',
     templateUrl: './stats.page.html',
     styleUrls: ['./stats.page.scss'],
+    standalone: false
 })
 export class StatsPage implements OnInit, OnDestroy {
 

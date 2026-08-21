@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{title}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    @for (group of groups; track group.title) {
+      @if (group.title) {
+      <ion-item-divider>
+        <ion-label>{{group.title}}</ion-label>
+      </ion-item-divider>
+      }
+      @for (message of group.messages; track message) {
+      <ion-item lines="full">
+        <ion-icon slot="start" name="alert-circle-outline" color="warning"></ion-icon>
+        <ion-label class="ion-text-wrap">{{message}}</ion-label>
+      </ion-item>
+      }
+    }
+  </ion-list>
+</ion-content>

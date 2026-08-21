@@ -1,29 +1,41 @@
 <ion-header>
-    <app-menu-toolbar>
-    </app-menu-toolbar>
+  <app-menu-toolbar> </app-menu-toolbar>
 </ion-header>
 
 <ion-content>
-    <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
-        <ion-refresher-content></ion-refresher-content>
-    </ion-refresher>
-    <img src="/assets/deelnemers.jpeg" style="width: 100%" alt=""/>
-    <ion-card-header *ngIf="participants">
-        <ion-card-title>
-            {{participants?.length}} Deelnemers
-        </ion-card-title>
-    </ion-card-header>
-    <ion-list>
-        <ion-item *ngFor="let p of participants; let itemBounds = bounds let i = index;" lines="full">
-            {{i + 1}} {{p.displayName}}
-            <ng-container *ngIf="isAdmin$ | async">
-                <ion-icon slot="end" [color]="p.matchpredictions === 36 ? 'primary' : 'danger'" name="football">
-                </ion-icon>
-                <ion-icon slot="end" [color]="p.poulepredictions === 24 ? 'primary' : 'danger'" name="list">
-                </ion-icon>
-                <ion-icon slot="end" [color]="p.knockoutpredictions === 15 ? 'primary' : 'danger'" name="trophy">
-                </ion-icon>
-            </ng-container>
-        </ion-item>
-    </ion-list>
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <img src="/assets/deelnemers.jpeg" style="width: 100%" alt="" />
+  @if (participants) {
+  <ion-card-header>
+    <ion-card-title> {{participants?.length}} Deelnemers </ion-card-title>
+  </ion-card-header>
+  }
+  <ion-list>
+    @for (p of participants; track p; let i = $index) {
+    <ion-item lines="full">
+      {{i + 1}} {{p.displayName}} @if (isAdmin$ | async) {
+      <ion-icon
+        slot="end"
+        [color]="p.matchpredictions === 72 ? 'primary' : 'danger'"
+        name="football"
+      >
+      </ion-icon>
+      <ion-icon
+        slot="end"
+        [color]="p.poulepredictions === 48 ? 'primary' : 'danger'"
+        name="list"
+      >
+      </ion-icon>
+      <ion-icon
+        slot="end"
+        [color]="p.knockoutpredictions === 66 ? 'primary' : 'danger'"
+        name="trophy"
+      >
+      </ion-icon>
+      }
+    </ion-item>
+    }
+  </ion-list>
 </ion-content>

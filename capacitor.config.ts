@@ -2,12 +2,14 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'com.wernerholzapfel.hetekspel',
-  appName: 'Het EK Spel',
+  appName: 'Het WK Spel',
   webDir: 'www',
   bundledWebRuntime: false,
   plugins: {
     CapacitorUpdater: {
       autoUpdate: true,
+      directUpdate: 'always', // or 'atInstall' for updates only on app install/update
+      autoSplashscreen: true,
     }
   },
   cordova: {
@@ -25,7 +27,7 @@ const config: CapacitorConfig = {
   },
   ios: {
     includePlugins: ["@capgo/capacitor-updater", '@capacitor/app', '@capacitor/haptics', '@capacitor/keyboard'
-    , '@capacitor/push-notifications', '@capacitor/splash-screen', '@capacitor/status-bar', '@awesome-cordova-plugins/core'],
+      , '@capacitor/push-notifications', '@capacitor/splash-screen', '@capacitor/status-bar', '@awesome-cordova-plugins/core'],
   }
 };
 

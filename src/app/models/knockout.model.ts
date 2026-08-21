@@ -1,25 +1,30 @@
 import {ITeam} from './poule.model';
-import {ISaveKnockoutPredictionsBody} from './knockout-predictions.model';
+import {IKnockoutPrediction, ISaveKnockoutPredictionsBody} from './knockout-predictions.model';
 
 export interface IKnockout {
     id: string;
     matchId: string;
     homeId: string;
     awayId: string;
-    round: string;
+    round: string; // ?? is dit zo
     city: string;
     date: string;
-    selectedTeam?: ITeam;
     homeTeam?: ITeam;
     awayTeam?: ITeam;
+    selectedTeam?: ITeam; 
     homeScore?: number;
     awayScore?: number;
-    prediction: ISaveKnockoutPredictionsBody; // todo prediction get body?
+    prediction: any; // todo prediction get body?
     isLoading?: boolean;
+    roundText?: string;
 }
 
+export interface IDeelnemerSpeelschema {
+    europeeskampioen: IKnockoutPrediction; winnaarTroostFinale: IKnockoutPrediction; knockouts: IKnockout[]
+}
 export class UpdateKnockoutDto {
     id: string;
+    round: string;
     homeTeam: { id: string };
     awayTeam: { id: string };
     winnerTeam: { id: string };

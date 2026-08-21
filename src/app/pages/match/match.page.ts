@@ -10,6 +10,7 @@ import {BehaviorSubject, combineLatest, Subject} from 'rxjs';
     selector: 'app-match',
     templateUrl: './match.page.html',
     styleUrls: ['./match.page.scss'],
+    standalone: false
 })
 export class MatchPage implements OnInit, OnDestroy {
 

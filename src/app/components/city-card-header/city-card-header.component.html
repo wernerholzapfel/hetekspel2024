@@ -1,6 +1,10 @@
-<img *ngIf="showImage" class="hes-image-card-header" [src]="imageUrl">
+@if (showImage) {
+<img class="hes-image-card-header" [src]="imageUrl" />
+}
 <ion-card-header>
-  <ion-card-subtitle color="light">{{match?.date | date : 'dd MMMM HH:mm' }} <span
-          *ngIf="match?.matchId">({{match?.matchId}})</span>
-    &#64; {{match?.city}}</ion-card-subtitle>
+  <ion-card-subtitle color="light"
+    >{{ match?.date | date : "dd MMMM HH:mm" }} @if (match?.matchId) {
+    <span>({{ match?.matchId }})</span>
+    } &#64; {{ match?.city }}</ion-card-subtitle
+  >
 </ion-card-header>

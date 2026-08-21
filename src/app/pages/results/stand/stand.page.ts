@@ -8,6 +8,7 @@ import {StatsService} from '../../../services/stats.service';
     selector: 'app-stand',
     templateUrl: './stand.page.html',
     styleUrls: ['./stand.page.scss'],
+    standalone: false
 })
 export class StandPage implements OnInit {
 

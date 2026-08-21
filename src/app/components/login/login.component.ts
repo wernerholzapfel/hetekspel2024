@@ -10,7 +10,8 @@ import {UiService} from '../../services/ui.service';
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss']
+    styleUrls: ['./login.component.scss'],
+    standalone: false
 })
 export class LoginComponent implements OnInit, OnDestroy {
     user = {
@@ -19,6 +20,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         displayName: '',
     };
     activeSegment = 'inschrijven';
+    isSubmitting = false;
 
     unsubscribe = new Subject<void>();
 
@@ -93,6 +95,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     signUpRegular() {
+        if (this.isSubmitting) { return; }
+        this.isSubmitting = true;
         this.authService.signUpRegular(this.user.email, this.user.password, this.user.displayName)
             .then((res) => {
                     if (res) {
@@ -117,6 +121,9 @@ export class LoginComponent implements OnInit, OnDestroy {
                     duration: 2000
                 });
                 toast.present();
+            })
+            .finally(() => {
+                this.isSubmitting = false;
             });
     }
 

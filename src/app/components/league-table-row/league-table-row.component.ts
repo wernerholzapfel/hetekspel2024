@@ -10,6 +10,7 @@ import {ToastService} from '../../services/toast.service';
     selector: 'app-league-table-row',
     templateUrl: './league-table-row.component.html',
     styleUrls: ['./league-table-row.component.scss'],
+    standalone: false
 })
 export class LeagueTableRowComponent implements OnInit {
 
@@ -25,6 +26,7 @@ export class LeagueTableRowComponent implements OnInit {
     }
 
     ngOnInit() {
+        console.log('line', this.line);
     }
 
     async openSelect() {
@@ -46,15 +48,16 @@ export class LeagueTableRowComponent implements OnInit {
             id: line.team.id,
             poulePosition: line.positie,
             isEliminated: line.team.isEliminated,
-            eliminationRound: '32',
-            isPositionFinal: line.isPositionFinal
+            eliminationRound: 64,
+            isPositionFinal: line.isPositionFinal,
+            poule: line.poule
         }).subscribe(() => {
             this.toastService.presentToast('opslaan gelukt');
             this.line = {
                 ...line,
                 team: {
                     ...line.team,
-                    eliminationRound: '32'
+                    eliminationRound: 64
                 }
             };
         }, () => this.toastService.presentToast('opslaan mislukt', 'danger'));

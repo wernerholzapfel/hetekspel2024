@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { UiService } from '../../../services/ui.service';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { PouleNav } from '../../../models/poule.model';
-import { IonRouterOutlet, ModalController } from '@ionic/angular';
+import { IonModal, IonRouterOutlet, ModalController } from '@ionic/angular';
 import { StandCardComponent } from 'src/app/components/stand-card/stand-card.component';
 import { PoulepredictionService } from 'src/app/services/pouleprediction.service';
 
@@ -14,8 +14,11 @@ import { PoulepredictionService } from 'src/app/services/pouleprediction.service
     selector: 'app-matches',
     templateUrl: './matches.page.html',
     styleUrls: ['./matches.page.scss'],
+    standalone: false
 })
 export class MatchesPage {
+    @ViewChild(IonModal) modal: IonModal;
+
     @ViewChild('topScrollAnchor') topScroll: ElementRef;
 
     public pouleName = 'A';
@@ -24,6 +27,9 @@ export class MatchesPage {
     pouleNavigatie: PouleNav[];
     activePoule: PouleNav;
     standCardPoule: { poule: string, stand: any[], isSortDisabled: boolean }
+    showPouleNavigation = false;
+    isStandModalOpen = false;
+    private pendingNextPoule: string;
 
     constructor(
         private matchService: MatchService,
@@ -46,7 +52,7 @@ export class MatchesPage {
             });
 
         this.isRegistrationOpen$ = this.uiService.isRegistrationOpen$;
-        
+
         this.uiService.fetchTable$.pipe(takeUntil(this.unsubscribe))
             .pipe(switchMap((pouleName: string) => {
                 return this.poulePredictionService.getStandBasedOnPredictionsForLoggedInUser(pouleName)
@@ -59,6 +65,7 @@ export class MatchesPage {
     getPredictedMatches() {
         this.matchService.getMatchPredictions().subscribe(
             matchPredictions => {
+                this.showPouleNavigation = matchPredictions.filter(mp => mp.awayScore != null && mp.homeScore != null).length === 72
                 this.uiService.matchPredictions$.next(matchPredictions);
             });
     }
@@ -77,10 +84,35 @@ export class MatchesPage {
         this.activePoule = this.pouleNavigatie.find(pn => pn.current === nextPoule)
         this.uiService.fetchTable$.next(nextPoule);
         this.scrollSegments(this.pouleNavigatie.findIndex(poule => poule.next === nextPoule));
+    }
+
+    openStandModal(nextPoule: string) {
+        this.pendingNextPoule = nextPoule;
+        this.isStandModalOpen = true;
+    }
+
+    confirmNextPoule() {
+        this.isStandModalOpen = false;
+    }
+
+    onStandModalDismiss(event) {
+        console.log('Stand modal dismissed with role:', event.detail.role);
+        if (event.detail.role === 'cancel' || event.detail.role === 'backdrop') {
+            this.isStandModalOpen = false;
+            return
+        }
+        else {
+            this.isStandModalOpen = false;
+            if (this.pendingNextPoule) {
+                this.next(this.pendingNextPoule);
+                this.pendingNextPoule = null;
+            }
+        }
 
     }
 
     navigateToPoulePredictions() {
+        this.isStandModalOpen = false;
         this.router.navigate([`prediction/prediction/poule/`]);
     }
     ionViewDidLeave(): void {
