@@ -1,5 +1,5 @@
 WEB:
-export NODE_OPTIONS=--openssl-legacy-provider && ng build --configuration production
+ng build --configuration production
 npx firebase deploy --only hosting
 
 
@@ -7,7 +7,7 @@ ANDROID:
 
 
 IOS
-export NODE_OPTIONS=--openssl-legacy-provider && ng build --configuration production
+ng build --configuration production
 npx cap sync ios
 
 IOS OTA

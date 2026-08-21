@@ -8,6 +8,8 @@ const config: CapacitorConfig = {
   plugins: {
     CapacitorUpdater: {
       autoUpdate: true,
+      directUpdate: 'always', // or 'atInstall' for updates only on app install/update
+      autoSplashscreen: true,
     }
   },
   cordova: {
@@ -25,7 +27,7 @@ const config: CapacitorConfig = {
   },
   ios: {
     includePlugins: ["@capgo/capacitor-updater", '@capacitor/app', '@capacitor/haptics', '@capacitor/keyboard'
-    , '@capacitor/push-notifications', '@capacitor/splash-screen', '@capacitor/status-bar', '@awesome-cordova-plugins/core'],
+      , '@capacitor/push-notifications', '@capacitor/splash-screen', '@capacitor/status-bar', '@awesome-cordova-plugins/core'],
   }
 };
 
